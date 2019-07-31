@@ -8,10 +8,11 @@
             "camelCase"
         ],
         "component-selector": [
-            true,
+            false,
             "element",
             "app",
             "kebab-case"
-        ]
-    }
+        ],
+			"indent": [true, "tabs", 2]
+		}
 }
