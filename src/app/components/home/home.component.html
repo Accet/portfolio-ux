@@ -1,12 +1,24 @@
-<!--<div class="dashboard-wrapper" appScrollSpy (stickySet)="setSticky($event)" [class.sticky-nav]="isStickied">-->
-<!--	<div>-->
-<!--		<app-header [isStickied]="isStickied"></app-header>-->
-<!--		<div class="container no-pad" appBlurredModal>-->
-<!--			<app-navigation-links *ngIf="!isStickied" navMode="nav"></app-navigation-links>-->
-<!--			<div>-->
-<p>HOME</p>
-<!--				HERE-->
-<!--			</div>-->
-<!--		</div>-->
-<!--	</div>-->
-<!--</div>-->
+<div class="d-flex flex-column justify-content-between">
+	<div class="head-bg">
+		<img src="/assets/images/top_header.png" alt="header image" />
+	</div>
+	<div class="container">
+		<div class="dashboard-section route-section mt-2" id="top">
+			info block
+		</div>
+		<div class="dashboard-section route-section mt-2" id="about">
+			about me
+		</div>
+	</div>
+	<div class="middle-bg">
+		<img src="/assets/images/middle_bg.png" alt="header image" />
+	</div>
+	<div class="container">
+		<div class="dashboard-section route-section" id="works">
+			my works
+		</div>
+		<div class="dashboard-section route-section " id="contact">
+			contact me
+		</div>
+	</div>
+</div>

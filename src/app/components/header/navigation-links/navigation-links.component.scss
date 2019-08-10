@@ -2,6 +2,7 @@
 
 ul {
 	width: 100%;
+	z-index: 200;
 	&.nav {
 		@media (max-width: $layout-lg-size) {
 			display: none !important;
@@ -35,6 +36,7 @@ ul {
 		}
 
 		.nav-link {
+			z-index: 1000;
 			font-size: 1rem;
 			color: #2e2e2e;
 			font-weight: 600;
