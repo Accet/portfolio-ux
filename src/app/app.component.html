@@ -1,1 +1,11 @@
-<router-outlet></router-outlet>
+<div class="dashboard-wrapper" appScrollSpy (stickySet)="setSticky($event)" [class.sticky-nav]="isStickied">
+	<div>
+		<app-header [isStickied]="isStickied"></app-header>
+		<div class="container no-pad" appBlurredModal>
+			<app-navigation-links *ngIf="!isStickied" navMode="nav"></app-navigation-links>
+			<div>
+				<router-outlet></router-outlet>
+			</div>
+		</div>
+	</div>
+</div>

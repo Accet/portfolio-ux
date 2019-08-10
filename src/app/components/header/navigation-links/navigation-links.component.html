@@ -1,7 +1,7 @@
 <ul [class]="navMode">
 	<li class="nav-item" *ngFor="let link of links" [class.selected]="link.selected">
 		<button class="btn-clear nav-link" (click)="handleScrollToSection(link?.section)">
-			{{ link.linkText }}
+			{{ link.linkText | uppercase }}
 		</button>
 	</li>
 </ul>

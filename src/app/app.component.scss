@@ -1,0 +1,21 @@
+@import "styles";
+
+.dashboard-wrapper {
+	height: 2000px;
+	&.sticky-nav {
+		.container {
+			padding-top: 9rem;
+
+			@media (max-width: $layout-lg-size) {
+				padding-top: 6rem;
+			}
+		}
+	}
+
+	.container {
+		position: relative;
+		padding-top: 6rem;
+		padding-bottom: 3rem;
+		z-index: 1;
+	}
+}

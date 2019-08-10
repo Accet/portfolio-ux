@@ -23,19 +23,19 @@ export class NavigationLinksComponent extends BaseObserverComponent implements O
 
 	links: HomeLink[] = [
 		{
-			linkText: 'About',
+			linkText: 'About Me',
 			linkTo: 'about',
 			selected: false,
 			section: 'about'
 		},
 		{
-			linkText: 'Works',
+			linkText: 'My Works',
 			linkTo: 'works',
 			selected: false,
 			section: 'works'
 		},
 		{
-			linkText: 'Contact',
+			linkText: 'Contact me',
 			linkTo: 'contact',
 			selected: false,
 			section: 'contact'
