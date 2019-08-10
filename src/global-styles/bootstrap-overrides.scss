@@ -1,0 +1,14 @@
+.container {
+	@media (min-width: $layout-xl-size) {
+		max-width: $container-width !important;
+		&.no-pad {
+			padding: 0;
+		}
+	}
+
+	@media (min-width: $layout-lg-size) {
+		&.no-pad {
+			padding: 0;
+		}
+	}
+}

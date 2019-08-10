@@ -1,0 +1,29 @@
+@import "variables";
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "mixins";
+@import "~bootstrap/scss/bootstrap";
+@import "bootstrap-overrides";
+
+
+body {
+	background-color: #f4f3f3;
+	margin: 0;
+	app-root * {
+		font-family: $font-family;
+	}
+}
+
+.modal-bg-blur {
+	@include blur();
+}
+
+.btn-clear {
+	background-color: transparent;
+	border-color: transparent;
+	width: fit-content;
+	display: flex;
+	justify-content: center;
+}
+.btn-clear:focus {
+	outline: none;
+}

@@ -1,0 +1,59 @@
+@mixin simple-fade($speed) {
+	-webkit-animation: fadein $speed;
+	-moz-animation: fadein $speed;
+	-ms-animation: fadein $speed;
+	-o-animation: fadein $speed;
+	animation: fadein $speed;
+}
+
+@mixin blur($blur: 0.2rem) {
+	-webkit-filter: blur($blur);
+	-moz-filter: blur($blur);
+	-o-filter: blur($blur);
+	-ms-filter: blur($blur);
+	filter: blur($blur);
+}
+
+@mixin dashboard-box-shadow() {
+	box-shadow: 0 0.625rem 2.125rem 0 rgba(210, 210, 210, 0.5);
+}
+
+@mixin dashboard-section() {
+	margin-top: 2rem;
+	border-radius: 0.625rem;
+	background: $white;
+	padding: 2.25rem 2rem;
+
+	@media (max-width: $layout-sm-size) {
+		padding: 2rem 1rem;
+	}
+
+	@include dashboard-box-shadow();
+}
+
+@-webkit-keyframes slide-in-top {
+	0% {
+		-webkit-transform: translateY(-1000px);
+		transform: translateY(-1000px);
+		opacity: 0;
+	}
+	100% {
+		-webkit-transform: translateY(0);
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes slide-in-top {
+	0% {
+		-webkit-transform: translateY(-1000px);
+		transform: translateY(-1000px);
+		opacity: 0;
+	}
+	100% {
+		-webkit-transform: translateY(0);
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
