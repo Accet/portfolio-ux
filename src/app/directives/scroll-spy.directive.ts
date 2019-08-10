@@ -22,19 +22,18 @@ export class ScrollSpyDirective extends BaseObserverComponent implements OnDestr
 
 	isStickied: boolean;
 
-	active = false;
-	sections: HTMLCollection;
+	sections: HTMLElement[];
 	ignoreScroll = false;
 	currentSectionId = '';
 
 	@HostListener('window:scroll', ['$event'])
-	windowScrolled($event) {
+	windowScrolled() {
 		this.handleStickyNavEvent();
 		this.handleWindowScrollNavEvent();
 	}
 
 	@HostListener('window:resize', ['$event'])
-	onResize($event) {
+	onResize() {
 		this.handleWindowScrollNavEvent();
 	}
 
@@ -49,7 +48,7 @@ export class ScrollSpyDirective extends BaseObserverComponent implements OnDestr
 			.pipe(takeUntil(this.destroy$))
 			.subscribe((sectionId: any) => {
 				if (sectionId) {
-					for (const section of <any>this.sections) {
+					for (const section of this.sections) {
 						if (section.id === sectionId) {
 							const elemTop = section.offsetTop - 90;
 							window.scrollTo(0, elemTop);
@@ -62,7 +61,6 @@ export class ScrollSpyDirective extends BaseObserverComponent implements OnDestr
 
 	ngOnDestroy() {
 		super.ngOnDestroy();
-		this.active = false;
 		this.stickySet.emit(false);
 	}
 
@@ -86,7 +84,6 @@ export class ScrollSpyDirective extends BaseObserverComponent implements OnDestr
 		const docViewTop = window.pageYOffset;
 		if (!this.ignoreScroll) {
 			let currentSectionId: string;
-
 			for (const section of this.sections as any) {
 				const elemTop = section.offsetTop - 90;
 				const isAtTop = docViewTop >= elemTop;

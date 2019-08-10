@@ -4,15 +4,24 @@
 //.dashboard-container {
 	.container {
 		position: relative;
-		z-index: 100;
 	}
 //}
 
 .dashboard-section {
-	&:first-child {
-		margin-top: 1rem;
-	}
 	height: 500px;
+	&.title-section {
+		height: 47.5rem;
+		display: flex;
+
+		align-items: start;
+		justify-content: flex-end;
+		flex-direction: row;
+		.short-info {
+			max-width: 70%;
+			margin-top: 10rem;
+			font-size: 2.25rem;
+		}
+	}
 	background-color: transparent;
 }
 

@@ -51,7 +51,6 @@ export class NavigationLinksComponent extends BaseObserverComponent implements O
 			.getMessage(MessageType.HIGHLIGHT_SCROLL_SECTION)
 			.pipe(takeUntil(this.destroy$))
 			.subscribe((section: any) => {
-				console.log('Function: , section: ', section);
 				this.setActiveNavLink(section);
 			});
 	}
