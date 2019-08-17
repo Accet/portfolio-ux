@@ -1,0 +1,96 @@
+@import "styles";
+.work-container {
+	cursor: pointer;
+	margin-top: 3.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: stretch;
+	flex-direction: column;
+
+	@media (min-width: $layout-xl-size) {
+		height: 25rem;
+		.ground {
+			margin-top: 4rem !important;
+			margin-bottom: 4rem !important;
+			width: 100%;
+			flex-direction: row;
+			justify-content: space-around;
+			align-items: center;
+		}
+
+		.image-container {
+			margin-top: -4rem;
+			margin-bottom: -4rem;
+			margin-left: 4rem;
+			height: 25rem;
+			img {
+				object-fit: scale-down;
+				object-position: 100% 0;
+			}
+		}
+
+		.info-container {
+			margin: 1rem 4rem 1rem 2rem;
+			align-self: stretch;
+		}
+	}
+	@media (max-width: $layout-xl-size) {
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+		.ground {
+			//background-color: transparent;
+			flex-direction: column;
+		}
+
+		.image-container {
+			height: auto;
+			align-self: stretch;
+			//width: 100%;
+			margin: 1rem;
+			img	{
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+				max-width: 100%;
+
+				object-position: center;
+
+				object-fit: cover;
+			}
+		}
+
+		.info-container {
+			margin: 1rem;
+		}
+	}
+	.ground {
+		height: 100%;
+		background-color: $works_background;
+		border-radius: $border-radius;
+	}
+	.info-container {
+		flex-grow: 1;
+	}
+
+	.date-container {
+		font-family: $font-family;
+		color: $form-input-label-color;
+		font-size: 0.85rem;
+	}
+
+	.title-container {
+		margin-top: 1.5rem;
+		font-family: $font-family;
+		color: $header-font-color;
+		font-weight: $font-weight-bolder;
+		font-size: 1.9rem;
+	}
+
+	.description-container {
+		margin-top: 2rem;
+		font-family: $font-family;
+		color: $form-input-label-color;
+		font-size: 1.15rem;
+	}
+}

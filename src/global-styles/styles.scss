@@ -3,10 +3,10 @@
 @import "mixins";
 @import "~bootstrap/scss/bootstrap";
 @import "bootstrap-overrides";
-
+@import "material-overrides";
 
 body {
-	background-color: #f4f3f3;
+	background-color: $background;
 	margin: 0;
 	app-root * {
 		font-family: $font-family;

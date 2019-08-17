@@ -1,0 +1,88 @@
+@import "styles";
+
+.split-controls {
+	@media (min-width: $layout-lg-size) {
+		flex-direction: row;
+	}
+
+	@media (max-width: $layout-lg-size) {
+		flex-direction: column;
+		.contact-info {
+			margin-left: 0;
+		}
+	}
+}
+
+.contact-info {
+	margin: 1rem;
+	padding: 1rem 2rem 1rem 2rem;
+}
+a {
+	text-decoration: none;
+}
+
+:host ::ng-deep {
+	mat-form-field {
+		&.form-input {
+			height: auto !important;
+		}
+	}
+
+	.mat-button {
+		display: flex;
+		align-items: center;
+		margin: auto;
+		position: relative;
+		padding: 0.3rem 1rem 0.3rem 1rem;
+		box-sizing: border-box;
+		$border: 2px;
+		background: white;
+		background-clip: padding-box; /* !importanté */
+		border: solid $border transparent; /* !importanté */
+		border-radius: 1em;
+		color: $header-font-color;
+		&:before {
+			content: '';
+			position: absolute;
+			top: 0; right: 0; bottom: 0; left: 0;
+			z-index: -1;
+			margin: -$border; /* !importanté */
+			border-radius: inherit; /* !importanté */
+			background: linear-gradient(-45deg, $secondary, $primary);
+		}
+	}
+	.mat-button-wrapper {
+		vertical-align: top !important;
+		font-size: 1rem !important;
+	}
+	.mat-icon {
+		svg {
+			vertical-align: top !important;
+		}
+	}
+}
+
+.gradient-box {
+
+	display: flex;
+	align-items: center;
+	margin: auto;
+	position: relative;
+	padding: 0.3rem 1rem 0.3rem 1rem;
+	box-sizing: border-box;
+	$border: 2px;
+	background: white;
+	background-clip: padding-box; /* !importanté */
+	border: solid $border transparent; /* !importanté */
+	border-radius: 1em;
+
+	&:before {
+		content: '';
+		position: absolute;
+		top: 0; right: 0; bottom: 0; left: 0;
+		z-index: -1;
+		margin: -$border; /* !importanté */
+		border-radius: inherit; /* !importanté */
+		background: linear-gradient(to right, red, orange);
+	}
+}

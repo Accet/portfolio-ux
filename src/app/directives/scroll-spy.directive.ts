@@ -8,10 +8,11 @@ import {
 	OnDestroy,
 	Output
 } from '@angular/core';
-import {Router} from '@angular/router';
-import {takeUntil} from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
+import {concatMap, delay, scan, switchMap, takeUntil, takeWhile} from 'rxjs/operators';
 import {CommunicationService, MessageType} from '../services/communication.service';
 import {BaseObserverComponent} from '../components/base-observer/base-observer.component';
+import {combineLatest, from, interval, of} from 'rxjs';
 
 @Directive({
 	selector: '[appScrollSpy]'
@@ -37,7 +38,12 @@ export class ScrollSpyDirective extends BaseObserverComponent implements OnDestr
 		this.handleWindowScrollNavEvent();
 	}
 
-	constructor(private el: ElementRef, private router: Router, private communicationService: CommunicationService) {
+	constructor(
+		private el: ElementRef,
+		private router: Router,
+		private communicationService: CommunicationService,
+		private route: ActivatedRoute
+	) {
 		super();
 	}
 
@@ -45,16 +51,51 @@ export class ScrollSpyDirective extends BaseObserverComponent implements OnDestr
 		this.sections = this.el.nativeElement.getElementsByClassName('route-section');
 		this.communicationService
 			.getMessage(MessageType.SCROLL_TO_SECTION)
-			.pipe(takeUntil(this.destroy$))
-			.subscribe((sectionId: any) => {
-				if (sectionId) {
-					for (const section of this.sections) {
-						if (section.id === sectionId) {
-							const elemTop = section.offsetTop - 90;
-							window.scrollTo(0, elemTop);
-							break;
-						}
+			.pipe(
+				takeUntil(this.destroy$),
+				switchMap(section => {
+					if (this.router.url !== '/') {
+						this.communicationService.sendMessage({type: MessageType.HIGHLIGHT_SCROLL_SECTION, data: section});
+						return combineLatest([from(this.router.navigate([''])), of(section)]).pipe(delay(300));
+					} else {
+						return combineLatest([of(null), of(section)]);
 					}
+				}),
+				// .subscribe((sectionId: any) => {
+				// 	if (sectionId) {
+				// 		for (const section of this.sections) {
+				// 			if (section.id === sectionId) {
+				// 				const elemTop = section.offsetTop - 90;
+				// 				window.scrollTo(0, elemTop);
+				// 				break;
+				// 			}
+				// 		}
+				// 	}
+				// });
+				concatMap(([_, sectionId]) => {
+					if (sectionId) {
+						let elemTop;
+						for (const section of this.sections) {
+							if (section.id === sectionId) {
+								elemTop = section.offsetTop - 70;
+								break;
+							}
+						}
+						return of(elemTop);
+					} else {
+						return of(null);
+					}
+				}),
+				switchMap(targetYPos =>
+					interval(5).pipe(
+						scan((acc, curr) => (targetYPos > window.pageYOffset ? acc + 10 : acc - 10), window.pageYOffset),
+						takeWhile(val => (targetYPos > window.pageYOffset ? val < targetYPos : val > targetYPos))
+					)
+				)
+			)
+			.subscribe(position => {
+				if (position) {
+					window.scrollTo(0, position);
 				}
 			});
 	}

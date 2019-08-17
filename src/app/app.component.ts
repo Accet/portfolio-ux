@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {MatIconRegistry} from '@angular/material';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
 	selector: 'app-root',
@@ -8,7 +10,14 @@ import {Component, OnInit} from '@angular/core';
 export class AppComponent implements OnInit {
 	isStickied = false;
 
-	constructor() {}
+	constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
+		['linked', 'medium', 'mail'].forEach(icon => {
+			this.matIconRegistry.addSvgIcon(
+				icon,
+				this.domSanitizer.bypassSecurityTrustResourceUrl(`assets/icons/${icon}.svg`)
+			);
+		});
+	}
 
 	ngOnInit() {}
 

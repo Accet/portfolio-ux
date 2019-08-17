@@ -7,9 +7,12 @@ $categoryEntityColor: #3F3F3F;
 $danger: #eb3530;
 $white: #ffffff;
 
-$primary: #0073d0;
-$primary-alpha: rgba(0,115,208, 0.54);
+$background: #f4f3f3;
+$primary: #fbc732;
+//$primary-light: #fffaeb;
 $primary-light: #e5f5fc;
+$secondary: #d63839;
+
 
 $form-input-placeholder-color: #D3D3D3;
 $form-input-border: 1px solid #ced4da;
@@ -32,3 +35,7 @@ $layout-md-size: 768px;
 $layout-sm-size: 576px;
 
 $container-width: 1152px;
+$border-radius: 0.5rem;
+
+//$works_background: rgba(255, 250, 235, 0.8);
+$works_background: rgba(255,245,242, 0.8);

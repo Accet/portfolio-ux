@@ -1,0 +1,121 @@
+<div class="container mt-5 mb-5 d-flex split-controls">
+	<form
+		class="d-flex align-items-center justify-content-start flex-column mt-3 col-lg-6 col-md-12"
+		[formGroup]="contactForm"
+		(ngSubmit)="onSend()"
+	>
+		<!--SUBJECT-->
+		<div class="d-flex align-self-stretch">
+			<div class="form-group col-12">
+				<mat-form-field class="form-input">
+					<input
+						matInput
+						name="subject"
+						formControlName="subject"
+						type="text"
+						autocorrect="off"
+						autocapitalize="sentences"
+						spellcheck="off"
+						placeholder="Subject"
+					/>
+				</mat-form-field>
+			</div>
+		</div>
+		<!--NAME AND EMAIL-->
+		<div class="d-flex split-controls align-self-stretch">
+			<div class="form-group col-lg-6 col-md-12">
+				<mat-form-field class="form-input">
+					<input
+						matInput
+						name="name"
+						formControlName="name"
+						type="text"
+						required
+						autocorrect="off"
+						autocapitalize="words"
+						spellcheck="off"
+						placeholder="Name"
+					/>
+				</mat-form-field>
+				<div *ngIf="contactForm.get('name').touched && contactForm.get('name').invalid" class="text-danger form-error">
+					Please enter your name
+				</div>
+			</div>
+			<div class="form-group col-lg-6 col-md-12">
+				<mat-form-field class="form-input">
+					<input
+						matInput
+						name="email"
+						formControlName="email"
+						type="email"
+						required
+						autocorrect="off"
+						spellcheck="off"
+						placeholder="Email"
+					/>
+				</mat-form-field>
+				<div
+					*ngIf="contactForm.get('email').touched && contactForm.get('email').invalid"
+					class="text-danger form-error"
+				>
+					Please enter a valid email
+				</div>
+			</div>
+		</div>
+		<div class="d-flex align-self-stretch">
+			<div class="form-group col-12">
+				<mat-form-field class="form-input">
+					<mat-label>Type your message here</mat-label>
+					<textarea
+						formControlName="message"
+						required
+						matInput
+						cdkTextareaAutosize
+						cdkAutosizeMinRows="1"
+						cdkAutosizeMaxRows="10"
+					></textarea>
+				</mat-form-field>
+				<div
+					*ngIf="contactForm.get('message').touched && contactForm.get('message').invalid"
+					class="text-danger form-error"
+				>
+					Please enter message
+				</div>
+			</div>
+		</div>
+		<div class="d-flex w-100 justify-content-end align-items-end flex-row">
+			<div class=" mr-3">
+				<button (submit)="onSend()" mat-button color="grey" disableRipple>
+					<div class="d-flex justify-content-between w-100 align-items-center">
+						<span class="mr-3">{{ 'Send' }}</span>
+						<mat-icon svgIcon="mail"></mat-icon>
+					</div>
+				</button>
+			</div>
+		</div>
+	</form>
+	<div class="contact-info card col-lg-6 col-md-12">
+		<div>
+			My email:
+		</div>
+		<div class="pt-2">
+			tatyana.arkhypchuk@gmail.com
+		</div>
+		<hr />
+		<div>
+			Skype:
+		</div>
+		<div class="pt-2">
+			Some Skype
+		</div>
+		<hr />
+		<div class="d-flex flex-row">
+			<a class="mr-3" href="https://www.linkedin.com/in/tanya-arkhypchuk-754ba2105/" target="_blank">
+				<mat-icon [svgIcon]="'linked'"></mat-icon>
+			</a>
+			<a class="mr-3" href="https://www.linkedin.com/in/tanya-arkhypchuk-754ba2105/" target="_blank">
+				<mat-icon [svgIcon]="'medium'"></mat-icon>
+			</a>
+		</div>
+	</div>
+</div>

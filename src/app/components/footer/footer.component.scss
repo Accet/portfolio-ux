@@ -1,0 +1,26 @@
+@import 'styles';
+
+
+footer {
+	margin-top: 3rem;
+	background-color: $secondary;
+	padding: 1rem 0;
+
+	.footer-links a { font-size: 0.75rem; }
+
+	.footer-links a {
+		margin-right: 2rem;
+		text-decoration: underline;
+		color: $gray-300;
+		font-family: $font-family;
+		font-weight: $font-weight-bolder;
+	}
+
+	.info {
+		color: $gray-300;
+		font-family: $font-family;
+		font-weight: $font-weight-bolder;
+		font-size: 0.85rem;
+		text-align: end;
+	}
+}
