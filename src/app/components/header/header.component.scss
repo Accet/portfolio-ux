@@ -40,13 +40,21 @@
 				display: flex !important;
 			}
 		}
+
 		.wrap {
+			@supports (backdrop-filter: none) {
+					backdrop-filter: blur(10px);
+					-webkit-backdrop-filter: blur(10px);
+			}
+
+			@supports not (backdrop-filter: none) {
+				background-color: $background;
+			}
 			position: absolute;
 			top: 0;
 			width: 100%;
 			height: 100%;
-			backdrop-filter: blur(10px);
-			-webkit-backdrop-filter: blur(10px);
+
 		}
 	}
 

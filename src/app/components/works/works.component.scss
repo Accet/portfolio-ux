@@ -47,8 +47,17 @@
 			height: auto;
 			align-self: stretch;
 			//width: 100%;
+			@supports (backdrop-filter: none) {
+				backdrop-filter: blur(0.5rem);
+				-webkit-backdrop-filter: blur(0.5rem);
+			}
+
+			@supports not (backdrop-filter: none) {
+				background-color: $background;
+			}
 			margin: 1rem;
 			img	{
+
 				display: block;
 				margin-left: auto;
 				margin-right: auto;
