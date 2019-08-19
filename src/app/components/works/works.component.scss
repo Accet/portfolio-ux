@@ -8,7 +8,7 @@
 	flex-direction: column;
 
 	@media (min-width: $layout-xl-size) {
-		height: 25rem;
+		min-height: 25rem;
 		.ground {
 			margin-top: 4rem !important;
 			margin-bottom: 4rem !important;
