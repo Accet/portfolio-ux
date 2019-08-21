@@ -1,3 +1,114 @@
-<div class="d-flex flex-column justify-content-between">
-	<p>binquit works!</p>
+<div class="d-flex h-100 flex-column justify-content-between">
+	<div #head class="head-bg">
+		<img src="/assets/images/binquit_head.jpg" alt="header image" />
+	</div>
+	<div class="container w-100">
+		<div #placeholder class="placeholder"></div>
+		<app-work-info></app-work-info>
+		<div class="mt-5">
+			<h2>{{ 'Overview' | uppercase }}</h2>
+			<div class="info">
+				Binqit is an online job market platform focused on helping students find part-time jobs fast, moreover what so
+				many young people love about it is that there is no need to create a resume. In addition, the app's vetting
+				algorithm will match students with best-fit jobs based on their skills, experience, and hourly availability.
+			</div>
+		</div>
+		<div class="mt-5">
+			<h2>{{ 'research' | uppercase }}</h2>
+			<div class="info">
+				Our research objective was to find out what is crucial for students when they search for jobs and what is
+				important for employers when they look for potential student employees. 4 business owners and 11 job seekers
+				were interviewed, 47 survey responses.
+			</div>
+		</div>
+		<div class="mt-5">
+			<h2>{{ 'persona' | uppercase }}</h2>
+			<div class="info">
+				We summarized information through our research and created two personas. We will then base our future UX designs
+				for the primary needs of these two users.s
+			</div>
+		</div>
+		<div class="mt-5 mb-5">
+			<app-carousel></app-carousel>
+		</div>
+		<div class="mt-5 grid-row">
+			<div class="grid-cell">
+				<h2>{{ 'IDENTIFYING PROBLEM' | uppercase }}</h2>
+				<div class="info">
+					There is no platform specifically for part-time job searching that makes the process quick, easy, convenient,
+					and transparent.
+				</div>
+			</div>
+			<div class="grid-cell">
+				<h2>{{ 'IDENTIFYING SOLUTION' | uppercase }}</h2>
+				<div class="info">
+					Create a platform that matches job seekers with jobs, has built-in messaging and scheduling, and provides
+					timely application status updates.
+				</div>
+			</div>
+		</div>
+		<h2 class="mt-5">{{ 'DESIGN ' | uppercase }}</h2>
+		<div class="mt-5 grid-row">
+			<div class="grid-cell align-self-center">
+				<div class="info">
+					<h3>Job Seeker’s Pain Point:</h3>
+					<p>Regular applications lack availability scheduling function.</p>
+
+					<h3>Employer’s Pain Point:</h3>
+					<p>Same as job seekers - regular applications lack availability scheduling function.</p>
+
+					<h3>Design Decision:</h3>
+					<p>Input availability scheduling function.</p>
+				</div>
+			</div>
+			<div class="grid-cell">
+				<img class="right" [src]="'/assets/images/b-content-1.jpg'" />
+			</div>
+		</div>
+		<div class="mt-5 grid-row">
+			<div class="grid-cell">
+				<img class="left" [src]="'/assets/images/b-content-2.jpg'" />
+			</div>
+			<div class="grid-cell align-self-center">
+				<div class="info">
+					<h3>Job Seeker’s Pain Point:</h3>
+					<p>Job search is time consuming;</p>
+
+					<h3>Design Decisions:</h3>
+					<ul>
+						<li>Every Job post shows clear and precise information defining whether a job seeker fits for the job;</li>
+
+						<li>Responsibilities as bullet points;</li>
+						<li>Requirements as tags;</li>
+						<li>Specific hours required;</li>
+						<li>1 click apply.</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="mt-5 grid-row">
+			<div class="grid-cell align-self-center">
+				<div class="info">
+					<h3>Job Seeker’s Pain Point:</h3>
+					<p>
+						No feedback from businesses they have applied to and been declined from because business owners are busy and
+						forgetful.
+					</p>
+					<h3>Design Decisions:</h3>
+					<p>Automated decline messaging.</p>
+				</div>
+			</div>
+			<div class="grid-cell">
+				<img class="right" [src]="'/assets/images/b-content-3.jpg'" />
+			</div>
+		</div>
+		<div class="mt-5 mb-5 d-flex flex-row justify-content-center">
+			<a
+				class="btn link"
+				href="https://www.figma.com/proto/Xnz7yso9L0iobpTphA7pTZTL/Final-File?node-id=1%3A31211&viewport=-44%2C412%2C0.10865195840597153&scaling=min-zoom"
+				target="_blank"
+				>You can go through our prototype by clicking on the link: Binqit</a
+			>
+		</div>
+	</div>
 </div>

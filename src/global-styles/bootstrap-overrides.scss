@@ -16,3 +16,13 @@
 .form-group {
 	margin-bottom: 1rem;
 }
+
+.carousel {
+	a:focus {outline:0;}
+	.carousel-indicators li {
+		background-color: $header-font-color;
+		position: relative;
+		top: 2.5rem;
+	}
+}
+.carousel:focus {outline:0;}

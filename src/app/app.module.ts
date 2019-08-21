@@ -13,11 +13,14 @@ import {NavigationLinksComponent} from './components/header/navigation-links/nav
 import {WorksComponent} from './components/works/works.component';
 import {ContactComponent} from './components/contact/contact.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule} from '@angular/material';
+import {MatButtonModule, MatFormFieldModule, MatGridListModule, MatIconModule, MatInputModule} from '@angular/material';
 import {FooterComponent} from './components/footer/footer.component';
 import {BinquitComponent} from './components/works/binquit/binquit.component';
 import {SCareComponent} from './components/works/s-care/s-care.component';
 import {TownsComponent} from './components/works/towns/towns.component';
+import {WorkInfoComponent} from './components/works/work-info/work-info.component';
+import {NgbCarouselModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {CarouselComponent} from './components/carousel/carousel.component';
 
 @NgModule({
 	declarations: [
@@ -32,7 +35,9 @@ import {TownsComponent} from './components/works/towns/towns.component';
 		FooterComponent,
 		BinquitComponent,
 		SCareComponent,
-		TownsComponent
+		TownsComponent,
+		WorkInfoComponent,
+		CarouselComponent
 	],
 	imports: [
 		BrowserModule,
@@ -43,7 +48,9 @@ import {TownsComponent} from './components/works/towns/towns.component';
 		MatFormFieldModule,
 		MatInputModule,
 		MatIconModule,
-		MatButtonModule
+		MatButtonModule,
+		NgbModule,
+		MatGridListModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

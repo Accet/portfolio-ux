@@ -1,17 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
+import {Observable, Subject} from 'rxjs';
+import {ScrollSpyDirective} from './directives/scroll-spy.directive';
 
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-	isStickied = false;
+export class AppComponent implements OnInit, AfterViewInit {
+	isStickied: Observable<boolean>;
+	@ViewChild(ScrollSpyDirective, {static: false}) spy: ScrollSpyDirective;
 
 	constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
-		['linked', 'medium', 'mail'].forEach(icon => {
+		['linked', 'medium', 'mail', 'media'].forEach(icon => {
 			this.matIconRegistry.addSvgIcon(
 				icon,
 				this.domSanitizer.bypassSecurityTrustResourceUrl(`assets/icons/${icon}.svg`)
@@ -21,12 +24,9 @@ export class AppComponent implements OnInit {
 
 	ngOnInit() {}
 
-	setSticky(isStickied: boolean): void {
-		this.isStickied = isStickied;
-		if (this.isStickied) {
-			document.body.classList.add('stickied');
-		} else {
-			document.body.classList.remove('stickied');
-		}
+	ngAfterViewInit(): void {
+		setTimeout(() => {
+			this.isStickied = this.spy.stickySet.asObservable();
+		});
 	}
 }

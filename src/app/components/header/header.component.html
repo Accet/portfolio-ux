@@ -1,4 +1,4 @@
-<div class="nav-container fixed-top" [class.sticky]="isStickied" [class.fill]="navBarOpen">
+<div class="nav-container fixed-top" [class.sticky]="isStickied$ | async" [class.fill]="navBarOpen">
 	<div class="wrap"></div>
 	<nav class="navbar navbar-expand-lg navbar-light" appBlurredModal>
 		<div class="container no-pad">

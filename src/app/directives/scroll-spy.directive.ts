@@ -13,16 +13,30 @@ import {concatMap, delay, scan, switchMap, takeUntil, takeWhile} from 'rxjs/oper
 import {CommunicationService, MessageType} from '../services/communication.service';
 import {BaseObserverComponent} from '../components/base-observer/base-observer.component';
 import {combineLatest, from, interval, of} from 'rxjs';
+import {NavBarService} from '../services/nav-bar.service';
+
+export enum NavBarMode {
+	STICKIED,
+	OPEN,
+	FREE
+}
 
 @Directive({
 	selector: '[appScrollSpy]'
 })
 export class ScrollSpyDirective extends BaseObserverComponent implements OnDestroy, AfterViewInit {
+	get isStickied(): boolean {
+		return this._isStickied;
+	}
+
+	set isStickied(value: boolean) {
+		this.stickySet.emit((this._isStickied = value));
+	}
+
 	@Input() stickyOffset = 45;
 	@Output() stickySet: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-	isStickied: boolean;
-
+	private _isStickied: boolean;
 	sections: HTMLElement[];
 	ignoreScroll = false;
 	currentSectionId = '';
@@ -42,12 +56,18 @@ export class ScrollSpyDirective extends BaseObserverComponent implements OnDestr
 		private el: ElementRef,
 		private router: Router,
 		private communicationService: CommunicationService,
-		private route: ActivatedRoute
+		private navBarService: NavBarService
 	) {
 		super();
 	}
 
 	ngAfterViewInit() {
+		this.navBarService.isStickied
+			.asObservable()
+			.pipe(takeUntil(this.destroy$))
+			.subscribe(val => {
+				this.isStickied = val;
+			});
 		this.sections = this.el.nativeElement.getElementsByClassName('route-section');
 		this.communicationService
 			.getMessage(MessageType.SCROLL_TO_SECTION)
@@ -106,17 +126,17 @@ export class ScrollSpyDirective extends BaseObserverComponent implements OnDestr
 	}
 
 	handleStickyNavEvent(): void {
-		const wrapper = this.el.nativeElement;
-		const docViewTop = window.pageYOffset;
-		if (docViewTop > wrapper.offsetTop + this.stickyOffset) {
-			if (!this.isStickied) {
-				this.isStickied = true;
-				this.stickySet.emit(this.isStickied);
-			}
-		} else {
-			if (this.isStickied) {
-				this.isStickied = false;
-				this.stickySet.emit(this.isStickied);
+		if (this.navBarService.currentMode === NavBarMode.FREE) {
+			const wrapper = this.el.nativeElement;
+			const docViewTop = window.pageYOffset;
+			if (docViewTop > wrapper.offsetTop + this.stickyOffset) {
+				if (!this.isStickied) {
+					this.isStickied = true;
+				}
+			} else {
+				if (this.isStickied) {
+					this.isStickied = false;
+				}
 			}
 		}
 	}

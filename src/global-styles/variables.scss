@@ -7,7 +7,8 @@ $categoryEntityColor: #3F3F3F;
 $danger: #eb3530;
 $white: #ffffff;
 
-$background: #f4f3f3;
+//$background: #f4f3f3;
+$background: #fff;
 $primary: #fbc732;
 //$primary-light: #fffaeb;
 $primary-light: #e5f5fc;
@@ -21,13 +22,14 @@ $form-input-label-color: #79797a;
 $form-focus-border-color: #2ea2f8;
 $form-focus-input-color: #2ea2f8;
 $header-font-color: #1f1f1f;
+//$subheader-font-color: #4b4a4a;
 
 $font-family: 'Open Sans', serif;
 $font-size-sm: .875rem;
 $font-weight-normal: 300;
 $font-weight-bold: 400;
 $font-weight-bolder: 600;
-$font-color-main: #495057;
+$font-color-main: #4b4a4a;
 
 $layout-xl-size: 1200px;
 $layout-lg-size: 992px;
@@ -38,4 +40,4 @@ $container-width: 1152px;
 $border-radius: 0.5rem;
 
 //$works_background: rgba(255, 250, 235, 0.8);
-$works_background: rgba(255,245,242, 0.8);
+$works_background: rgba(255,245,242, 0.9);

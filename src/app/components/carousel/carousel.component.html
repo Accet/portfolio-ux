@@ -1,0 +1,7 @@
+<ngb-carousel *ngIf="data" [interval]="0" [showNavigationArrows]="true" [showNavigationIndicators]="true">
+	<ng-template ngbSlide *ngFor="let item of data">
+		<div class="img-wrapper">
+			<img [src]="item.url" [alt]="item.alt" />
+		</div>
+	</ng-template>
+</ngb-carousel>

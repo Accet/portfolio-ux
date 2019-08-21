@@ -1,5 +1,6 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
 	selector: 'app-header',
@@ -7,7 +8,12 @@ import {Router} from '@angular/router';
 	styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-	@Input() isStickied = false;
+	isStickied$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+	@Input() set isStickied(val) {
+		if (val === false || val === true) {
+			this.isStickied$.next(val);
+		}
+	}
 	navBarOpen = false;
 
 	@HostListener('window:resize', ['$event'])

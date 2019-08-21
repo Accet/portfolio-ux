@@ -1,0 +1,35 @@
+<div class="title-container d-flex flex-column">
+	<h1>{{ items.fullTitle }}</h1>
+	<div class="d-flex flex-row justify-content-start align-items-center" *ngIf="items.mediumUrl">
+		<h2>Read the full story on Medium</h2>
+		<a class="ml-3" [href]="items.mediumUrl" target="_blank">
+			<mat-icon [svgIcon]="'media'"></mat-icon>
+		</a>
+	</div>
+</div>
+<div class="info-container d-flex align-items-stretch">
+	<div class="table-row d-flex flex-column ">
+		<div class="table-head">
+			ROLE
+		</div>
+		<div class="table-cell">
+			{{ items.role }}
+		</div>
+	</div>
+	<div class="table-row d-flex flex-column">
+		<div class="table-head">
+			DATE
+		</div>
+		<div class="table-cell">
+			{{ items.date | date: 'MMMM y' }}
+		</div>
+	</div>
+	<div class="table-row d-flex flex-column">
+		<div class="table-head">
+			TIMELINE
+		</div>
+		<div class="table-cell">
+			{{ items.timeline }}
+		</div>
+	</div>
+</div>
