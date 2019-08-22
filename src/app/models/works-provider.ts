@@ -31,7 +31,7 @@ export const WorksItems: WorkItem[] = [
 				alt: 'First design persona story'
 			},
 			{
-				url: '/assets/images/binquit-persona-2.png',
+				url: '/assets/images/binquit-persona-2.jpg',
 				alt: 'Second design persona story'
 			}
 		]
