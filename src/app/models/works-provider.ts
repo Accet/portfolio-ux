@@ -16,7 +16,7 @@ export interface WorkItem {
 export const WorksItems: WorkItem[] = [
 	{
 		url: '/binquit',
-		imgUrl: '/assets/images/binquit.jpg',
+		imgUrl: './assets/images/binquit.jpg',
 		date: new Date('June 2019'),
 		title: 'binquit',
 		fullTitle: 'Binqit - Part-Time Job Search Web-App',
@@ -27,18 +27,18 @@ export const WorksItems: WorkItem[] = [
 		mediumUrl: 'https://medium.com',
 		carousel: [
 			{
-				url: '/assets/images/binquit-persona-1.png',
+				url: './assets/images/binquit-persona-1.png',
 				alt: 'First design persona story'
 			},
 			{
-				url: '/assets/images/binquit-persona-2.jpg',
+				url: './assets/images/binquit-persona-2.jpg',
 				alt: 'Second design persona story'
 			}
 		]
 	},
 	{
 		url: '/s-care',
-		imgUrl: '/assets/images/binquit.jpg',
+		imgUrl: './assets/images/binquit.jpg',
 		date: new Date('May 2019'),
 		title: 'Senior Care Connect',
 		fullTitle: '',
@@ -49,18 +49,18 @@ export const WorksItems: WorkItem[] = [
 		mediumUrl: 'https://medium.com',
 		carousel: [
 			{
-				url: '/assets/images/s-care-persona-1.jpg',
+				url: './assets/images/s-care-persona-1.jpg',
 				alt: 'First design persona story'
 			},
 			{
-				url: '/assets/images/s-care-persona-2.png',
+				url: './assets/images/s-care-persona-2.png',
 				alt: 'Second design persona story'
 			}
 		]
 	},
 	{
 		url: '/towns',
-		imgUrl: '/assets/images/binquit.jpg',
+		imgUrl: './assets/images/binquit.jpg',
 		date: new Date('July 2019'),
 		fullTitle: '',
 		title: '1000 towns',
