@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "dist/protfolio-ux",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -26,14 +26,14 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "src/global-styles/styles.scss"
-            ],
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/global-styles"
-              ]
-            },
+						"styles": [
+							"src/global-styles/styles.scss"
+						],
+						"stylePreprocessorOptions": {
+							"includePaths": [
+								"src/global-styles"
+							]
+						},
             "scripts": [],
             "es5BrowserSupport": true
           },
@@ -88,14 +88,14 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
-            "styles": [
-              "src/global-styles/styles.scss"
-            ],
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/global-styles"
-              ]
-            },
+						"styles": [
+							"src/global-styles/styles.scss"
+						],
+						"stylePreprocessorOptions": {
+							"includePaths": [
+								"src/global-styles"
+							]
+						},
             "scripts": [],
             "assets": [
               "src/favicon.ico",
@@ -114,10 +114,6 @@
               "**/node_modules/**"
             ]
           }
-        },
-        "deploy": {
-          "builder": "angular-cli-ghpages:deploy",
-          "options": {}
         }
       }
     },

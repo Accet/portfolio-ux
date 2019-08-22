@@ -5,7 +5,6 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "prod": "ng build --prod --base-href \"https://accet.github.io/portfolio-ux/\"",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -23,7 +22,6 @@
     "@angular/platform-browser-dynamic": "~8.1.3",
     "@angular/router": "~8.1.3",
     "@ng-bootstrap/ng-bootstrap": "^5.1.0",
-    "angular-cli-ghpages": "^0.6.0-rc.2",
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
     "rxjs": "~6.5.2",
