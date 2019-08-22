@@ -17,7 +17,7 @@ export const WorksItems: WorkItem[] = [
 	{
 		url: '/binquit',
 		imgUrl: './assets/images/binquit.jpg',
-		date: new Date('June 2019'),
+		date: new Date(2019, 5),
 		title: 'binquit',
 		fullTitle: 'Binqit - Part-Time Job Search Web-App',
 		description:
@@ -39,7 +39,7 @@ export const WorksItems: WorkItem[] = [
 	{
 		url: '/s-care',
 		imgUrl: './assets/images/binquit.jpg',
-		date: new Date('May 2019'),
+		date: new Date(2019, 4),
 		title: 'Senior Care Connect',
 		fullTitle: '',
 		description:
@@ -61,7 +61,7 @@ export const WorksItems: WorkItem[] = [
 	{
 		url: '/towns',
 		imgUrl: './assets/images/binquit.jpg',
-		date: new Date('July 2019'),
+		date: new Date(2019, 7),
 		fullTitle: '',
 		title: '1000 towns',
 		description:
