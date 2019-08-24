@@ -14,7 +14,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 	@ViewChild(ScrollSpyDirective, {static: false}) spy: ScrollSpyDirective;
 
 	constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
-		['linked', 'medium', 'mail', 'media'].forEach(icon => {
+		['linked', 'medium', 'mail', 'media', 'download'].forEach(icon => {
 			this.matIconRegistry.addSvgIcon(
 				icon,
 				this.domSanitizer.bypassSecurityTrustResourceUrl(`assets/icons/${icon}.svg`)

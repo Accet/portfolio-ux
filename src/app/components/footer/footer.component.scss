@@ -3,24 +3,35 @@
 
 footer {
 	margin-top: 3rem;
-	background-color: $secondary;
+	background: $secondary;
+	background: linear-gradient(90deg, rgba(235,53,48,1) 35%, rgba(252,235,31,1) 100%);
+
 	padding: 1rem 0;
 
 	.footer-links a { font-size: 0.75rem; }
 
-	.footer-links a {
+	.footer-links {
+		.link {
 		margin-right: 2rem;
 		text-decoration: underline;
 		color: $gray-300;
 		font-family: $font-family;
 		font-weight: $font-weight-bolder;
+		}
 	}
 
 	.info {
-		color: $gray-300;
+		color: $header-font-color;
 		font-family: $font-family;
 		font-weight: $font-weight-bolder;
 		font-size: 0.85rem;
+		margin-top: 0;
 		text-align: end;
+	}
+
+	.mat-icon {
+		svg {
+			vertical-align: top !important;
+		}
 	}
 }
