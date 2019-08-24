@@ -78,6 +78,15 @@ h2 {
 			flex: 0 0 45%;
 			max-width: 45%;
 		}
+
+		.grid-cell  {
+			&.right {
+				display: flex;
+				flex-basis: auto;
+				align-items: center;
+				justify-content: center;
+			}
+		}
 	}
 
 	@media (max-width: $layout-lg-size) {
@@ -94,21 +103,22 @@ h2 {
 		}
 	}
 	.grid-cell {
+
 		h3 {
 			font-size: 1rem;
 			font-weight: $font-weight-bolder;
 		}
 
 		img	{
-			width: 100%;
+			max-width: 100%;
 			height: auto;
 			object-fit: scale-down;
-			&.right {
-				object-position: 100% 0;
-			}
-			&.left {
-				object-position: 0 0;
-			}
+			//&.right {
+			//	object-position: 100% 0;
+			//}
+			//&.left {
+			//	object-position: 0 0;
+			//}
 		}
 	}
 }
