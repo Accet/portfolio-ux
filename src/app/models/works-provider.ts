@@ -38,10 +38,10 @@ export const WorksItems: WorkItem[] = [
 	},
 	{
 		url: '/s-care',
-		imgUrl: './assets/images/binquit.jpg',
+		imgUrl: './assets/images/s-care.jpg',
 		date: new Date(2019, 4),
 		title: 'Senior Care Connect',
-		fullTitle: '',
+		fullTitle: 'Senior Care Connect - Caregiver Service',
 		description:
 			'Designed an application for Senior Care Connect and delivered the prototype made in accordance with research, planning, designing, and testing regulations.',
 		role: 'UX Designer',
@@ -50,24 +50,34 @@ export const WorksItems: WorkItem[] = [
 		carousel: [
 			{
 				url: './assets/images/s-care-persona-2.jpg',
-				alt: 'First design persona story'
+				alt: 'First design persona story for Senior Care connect mobile application. UX research'
 			},
 			{
 				url: './assets/images/s-care-persona-1.jpg',
-				alt: 'Second design persona story'
+				alt: 'Second design persona story for Senior Care connect mobile application. UX research'
 			}
 		]
 	},
 	{
 		url: '/towns',
-		imgUrl: './assets/images/binquit.jpg',
+		imgUrl: './assets/images/towns.jpg',
 		date: new Date(2019, 7),
-		fullTitle: '',
+		fullTitle: '1000 Towns of Canada',
 		title: '1000 towns',
 		description:
 			'Designed an application for Senior Care Connect and delivered the prototype made in accordance with research, planning, designing, and testing regulations.',
 		role: 'UX Designer',
 		timeline: '3 Weeks',
-		mediumUrl: ''
+		mediumUrl: 'https://medium.com',
+		carousel: [
+			{
+				url: './assets/images/towns-persona-1.jpg',
+				alt: 'First design persona story for 1000 towns of Canada. UX research'
+			},
+			{
+				url: './assets/images/towns-persona-2.jpg',
+				alt: 'Second design persona story for 1000 towns of Canada. UX research'
+			}
+		]
 	}
 ];

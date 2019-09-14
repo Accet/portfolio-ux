@@ -1,1 +1,118 @@
-<p>towns works!</p>
+<div class="d-flex h-100 flex-column justify-content-between">
+	<div #head class="head-bg">
+		<img src="./assets/images/towns-head.jpg" alt="header image" />
+	</div>
+	<div class="container w-100">
+		<div #placeholder class="placeholder"></div>
+		<app-work-info></app-work-info>
+		<div class="mt-5">
+			<h2>{{ 'Overview' | uppercase }}</h2>
+			<div class="info">
+				1000 Towns of Canada website is to help a user to find exciting and unique small towns all over Canada that they
+				have never heard of before. Small towns in their turn will benefit from this project as well. It can stimulate
+				their local economy and bring more money into municipal budgets thank to numerous travelers who might become
+				return customers of local businesses.
+			</div>
+		</div>
+		<div class="mt-5">
+			<h2>{{ 'research' | uppercase }}</h2>
+			<div class="info">
+				Our research began with brainstorming who needs to be interviewed and who needs to take part in our surveys.
+				Every single individual who can contribute to creating our problem-solving design is precious to us. We chose 3
+				groups of the target audience for our surveys and interviews: travelers, small-town citizens, and officials.
+			</div>
+		</div>
+		<div class="mt-5">
+			<h2>{{ 'persona' | uppercase }}</h2>
+			<div class="info">
+				We summarized information through our research and created two personas. We will then base our future UX designs
+				for the primary needs of these two users.
+			</div>
+		</div>
+		<div class="mt-5 mb-5">
+			<app-carousel></app-carousel>
+		</div>
+		<div class="mt-5 d-flex flex-column">
+			<!--			<div class="grid-cell">-->
+			<h2>{{ 'IDENTIFYING PROBLEM' | uppercase }}</h2>
+			<div class="info">
+				Tourists are not even aware of the fact that there are plenty of exciting little towns around them and that is
+				why they find it difficult to choose one to visit. Finding accurate information online is another challenge.
+			</div>
+		</div>
+		<div class="mt-5 d-flex flex-column">
+			<h2>{{ 'IDENTIFYING SOLUTION' | uppercase }}</h2>
+			<div class="info">
+				Design a website to increase awareness of the small towns of Canada, as well as to help travellers plan their
+				trips to towns.
+			</div>
+		</div>
+		<h2 class="mt-5">{{ 'DESIGN ' | uppercase }}</h2>
+		<div class="mt-5 grid-row">
+			<div class="grid-cell align-self-center">
+				<div class="info">
+					<h3>Traveller’s Pain Point:</h3>
+					<p>Tourists are not even aware about exciting little towns around them.</p>
+
+					<h3>Community’s Pain Point:</h3>
+					<p>Some small towns are not presented on travelling resources to visit.</p>
+
+					<h3>Design Decision:</h3>
+					<p>
+						From Landing Page a traveller can easily find interested town. Ambassadors can add their town with one
+						click.
+					</p>
+				</div>
+			</div>
+			<div class="grid-cell right">
+				<img
+					[src]="'./assets/images/towns-content-1.jpg'"
+					alt="1000 Towns of Canada. Presentation of the main page of the website"
+				/>
+			</div>
+		</div>
+		<div class="mt-5 grid-row">
+			<div class="grid-cell">
+				<img class="left" [src]="'./assets/images/towns-content-2.jpg'" />
+			</div>
+			<div class="grid-cell align-self-center">
+				<div class="info">
+					<h3>Traveller’s Pain Point:</h3>
+					<p>Travellers can set distance from their home town and they can see all small town around.</p>
+
+					<h3>Design Decisions:</h3>
+					<ul>
+						<li>Distance filter helps tourists to find a town around;</li>
+						<li>Activity filters filter search result according to tourist interests;</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="mt-5 grid-row">
+			<div class="grid-cell align-self-center">
+				<div class="info">
+					<h3>Traveller’s Pain Point:</h3>
+					<p>
+						Travellers can see all important information about town on one page, as well as events and things to do.
+					</p>
+					<h3>Community’s Pain Point:</h3>
+					<p></p>
+					<h3>Design Decisions:</h3>
+					<p>Ambassador can see all important information that can attract tourists in one page.</p>
+				</div>
+			</div>
+			<div class="grid-cell right">
+				<img [src]="'./assets/images/towns-content-3.jpg'" />
+			</div>
+		</div>
+
+		<div class="mt-5 mb-5 d-flex flex-row justify-content-center">
+			<a
+				class="btn link"
+				href="https://www.figma.com/proto/c6FU9S2FWRtba2xmvSZMTY2x/Hi-Fi-V2-Prototype?node-id=1%3A956&viewport=1766%2C1031%2C0.11318626254796982&scaling=scale-down"
+				target="_blank"
+				>You can go through our prototype by clicking on the link: Senior Care Connect</a
+			>
+		</div>
+	</div>
+</div>
