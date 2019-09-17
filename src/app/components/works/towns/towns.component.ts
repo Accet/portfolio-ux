@@ -32,9 +32,17 @@ export class TownsComponent extends BaseWork implements OnInit {
 					this.renderer.setStyle(
 						this._placeholderSection.nativeElement,
 						'min-height',
-						`${this._headerSection.nativeElement.offsetHeight - 104}px`
+						`${this._headerSection.nativeElement.offsetHeight - 130}px`
 					);
 				}
 			});
+	}
+
+	adjustSize() {
+		this.renderer.setStyle(
+			this._placeholderSection.nativeElement,
+			'min-height',
+			`${this._headerSection.nativeElement.offsetHeight - 130}px`
+		);
 	}
 }
