@@ -19,8 +19,21 @@ import {BinquitComponent} from './components/works/binquit/binquit.component';
 import {SCareComponent} from './components/works/s-care/s-care.component';
 import {TownsComponent} from './components/works/towns/towns.component';
 import {WorkInfoComponent} from './components/works/work-info/work-info.component';
-import {NgbCarouselModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {CarouselComponent} from './components/carousel/carousel.component';
+import {environment} from '../environments/environment';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireStorageModule} from '@angular/fire/storage';
+import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
+import {
+	RECAPTCHA_V3_SITE_KEY,
+	RecaptchaComponent,
+	RecaptchaFormsModule,
+	RecaptchaModule,
+	RecaptchaSettings,
+	RecaptchaV3Module
+} from 'ng-recaptcha';
+import {RecaptchaCommonModule} from 'ng-recaptcha/recaptcha/recaptcha-common.module';
 
 @NgModule({
 	declarations: [
@@ -41,10 +54,15 @@ import {CarouselComponent} from './components/carousel/carousel.component';
 	],
 	imports: [
 		BrowserModule,
+		AngularFireModule.initializeApp(environment.firebase),
+		AngularFireStorageModule,
+		AngularFirestoreModule,
 		BrowserAnimationsModule,
 		HttpClientModule,
 		AppRoutingModule,
 		ReactiveFormsModule,
+		RecaptchaModule,
+		RecaptchaFormsModule,
 		MatFormFieldModule,
 		MatInputModule,
 		MatIconModule,

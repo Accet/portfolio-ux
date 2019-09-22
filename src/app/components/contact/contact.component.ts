@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BaseObserverComponent} from '../base-observer/base-observer.component';
 import {validateEmail} from '../../models/validators';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {BehaviorSubject} from 'rxjs';
+import {takeUntil, tap} from 'rxjs/operators';
+import {environment} from '../../../environments/environment';
 
 @Component({
 	selector: 'app-contact',
@@ -9,10 +13,15 @@ import {validateEmail} from '../../models/validators';
 	styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent extends BaseObserverComponent implements OnInit {
-	constructor(private fb: FormBuilder) {
+	emailFirst = 'tatyana.arkhypchuk';
+	emailSecond = '@gmail.com';
+	contactForm: FormGroup;
+	disabledSubmit: BehaviorSubject<boolean> = new BehaviorSubject(true);
+
+	RECAPTCHA_KEY = environment.recaptcha;
+	constructor(private db: AngularFirestore, private fb: FormBuilder) {
 		super();
 	}
-	contactForm: FormGroup;
 
 	static markFormFieldsAsDirty(form: FormGroup): void {
 		Object.keys(form.controls).forEach(field => {
@@ -23,6 +32,13 @@ export class ContactComponent extends BaseObserverComponent implements OnInit {
 
 	ngOnInit() {
 		this.initForm();
+
+		this.contactForm.statusChanges
+			.pipe(
+				takeUntil(this.destroy$),
+				tap(state => this.disabledSubmit.next(state === 'INVALID'))
+			)
+			.subscribe();
 	}
 
 	initForm() {
@@ -30,17 +46,34 @@ export class ContactComponent extends BaseObserverComponent implements OnInit {
 			name: ['', [Validators.required]],
 			subject: ['', []],
 			email: ['', [Validators.required, validateEmail]],
-			message: ['', Validators.required]
+			message: ['', Validators.required],
+			recaptchaReactive: [null, Validators.required]
 		});
 	}
 
 	onSend() {
 		ContactComponent.markFormFieldsAsDirty(this.contactForm);
-		console.log('Function: onSend, , this.contactForm: ', this.contactForm);
 		if (!this.contactForm.valid) {
 			return;
 		}
-		const values = this.contactForm.value;
-		console.log('Function: onSend, values: ', values);
+		const {name, email, message, subject} = this.contactForm.value;
+		const date = Date();
+		const html = `
+<div>From: ${name}</div>
+<div>Email: <a href="mailto:${email}">${email}</a></div>
+<div>Subject: ${subject}</div>
+<div>Date: ${date}</div>
+<div>Message: ${message}</div>
+`;
+		const formRequest = {name, email, message, date, subject, html};
+		this.db
+			.collection('/messages')
+			.add(formRequest)
+			.then(() => {
+				this.disabledSubmit.next(true);
+			})
+			.catch(error => {
+				console.log('Function: , error: ', error);
+			});
 	}
 }

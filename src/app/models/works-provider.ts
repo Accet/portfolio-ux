@@ -65,7 +65,7 @@ export const WorksItems: WorkItem[] = [
 		fullTitle: '1000 Towns of Canada',
 		title: '1000 towns',
 		description:
-			'Designed an application for Senior Care Connect and delivered the prototype made in accordance with research, planning, designing, and testing regulations.',
+			'Redesigned one of a kind online utility and website which allows users with diverse backgrounds and interests to find unique small towns and exciting destinations all over Canada.',
 		role: 'UX Designer',
 		timeline: '3 Weeks',
 		mediumUrl: 'https://medium.com',
