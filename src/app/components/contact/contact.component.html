@@ -2,7 +2,8 @@
 	<form
 		class="d-flex align-items-center justify-content-start flex-column mt-3 col-lg-6 col-md-12"
 		[formGroup]="contactForm"
-		(ngSubmit)="onSend()"
+		(ngSubmit)="onSend(contactForm, formDirective)"
+		#formDirective="ngForm"
 	>
 		<!--SUBJECT-->
 		<div class="d-flex align-self-stretch">
@@ -88,7 +89,7 @@
 				<re-captcha [siteKey]="RECAPTCHA_KEY" formControlName="recaptchaReactive"></re-captcha>
 			</div>
 			<div class=" mr-3">
-				<button (submit)="onSend()" mat-button color="grey" disableRipple [disabled]="disabledSubmit | async">
+				<button type="submit" mat-button color="grey" disableRipple [disabled]="disabledSubmit | async">
 					<div class="d-flex justify-content-between w-100 align-items-center">
 						<span class="mr-3">{{ 'Send' }}</span>
 						<mat-icon svgIcon="mail"></mat-icon>

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {BaseObserverComponent} from '../base-observer/base-observer.component';
 import {validateEmail} from '../../models/validators';
 import {AngularFirestore} from '@angular/fire/firestore';
@@ -51,7 +51,7 @@ export class ContactComponent extends BaseObserverComponent implements OnInit {
 		});
 	}
 
-	onSend() {
+	onSend(formData: any, formDirective: FormGroupDirective) {
 		ContactComponent.markFormFieldsAsDirty(this.contactForm);
 		if (!this.contactForm.valid) {
 			return;
@@ -71,7 +71,10 @@ export class ContactComponent extends BaseObserverComponent implements OnInit {
 			.add(formRequest)
 			.then(() => {
 				this.disabledSubmit.next(true);
+				this.contactForm.reset();
 				this.notificationService.showSuccess({message: 'Your message sent!', duration: 3000});
+				formDirective.resetForm();
+				this.contactForm.reset({}, {emitEvent: false});
 			})
 			.catch(error => {
 				this.notificationService.showError({
