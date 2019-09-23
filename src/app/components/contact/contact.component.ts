@@ -6,6 +6,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {BehaviorSubject} from 'rxjs';
 import {takeUntil, tap} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
+import {NotificationService} from '../../services/notification.service';
 
 @Component({
 	selector: 'app-contact',
@@ -19,7 +20,7 @@ export class ContactComponent extends BaseObserverComponent implements OnInit {
 	disabledSubmit: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
 	RECAPTCHA_KEY = environment.recaptcha;
-	constructor(private db: AngularFirestore, private fb: FormBuilder) {
+	constructor(private db: AngularFirestore, private fb: FormBuilder, private notificationService: NotificationService) {
 		super();
 	}
 
@@ -32,7 +33,6 @@ export class ContactComponent extends BaseObserverComponent implements OnInit {
 
 	ngOnInit() {
 		this.initForm();
-
 		this.contactForm.statusChanges
 			.pipe(
 				takeUntil(this.destroy$),
@@ -71,8 +71,13 @@ export class ContactComponent extends BaseObserverComponent implements OnInit {
 			.add(formRequest)
 			.then(() => {
 				this.disabledSubmit.next(true);
+				this.notificationService.showSuccess({message: 'Your message sent!', duration: 3000});
 			})
 			.catch(error => {
+				this.notificationService.showError({
+					message: 'Something went wrong. Try again later, please.',
+					enableClose: true
+				});
 				console.log('Function: , error: ', error);
 			});
 	}

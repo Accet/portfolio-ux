@@ -1,0 +1,8 @@
+<div
+	class="d-flex align-items-center mt-6 justify-content-between"
+	[class.dismissible]="data?.enableClose"
+	(click)="close()"
+>
+	<span class="notification-message">{{ data?.message }}</span>
+	<div class="pl-3 close-button" *ngIf="data?.enableClose">&times;</div>
+</div>

@@ -13,7 +13,14 @@ import {NavigationLinksComponent} from './components/header/navigation-links/nav
 import {WorksComponent} from './components/works/works.component';
 import {ContactComponent} from './components/contact/contact.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MatButtonModule, MatFormFieldModule, MatGridListModule, MatIconModule, MatInputModule} from '@angular/material';
+import {
+	MatButtonModule,
+	MatFormFieldModule,
+	MatGridListModule,
+	MatIconModule,
+	MatInputModule,
+	MatSnackBarModule
+} from '@angular/material';
 import {FooterComponent} from './components/footer/footer.component';
 import {BinquitComponent} from './components/works/binquit/binquit.component';
 import {SCareComponent} from './components/works/s-care/s-care.component';
@@ -24,16 +31,9 @@ import {CarouselComponent} from './components/carousel/carousel.component';
 import {environment} from '../environments/environment';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireStorageModule} from '@angular/fire/storage';
-import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
-import {
-	RECAPTCHA_V3_SITE_KEY,
-	RecaptchaComponent,
-	RecaptchaFormsModule,
-	RecaptchaModule,
-	RecaptchaSettings,
-	RecaptchaV3Module
-} from 'ng-recaptcha';
-import {RecaptchaCommonModule} from 'ng-recaptcha/recaptcha/recaptcha-common.module';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {RecaptchaFormsModule, RecaptchaModule} from 'ng-recaptcha';
+import {CustomNotificationComponent} from './components/custom-notification/custom-notification.component';
 
 @NgModule({
 	declarations: [
@@ -50,7 +50,8 @@ import {RecaptchaCommonModule} from 'ng-recaptcha/recaptcha/recaptcha-common.mod
 		SCareComponent,
 		TownsComponent,
 		WorkInfoComponent,
-		CarouselComponent
+		CarouselComponent,
+		CustomNotificationComponent
 	],
 	imports: [
 		BrowserModule,
@@ -68,9 +69,11 @@ import {RecaptchaCommonModule} from 'ng-recaptcha/recaptcha/recaptcha-common.mod
 		MatIconModule,
 		MatButtonModule,
 		NgbModule,
-		MatGridListModule
+		MatGridListModule,
+		MatSnackBarModule
 	],
 	providers: [],
+	entryComponents: [CustomNotificationComponent],
 	bootstrap: [AppComponent]
 })
 export class AppModule {}

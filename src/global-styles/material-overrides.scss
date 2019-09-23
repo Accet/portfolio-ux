@@ -120,8 +120,34 @@ mat-form-field {
 	}
 }
 
-//.mat-icon {
-//	vertical-align: middle;
-//}
+.mat-snack-bar-container {
+	position: relative;
+	box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+	border-radius: 0.25rem !important;
+	min-height: 2rem !important;
+	padding: 0.5rem 1.5rem !important;
+	transition: all 500ms;
+	height: 100%;
+	top: 48px;
+
+	&.success {
+		background-color: $success !important;
+		color: $white;
+	}
+
+	&.warning {
+		background-color: $warning !important;
+		color: $white;
+	}
+
+	&.error {
+		background-color: $danger !important;
+		color: $white;
+	}
+
+	&.plain {
+		box-shadow: none;
+	}
+}
 
 
