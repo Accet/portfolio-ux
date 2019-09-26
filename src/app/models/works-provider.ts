@@ -24,7 +24,7 @@ export const WorksItems: WorkItem[] = [
 			'Designed a web app which allows personalizing the search for quality connections between job seekers and businesses.',
 		role: 'UX Designer',
 		timeline: '3 Weeks',
-		mediumUrl: 'https://medium.com',
+		mediumUrl: 'https://medium.com/@tanyaarkhypchuk/part-time-job-search-ux-case-study-ca9c188c2fd4',
 		carousel: [
 			{
 				url: './assets/images/binquit-persona-1.jpg',
@@ -46,7 +46,7 @@ export const WorksItems: WorkItem[] = [
 			'Designed an application for Senior Care Connect and delivered the prototype made in accordance with research, planning, designing, and testing regulations.',
 		role: 'UX Designer',
 		timeline: '3 Weeks',
-		mediumUrl: 'https://medium.com',
+		mediumUrl: 'https://medium.com/@tanyaarkhypchuk/caregiver-services-ux-case-study-ecda4e8f3c9c',
 		carousel: [
 			{
 				url: './assets/images/s-care-persona-2.jpg',
@@ -68,7 +68,7 @@ export const WorksItems: WorkItem[] = [
 			'Redesigned one of a kind online utility and website which allows users with diverse backgrounds and interests to find unique small towns and exciting destinations all over Canada.',
 		role: 'UX Designer',
 		timeline: '3 Weeks',
-		mediumUrl: 'https://medium.com',
+		mediumUrl: 'https://medium.com/@tanyaarkhypchuk/explore-small-towns-ux-case-study-3bfe07adb1ce',
 		carousel: [
 			{
 				url: './assets/images/towns-persona-1.jpg',

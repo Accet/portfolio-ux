@@ -13,6 +13,26 @@
 	}
 }
 
+.actions-container {
+	@media (min-width: $layout-md-size) {
+		flex-direction: row;
+		.button-container {
+		margin-right: 1rem;
+		}
+.recaptcha-container {
+	margin-left: 1rem;
+}
+		}
+	@media (max-width: $layout-md-size) {
+		flex-direction: column;
+		.button-container {
+			width: 100%;
+			margin-top: 1rem;
+			margin-left: 1rem;
+		}
+	}
+}
+
 .contact-info {
 	margin: 1rem 0 1rem 0;
 	padding: 1rem 2rem 1rem 2rem;
@@ -88,3 +108,4 @@ a {
 		background: linear-gradient(to right, red, orange);
 	}
 }
+
