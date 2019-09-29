@@ -15,7 +15,7 @@ export class WorksComponent implements OnInit {
 		this.items = WorksItems;
 	}
 
-	goToDetails(item: WorkItem) {
-		this.router.navigate([item.url]);
-	}
+	// goToDetails(item: WorkItem) {
+	// 	this.router.navigate([item.url]);
+	// }
 }

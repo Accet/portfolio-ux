@@ -1,6 +1,6 @@
 @import "styles";
 .work-container {
-	cursor: pointer;
+	//cursor: pointer;
 	margin-top: 3.5rem;
 	display: flex;
 	align-items: center;
@@ -101,5 +101,11 @@
 		font-family: $font-family;
 		color: $form-input-label-color;
 		font-size: 1.15rem;
+	}
+
+	.rounded-btn {
+		border-radius: $border-radius;
+		font-family: $font-family;
+		color: $header-font-color;
 	}
 }

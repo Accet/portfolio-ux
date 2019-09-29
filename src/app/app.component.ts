@@ -15,7 +15,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 	@ViewChild(ScrollSpyDirective, {static: false}) spy: ScrollSpyDirective;
 
 	constructor(db: AngularFirestore, private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
-		['linked', 'medium', 'mail', 'media', 'download'].forEach(icon => {
+		['linked', 'medium', 'mail', 'media', 'download', 'arrow_forward'].forEach(icon => {
 			this.matIconRegistry.addSvgIcon(
 				icon,
 				this.domSanitizer.bypassSecurityTrustResourceUrl(`assets/icons/${icon}.svg`)

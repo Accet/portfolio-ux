@@ -1,5 +1,5 @@
 <div class="w-100 d-flex justify-content-between justify-content-start flex-column container">
-	<div class="w-100 pb-6 work-container" *ngFor="let item of items" (click)="goToDetails(item)">
+	<div class="w-100 pb-6 work-container" *ngFor="let item of items">
 		<div class="ground d-flex">
 			<div class="image-container mat-elevation-z10">
 				<img class="h-100" [src]="item.imgUrl" [alt]="'Image of the ' + item.title + ' project'" />
@@ -14,6 +14,12 @@
 				<div class="description-container">
 					{{ item.description }}
 				</div>
+				<button class="btn-clear rounded-btn mt-3" mat-button disableRipple [routerLink]="item.url">
+					<div class="d-flex justify-content-between w-100 align-items-center">
+						<span class="mr-3">{{ 'Read more' }}</span>
+						<mat-icon svgIcon="arrow_forward"></mat-icon>
+					</div>
+				</button>
 			</div>
 		</div>
 	</div>
