@@ -14,12 +14,14 @@
 				<div class="description-container">
 					{{ item.description }}
 				</div>
-				<button class="btn-clear rounded-btn mt-3" mat-button disableRipple [routerLink]="item.url">
-					<div class="d-flex justify-content-between w-100 align-items-center">
-						<span class="mr-3">{{ 'Read more' }}</span>
-						<mat-icon svgIcon="arrow_forward"></mat-icon>
-					</div>
-				</button>
+				<div class="btn-container">
+					<button class="btn-clear rounded-btn mt-3" mat-button disableRipple [routerLink]="item.url">
+						<div class="d-flex justify-content-between w-100 align-items-center">
+							<span class="mr-3">{{ 'Read more' }}</span>
+							<mat-icon svgIcon="arrow_forward"></mat-icon>
+						</div>
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
