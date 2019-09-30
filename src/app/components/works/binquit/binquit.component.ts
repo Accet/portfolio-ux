@@ -37,4 +37,12 @@ export class BinquitComponent extends BaseWork implements OnInit {
 				}
 			});
 	}
+
+	adjustSize() {
+		this.renderer.setStyle(
+			this._placeholderSection.nativeElement,
+			'min-height',
+			`${this._headerSection.nativeElement.offsetHeight - 104}px`
+		);
+	}
 }

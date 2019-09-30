@@ -10,6 +10,7 @@ import {GoogleAnalyticsService} from '../../../services/google-analytics.service
 })
 export class WorkInfoComponent implements OnInit {
 	constructor(private router: Router, private gAnalytics: GoogleAnalyticsService) {}
+
 	items: WorkItem;
 
 	ngOnInit() {

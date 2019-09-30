@@ -1,6 +1,6 @@
 <div class="d-flex h-100 flex-column justify-content-between">
 	<div #head class="head-bg">
-		<img [src]="'./assets/images/binquit_head.jpg'" alt="header image" />
+		<img (load)="adjustSize()" [src]="'./assets/images/binquit_head.jpg'" alt="header image" />
 	</div>
 	<div class="container w-100">
 		<div #placeholder class="placeholder"></div>
