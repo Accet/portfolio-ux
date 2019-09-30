@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {GoogleAnalyticsService} from '../../services/google-analytics.service';
 
 @Component({
 	selector: 'app-footer',
@@ -6,7 +7,11 @@ import {Component, OnInit} from '@angular/core';
 	styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-	constructor() {}
+	constructor(private gAnalytics: GoogleAnalyticsService) {}
 
 	ngOnInit() {}
+
+	sendEvent(event: string) {
+		this.gAnalytics.sendEvent(event);
+	}
 }

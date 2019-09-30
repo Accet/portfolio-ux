@@ -7,6 +7,7 @@ import {BehaviorSubject} from 'rxjs';
 import {takeUntil, tap} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 import {NotificationService} from '../../services/notification.service';
+import {GoogleAnalyticsService} from '../../services/google-analytics.service';
 
 @Component({
 	selector: 'app-contact',
@@ -20,7 +21,12 @@ export class ContactComponent extends BaseObserverComponent implements OnInit {
 	disabledSubmit: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
 	RECAPTCHA_KEY = environment.recaptcha;
-	constructor(private db: AngularFirestore, private fb: FormBuilder, private notificationService: NotificationService) {
+	constructor(
+		private db: AngularFirestore,
+		private fb: FormBuilder,
+		private notificationService: NotificationService,
+		private gAnalytics: GoogleAnalyticsService
+	) {
 		super();
 	}
 
@@ -75,8 +81,10 @@ export class ContactComponent extends BaseObserverComponent implements OnInit {
 				this.notificationService.showSuccess({message: 'Your message sent!', duration: 3000});
 				formDirective.resetForm();
 				this.contactForm.reset({}, {emitEvent: false});
+				this.gAnalytics.sendEvent('contact_me', 'success');
 			})
 			.catch(error => {
+				this.gAnalytics.sendEvent('contact_me', 'failed', error.message);
 				this.notificationService.showError({
 					message: 'Something went wrong. Try again later, please.',
 					enableClose: true

@@ -8,7 +8,7 @@ import {
 	OnDestroy,
 	Output
 } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {concatMap, delay, scan, switchMap, takeUntil, takeWhile} from 'rxjs/operators';
 import {CommunicationService, MessageType} from '../services/communication.service';
 import {BaseObserverComponent} from '../components/base-observer/base-observer.component';
@@ -81,17 +81,6 @@ export class ScrollSpyDirective extends BaseObserverComponent implements OnDestr
 						return combineLatest([of(null), of(section)]);
 					}
 				}),
-				// .subscribe((sectionId: any) => {
-				// 	if (sectionId) {
-				// 		for (const section of this.sections) {
-				// 			if (section.id === sectionId) {
-				// 				const elemTop = section.offsetTop - 90;
-				// 				window.scrollTo(0, elemTop);
-				// 				break;
-				// 			}
-				// 		}
-				// 	}
-				// });
 				concatMap(([_, sectionId]) => {
 					if (sectionId) {
 						let elemTop;
@@ -150,17 +139,15 @@ export class ScrollSpyDirective extends BaseObserverComponent implements OnDestr
 				const isAtTop = docViewTop >= elemTop;
 				const rect = section.getBoundingClientRect();
 				const isVisible =
-					rect.bottom > 0 &&
-					rect.right > 0 &&
-					rect.left < (window.innerWidth || document.documentElement.clientWidth) &&
-					rect.top < (window.innerHeight || document.documentElement.clientHeight);
-
+					rect.bottom >= 0 &&
+					rect.left >= 0 &&
+					rect.right <= (window.innerWidth || document.documentElement.clientWidth) &&
+					rect.top <= (window.innerHeight || document.documentElement.clientHeight);
 				if (isAtTop && isVisible && rect.top > 0) {
 					currentSectionId = section.id;
 					break;
 				}
 			}
-
 			if (currentSectionId) {
 				if (currentSectionId !== this.currentSectionId) {
 					this.currentSectionId = currentSectionId;

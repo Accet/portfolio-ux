@@ -13,7 +13,8 @@ export const environment = {
 		messagingSenderId: '640357772806',
 		appId: '1:640357772806:web:0a2c1c5ba51e95f6da1d87'
 	},
-	recaptcha: '6Lf6wbkUAAAAAIaheEk2nYwUVOwNI8onBya0G2Ot'
+	recaptcha: '6Lf6wbkUAAAAAIaheEk2nYwUVOwNI8onBya0G2Ot',
+	analytics: 'UA-146439862-2'
 };
 
 /*

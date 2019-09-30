@@ -65,11 +65,6 @@ export class NavigationLinksComponent extends BaseObserverComponent implements O
 	}
 
 	setActiveNavLink(section: string): void {
-		// let linkTo = section;
-		// if (linkTo === 'top') {
-		// 	linkTo = 'about';
-		// }
-
 		this.links.forEach((link: HomeLink) => {
 			link.selected = link.linkTo === section;
 		});
