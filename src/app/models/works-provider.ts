@@ -19,7 +19,7 @@ export const WorksItems: WorkItem[] = [
 		url: '/binquit',
 		imgUrl: './assets/images/binquit.jpg',
 		date: new Date(2019, 5),
-		title: 'binquit',
+		title: 'binqit',
 		fullTitle: 'Binqit - Part-Time Job Search Web-App',
 		description:
 			'Designed a web app which allows personalizing the search for quality connections between job seekers and businesses.',

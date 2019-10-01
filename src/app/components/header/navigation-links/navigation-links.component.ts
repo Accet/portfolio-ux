@@ -3,6 +3,7 @@ import {takeUntil} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {BaseObserverComponent} from '../../base-observer/base-observer.component';
 import {CommunicationService, MessageType} from '../../../services/communication.service';
+import {GoogleAnalyticsService} from '../../../services/google-analytics.service';
 
 interface HomeLink {
 	linkText: string;
@@ -42,7 +43,11 @@ export class NavigationLinksComponent extends BaseObserverComponent implements O
 		}
 	];
 
-	constructor(private communicationService: CommunicationService, private router: Router) {
+	constructor(
+		private communicationService: CommunicationService,
+		private router: Router,
+		private gAnalytics: GoogleAnalyticsService
+	) {
 		super();
 	}
 
@@ -71,6 +76,7 @@ export class NavigationLinksComponent extends BaseObserverComponent implements O
 	}
 
 	onDownload() {
+		this.gAnalytics.sendEvent('download_cv');
 		const link = document.createElement('a');
 		link.href = 'https://store-cv-arkhypchuk.s3.amazonaws.com/cv/tanya_arkhypchuk_cv.pdf';
 		link.target = '_blank';
