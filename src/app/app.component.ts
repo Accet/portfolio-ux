@@ -1,13 +1,13 @@
 import {AfterViewInit, Component, NgZone, OnInit, ViewChild} from '@angular/core';
 import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
-import {Observable} from 'rxjs';
-import {ScrollSpyDirective} from './directives/scroll-spy.directive';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {NavBarMode, ScrollSpyDirective} from './directives/scroll-spy.directive';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {NavigationEnd, Router} from '@angular/router';
 import {filter, map} from 'rxjs/operators';
-import {environment} from '../environments/environment';
 import {GoogleAnalyticsService} from './services/google-analytics.service';
+import {NavBarService} from './services/nav-bar.service';
 
 @Component({
 	selector: 'app-root',
@@ -15,8 +15,9 @@ import {GoogleAnalyticsService} from './services/google-analytics.service';
 	styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, AfterViewInit {
-	isStickied: Observable<boolean>;
+	isStickied: BehaviorSubject<boolean> = new BehaviorSubject(false);
 	@ViewChild(ScrollSpyDirective, {static: false}) spy: ScrollSpyDirective;
+	navBarMode: Observable<NavBarMode>;
 
 	constructor(
 		db: AngularFirestore,
@@ -24,7 +25,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private domSanitizer: DomSanitizer,
 		private router: Router,
 		private run: NgZone,
-		private gAnalytics: GoogleAnalyticsService
+		private gAnalytics: GoogleAnalyticsService,
+
+		private navBarService: NavBarService
 	) {
 		['linked', 'medium', 'mail', 'media', 'download', 'arrow_forward', 'cv'].forEach(icon => {
 			this.matIconRegistry.addSvgIcon(
@@ -41,11 +44,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 			.subscribe(event => gAnalytics.trackPageChange(event.urlAfterRedirects));
 	}
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.navBarMode = this.navBarService.isStickied.asObservable();
+	}
 
 	ngAfterViewInit(): void {
-		setTimeout(() => {
-			this.isStickied = this.spy.stickySet.asObservable();
-		});
+		this.spy.stickySet.asObservable().subscribe(state => this.isStickied.next(state));
 	}
 }

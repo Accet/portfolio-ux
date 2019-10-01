@@ -13,7 +13,6 @@ import {concatMap, delay, scan, switchMap, takeUntil, takeWhile} from 'rxjs/oper
 import {CommunicationService, MessageType} from '../services/communication.service';
 import {BaseObserverComponent} from '../components/base-observer/base-observer.component';
 import {combineLatest, from, interval, of} from 'rxjs';
-import {NavBarService} from '../services/nav-bar.service';
 
 export enum NavBarMode {
 	STICKIED,
@@ -34,9 +33,28 @@ export class ScrollSpyDirective extends BaseObserverComponent implements OnDestr
 	}
 
 	@Input() stickyOffset = 45;
+	@Input() set navBarMode(navBarMode: NavBarMode) {
+		this._navBarMode = navBarMode;
+		switch (navBarMode) {
+			case NavBarMode.OPEN:
+				this.isStickied = false;
+				break;
+			case NavBarMode.STICKIED:
+				this.isStickied = true;
+				break;
+			default:
+				break;
+		}
+	}
+
+	get navBarMode(): NavBarMode {
+		return this._navBarMode;
+	}
+
 	@Output() stickySet: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 	private _isStickied: boolean;
+	private _navBarMode: NavBarMode;
 	sections: HTMLElement[];
 	ignoreScroll = false;
 	currentSectionId = '';
@@ -55,19 +73,12 @@ export class ScrollSpyDirective extends BaseObserverComponent implements OnDestr
 	constructor(
 		private el: ElementRef,
 		private router: Router,
-		private communicationService: CommunicationService,
-		private navBarService: NavBarService
+		private communicationService: CommunicationService // private navBarService: NavBarService
 	) {
 		super();
 	}
 
 	ngAfterViewInit() {
-		this.navBarService.isStickied
-			.asObservable()
-			.pipe(takeUntil(this.destroy$))
-			.subscribe(val => {
-				this.isStickied = val;
-			});
 		this.sections = this.el.nativeElement.getElementsByClassName('route-section');
 		this.communicationService
 			.getMessage(MessageType.SCROLL_TO_SECTION)
@@ -86,7 +97,7 @@ export class ScrollSpyDirective extends BaseObserverComponent implements OnDestr
 						let elemTop;
 						for (const section of this.sections) {
 							if (section.id === sectionId) {
-								elemTop = section.offsetTop - 70;
+								elemTop = section.offsetTop - 90;
 								break;
 							}
 						}
@@ -115,7 +126,7 @@ export class ScrollSpyDirective extends BaseObserverComponent implements OnDestr
 	}
 
 	handleStickyNavEvent(): void {
-		if (this.navBarService.currentMode === NavBarMode.FREE) {
+		if (this.navBarMode === NavBarMode.FREE) {
 			const wrapper = this.el.nativeElement;
 			const docViewTop = window.pageYOffset;
 			if (docViewTop > wrapper.offsetTop + this.stickyOffset) {

@@ -1,4 +1,9 @@
-<div class="dashboard-wrapper d-flex flex-column h-100" appScrollSpy [class.sticky-nav]="isStickied | async">
+<div
+	class="dashboard-wrapper d-flex flex-column h-100"
+	appScrollSpy
+	[navBarMode]="navBarMode | async"
+	[class.sticky-nav]="isStickied | async"
+>
 	<div class="flex-shrink-0">
 		<app-header [isStickied]="isStickied | async"></app-header>
 		<div class="container no-pad mh-100">
