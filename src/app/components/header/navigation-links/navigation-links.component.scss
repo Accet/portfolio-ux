@@ -26,7 +26,7 @@ ul {
 	.nav-item {
 		&.selected {
 			.nav-link {
-				border-bottom: 3px solid #00a1e0;
+				border-bottom: 3px solid $secondary;
 			}
 		}
 		@media (max-width: $layout-lg-size) {

@@ -97,7 +97,7 @@ export class ScrollSpyDirective extends BaseObserverComponent implements OnDestr
 						let elemTop;
 						for (const section of this.sections) {
 							if (section.id === sectionId) {
-								elemTop = section.offsetTop - 90;
+								elemTop = section.offsetTop - 70;
 								break;
 							}
 						}
