@@ -98,13 +98,13 @@
 				<img alt="Automated decline messaging" [src]="'./assets/images/b-content-3.jpg'" />
 			</div>
 		</div>
-		<div class="mt-5 mb-5 d-flex flex-row justify-content-center">
-			<a
-				class="btn link"
-				href="https://www.figma.com/proto/Xnz7yso9L0iobpTphA7pTZTL/Final-File?node-id=1%3A31211&viewport=-44%2C412%2C0.10865195840597153&scaling=min-zoom"
-				target="_blank"
+		<div *ngIf="items?.figmaUrl; else gap" class="mt-5 mb-5 d-flex flex-row justify-content-center">
+			<a class="btn link" [href]="items.figmaUrl" target="_blank" (click)="onSendEvent('view_prototype')"
 				>You can go through our prototype by clicking on the link: Binqit</a
 			>
 		</div>
+		<ng-template #gap>
+			<div class="mt-5 mb-5"></div>
+		</ng-template>
 	</div>
 </div>

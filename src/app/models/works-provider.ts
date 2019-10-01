@@ -11,6 +11,7 @@ export interface WorkItem {
 	fullTitle: string;
 	mediumUrl?: string;
 	carousel?: CarouselData[];
+	figmaUrl?: string;
 }
 
 export const WorksItems: WorkItem[] = [
@@ -34,7 +35,9 @@ export const WorksItems: WorkItem[] = [
 				url: './assets/images/binquit-persona-2.jpg',
 				alt: 'Second design persona story'
 			}
-		]
+		],
+		figmaUrl:
+			'https://www.figma.com/proto/Xnz7yso9L0iobpTphA7pTZTL/Final-File?node-id=1%3A31211&viewport=10%2C657%2C0.04189290106296539&scaling=min-zoom'
 	},
 	{
 		url: '/s-care',
@@ -56,7 +59,9 @@ export const WorksItems: WorkItem[] = [
 				url: './assets/images/s-care-persona-1.jpg',
 				alt: 'Second design persona story for Senior Care connect mobile application. UX research'
 			}
-		]
+		],
+		figmaUrl:
+			'https://www.figma.com/proto/c6FU9S2FWRtba2xmvSZMTY2x/Hi-Fi-V2-Prototype?node-id=1%3A311&scaling=scale-down'
 	},
 	{
 		url: '/towns',

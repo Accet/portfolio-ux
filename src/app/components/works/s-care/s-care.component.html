@@ -112,13 +112,13 @@
 				</div>
 			</div>
 		</div>
-		<div class="mt-5 mb-5 d-flex flex-row justify-content-center">
-			<a
-				class="btn link"
-				href="https://www.figma.com/proto/c6FU9S2FWRtba2xmvSZMTY2x/Hi-Fi-V2-Prototype?node-id=1%3A956&viewport=1766%2C1031%2C0.11318626254796982&scaling=scale-down"
-				target="_blank"
+		<div *ngIf="items?.figmaUrl; else gap" class="mt-5 mb-5 d-flex flex-row justify-content-center">
+			<a class="btn link" [href]="items.figmaUrl" target="_blank" (click)="onSendEvent('view_prototype')"
 				>You can go through our prototype by clicking on the link: Senior Care Connect</a
 			>
 		</div>
+		<ng-template #gap>
+			<div class="mt-5 mb-5"></div>
+		</ng-template>
 	</div>
 </div>

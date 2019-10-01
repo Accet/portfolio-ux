@@ -26,7 +26,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private run: NgZone,
 		private gAnalytics: GoogleAnalyticsService
 	) {
-		['linked', 'medium', 'mail', 'media', 'download', 'arrow_forward'].forEach(icon => {
+		['linked', 'medium', 'mail', 'media', 'download', 'arrow_forward', 'cv'].forEach(icon => {
 			this.matIconRegistry.addSvgIcon(
 				icon,
 				this.domSanitizer.bypassSecurityTrustResourceUrl(`assets/icons/${icon}.svg`)

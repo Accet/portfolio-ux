@@ -4,4 +4,12 @@
 			{{ link.linkText | uppercase }}
 		</button>
 	</li>
+	<li class="nav-item btn-container">
+		<button class="btn-clear nav-link rounded-btn mt-3" mat-button disableRipple (click)="onDownload()">
+			<div class="d-flex justify-content-between w-100 align-items-center">
+				<span class="mr-2">{{ 'RESUME' }}</span>
+				<mat-icon svgIcon="cv"></mat-icon>
+			</div>
+		</button>
+	</li>
 </ul>

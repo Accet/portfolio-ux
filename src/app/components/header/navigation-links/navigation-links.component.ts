@@ -69,4 +69,11 @@ export class NavigationLinksComponent extends BaseObserverComponent implements O
 			link.selected = link.linkTo === section;
 		});
 	}
+
+	onDownload() {
+		const link = document.createElement('a');
+		link.href = 'https://store-cv-arkhypchuk.s3.amazonaws.com/cv/tanya_arkhypchuk_cv.pdf';
+		link.target = '_blank';
+		link.click();
+	}
 }
