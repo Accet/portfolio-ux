@@ -1,18 +1,1 @@
-<div
-	class="dashboard-wrapper d-flex flex-column h-100"
-	appScrollSpy
-	[navBarMode]="navBarMode | async"
-	[class.sticky-nav]="isStickied | async"
->
-	<div class="flex-shrink-0">
-		<app-header [isStickied]="isStickied | async"></app-header>
-		<div class="container no-pad mh-100">
-			<app-navigation-links *ngIf="(isStickied | async) === false" navMode="nav"></app-navigation-links>
-		</div>
-
-		<div appBlurredModal>
-			<router-outlet></router-outlet>
-		</div>
-	</div>
-	<app-footer></app-footer>
-</div>
+<router-outlet></router-outlet>
