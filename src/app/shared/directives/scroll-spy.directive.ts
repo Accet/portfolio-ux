@@ -35,10 +35,11 @@ export class ScrollSpyDirective extends BaseObserverComponent implements OnDestr
 
 	@Input() stickyOffset = 45;
 	@Input() set navBarMode(navBarMode: NavBarMode) {
-		if (navBarMode !== null) {
-			this._navBarMode = navBarMode;
+		if (navBarMode === null) {
+			return;
 		}
-		this.isStickied = !isBoolean(this.isStickied) && navBarMode === NavBarMode.FREE;
+		this._navBarMode = navBarMode;
+		this.isStickied = !isBoolean(this.isStickied) && navBarMode === NavBarMode.FREE && window.pageYOffset > 140;
 
 		switch (navBarMode) {
 			case NavBarMode.OPEN:

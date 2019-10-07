@@ -15,7 +15,9 @@ export class GoogleAnalyticsService {
 
 	trackPageChange(url: string) {
 		this.run.runOutsideAngular(() => {
-			gtag('config', environment.analytics, {page_path: url});
+			gtag('config', environment.analytics, {
+				page_path: url
+			});
 		});
 	}
 
@@ -23,10 +25,14 @@ export class GoogleAnalyticsService {
 		this.run.runOutsideAngular(() => {
 			const properties: any = {
 				event_category: category,
-				value
+				value,
+				event_callback: () => {
+					console.log('event_callback, analyticsRes: ');
+				},
+				event_timeout: 3000
 			};
 			if (label) {
-				properties.label = label;
+				properties.event_label = label;
 			}
 			gtag('event', action, properties);
 		});
