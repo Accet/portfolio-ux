@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {NavBarService} from '../../../shared/services/nav-bar.service';
+import {NavBarMode} from '../../../shared/directives/scroll-spy.directive';
 
 @Component({
 	selector: 'app-home',
@@ -6,5 +8,8 @@ import {Component, OnInit} from '@angular/core';
 	styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-	ngOnInit() {}
+	constructor(private navService: NavBarService) {}
+	ngOnInit() {
+		this.navService.setNavBarMode(NavBarMode.FREE);
+	}
 }

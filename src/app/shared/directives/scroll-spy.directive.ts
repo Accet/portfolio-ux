@@ -13,6 +13,7 @@ import {concatMap, delay, scan, switchMap, takeUntil, takeWhile} from 'rxjs/oper
 import {CommunicationService, MessageType} from '../services/communication.service';
 import {BaseObserverComponent} from '../components/base-observer/base-observer.component';
 import {combineLatest, from, interval, of} from 'rxjs';
+import {isBoolean} from 'util';
 
 export enum NavBarMode {
 	STICKIED,
@@ -37,6 +38,8 @@ export class ScrollSpyDirective extends BaseObserverComponent implements OnDestr
 		if (navBarMode !== null) {
 			this._navBarMode = navBarMode;
 		}
+		this.isStickied = !isBoolean(this.isStickied) && navBarMode === NavBarMode.FREE;
+
 		switch (navBarMode) {
 			case NavBarMode.OPEN:
 				this.isStickied = false;
@@ -72,11 +75,7 @@ export class ScrollSpyDirective extends BaseObserverComponent implements OnDestr
 		this.handleWindowScrollNavEvent();
 	}
 
-	constructor(
-		private el: ElementRef,
-		private router: Router,
-		private communicationService: CommunicationService // private navBarService: NavBarService
-	) {
+	constructor(private el: ElementRef, private router: Router, private communicationService: CommunicationService) {
 		super();
 	}
 
