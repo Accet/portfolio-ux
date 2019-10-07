@@ -1,7 +1,7 @@
 import {Directive, ElementRef, OnInit, Renderer2} from '@angular/core';
 import {takeUntil} from 'rxjs/operators';
-import {ModalService} from '../services/modal.service';
-import {BaseObserverComponent} from '../components/base-observer/base-observer.component';
+import {ModalService} from '../../shared/services/modal.service';
+import {BaseObserverComponent} from '../../shared/components/base-observer/base-observer.component';
 
 @Directive({
 	selector: '[appBlurredModal]'

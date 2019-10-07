@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
 		private run: NgZone,
 		private gAnalytics: GoogleAnalyticsService
 	) {
-		['linked', 'medium', 'mail', 'media', 'download', 'arrow_forward', 'cv'].forEach(icon => {
+		['linked', 'medium', 'mail', 'media', 'download', 'arrow_forward', 'cv', 'hide', 'show'].forEach(icon => {
 			this.matIconRegistry.addSvgIcon(
 				icon,
 				this.domSanitizer.bypassSecurityTrustResourceUrl(`assets/icons/${icon}.svg`)

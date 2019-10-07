@@ -1,0 +1,41 @@
+<div class="nav-container fixed-top" [class.fill]="navbarOpen">
+	<nav class="navbar navbar-expand-lg navbar-light">
+		<div class="container no-pad d-flex ">
+			<a class="navbar-brand">
+				<div class="d-flex align-items-center justify-content-between">
+					<span>Dashboard</span>
+				</div>
+			</a>
+
+			<button class="navbar-toggler" type="button" aria-label="Toggle navigation" (click)="toggleNavbar()">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse main-link-container justify-content-between" [class.show]="navbarOpen">
+				<ul class="navbar-nav">
+					<li class="nav-item" *ngFor="let link of menuItems" [class.selected]="link.selected">
+						<button
+							[disabled]="!(user$ | async)"
+							class="btn-clear nav-link"
+							(click)="handleMenuItemSelected(link?.url)"
+						>
+							{{ link.name }}
+						</button>
+					</li>
+					<ng-template [ngIf]="navbarOpen">
+						<li class="nav-item">
+							<button class="btn-clear nav-link" routerLink="/">Home</button>
+						</li>
+						<li class="nav-item">
+							<button class="btn-clear nav-link " (click)="handleLogout()">Logout</button>
+						</li>
+					</ng-template>
+				</ul>
+			</div>
+
+			<div *ngIf="!navbarOpen" class="actions-bar d-flex justify-content-end align-items-center">
+				<button class="btn-clear auth-btn mr-3" routerLink="/">Home</button>
+				<button *ngIf="user$ | async" class="btn-clear auth-btn " (click)="handleLogout()">Logout</button>
+			</div>
+		</div>
+	</nav>
+</div>

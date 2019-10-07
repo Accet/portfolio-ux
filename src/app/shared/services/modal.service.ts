@@ -5,7 +5,7 @@ import {catchError, finalize} from 'rxjs/operators';
 
 export const MODAL_DATA = new InjectionToken('modalData');
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class ModalService {
 	modalOpened$: BehaviorSubject<NgbModalRef> = new BehaviorSubject(null);
 	defaultConfig: NgbModalOptions = {

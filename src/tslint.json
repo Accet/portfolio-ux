@@ -13,6 +13,7 @@
             "app",
             "kebab-case"
         ],
+			"no-string-literal": false,
 			"indent": [true, "tabs", 2]
 		}
 }
