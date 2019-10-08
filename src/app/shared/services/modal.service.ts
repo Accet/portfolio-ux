@@ -8,6 +8,9 @@ export const MODAL_DATA = new InjectionToken('modalData');
 @Injectable()
 export class ModalService {
 	modalOpened$: BehaviorSubject<NgbModalRef> = new BehaviorSubject(null);
+	modalRef: NgbModalRef;
+	displayedModals: any[] = [];
+
 	defaultConfig: NgbModalOptions = {
 		centered: true,
 		windowClass: 'g-modal',
@@ -17,16 +20,17 @@ export class ModalService {
 	constructor(private injector: Injector, private ngbModalService: NgbModal) {}
 
 	open(modalContent: any, modalData?: any, modalConfig?: NgbModalOptions): NgbModalRef {
-		this.dismissAll();
-		const modalRef = this.ngbModalService.open(modalContent, this.configureModal(modalData, modalConfig));
-		this.modalOpened$.next(modalRef);
-		from(modalRef.result)
+		// this.dismissAll();
+		this.modalRef = this.ngbModalService.open(modalContent, this.configureModal(modalData, modalConfig));
+		this.modalOpened$.next(this.modalRef);
+		from(this.modalRef.result)
 			.pipe(
 				catchError(() => of(null)),
-				finalize(() => this.modalOpened$.next(null))
+				finalize(() => this.removeFromDisplayedModals())
 			)
 			.subscribe();
-		return modalRef;
+		this.displayedModals.push(this.modalRef);
+		return this.modalRef;
 	}
 
 	dismissAll(reason?: any): void {
@@ -41,5 +45,12 @@ export class ModalService {
 		return Object.assign({}, this.defaultConfig, modalConfig, {
 			injector: Injector.create({providers: [{provide: MODAL_DATA, useValue: {data: modalData}}]})
 		});
+	}
+
+	private removeFromDisplayedModals() {
+		this.displayedModals.pop();
+		if (!this.displayedModals.length) {
+			this.modalOpened$.next(null);
+		}
 	}
 }

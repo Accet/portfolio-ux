@@ -9,6 +9,9 @@ import {FormUtils} from '../../../shared/utils/form-utils';
 import {CustomValidators} from '../../../shared/utils/custom-validators';
 import {MatButton} from '@angular/material';
 import {BaseObserverComponent} from '../../../shared/components/base-observer/base-observer.component';
+import {ModalService} from '../../../shared/services/modal.service';
+import {ForgotPasswordComponent} from '../forgot-password/forgot-password.component';
+import {NotificationService} from '../../../shared/services/notification.service';
 
 @Component({
 	selector: 'app-login-modal',
@@ -19,6 +22,8 @@ export class LoginModalComponent extends BaseObserverComponent implements OnInit
 	private capsLockState: boolean;
 	private passwordFocus: boolean;
 	visiblePassword = false;
+	stopListeningForSubmit = false;
+
 	@ViewChild('btnRef', {static: true}) buttonRef: MatButton;
 	@ViewChild('popOver', {static: false}) popOver: NgbPopover;
 
@@ -26,7 +31,9 @@ export class LoginModalComponent extends BaseObserverComponent implements OnInit
 		public activeModal: NgbActiveModal,
 		private fb: FormBuilder,
 		private router: Router,
-		private authService: AuthService
+		private authService: AuthService,
+		private modalService: ModalService,
+		private notificationService: NotificationService
 	) {
 		super();
 	}
@@ -42,7 +49,9 @@ export class LoginModalComponent extends BaseObserverComponent implements OnInit
 				takeUntil(this.destroy$)
 			)
 			.subscribe(keyboardEvent => {
-				this.handleLogin(keyboardEvent);
+				if (!this.stopListeningForSubmit) {
+					this.handleLogin(keyboardEvent);
+				}
 			});
 	}
 
@@ -64,7 +73,6 @@ export class LoginModalComponent extends BaseObserverComponent implements OnInit
 			.login(email, password)
 			.pipe(
 				catchError(error => {
-					console.log('Function: , error: ', error);
 					switch (error.code) {
 						case 'auth/invalid-email': {
 							this.loginForm.get('email').setErrors({validateEmail: true});
@@ -127,5 +135,17 @@ export class LoginModalComponent extends BaseObserverComponent implements OnInit
 	togglePasswordVisibility(event: MouseEvent) {
 		event.preventDefault();
 		this.visiblePassword = !this.visiblePassword;
+	}
+
+	showForgot(event: MouseEvent) {
+		event.preventDefault();
+		this.stopListeningForSubmit = true;
+		const modalRef = this.modalService.open(ForgotPasswordComponent, null, {size: 'sm'});
+		modalRef.result
+			.then(() => {})
+			.catch(() => {
+				this.notificationService.dismissAll();
+			})
+			.finally(() => (this.stopListeningForSubmit = false));
 	}
 }

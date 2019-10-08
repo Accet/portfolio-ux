@@ -55,4 +55,8 @@ export class NotificationService {
 	showSuccess(messageData: NotificationData, override?: any): any {
 		return this.showNotification(NotificationType.SUCCESS, messageData, override);
 	}
+
+	dismissAll() {
+		this.snackBar.dismiss();
+	}
 }

@@ -1,11 +1,19 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../shared/services/auth.service';
 import {BaseObserverComponent} from '../shared/components/base-observer/base-observer.component';
-import {catchError, switchMap, takeUntil} from 'rxjs/operators';
+import {catchError, concatMap, finalize, switchMap, takeUntil} from 'rxjs/operators';
 import {ModalService} from '../shared/services/modal.service';
-import {from, iif, of, throwError} from 'rxjs';
+import {from, of, ReplaySubject, throwError} from 'rxjs';
 import {LoginModalComponent} from './components/login-modal/login-modal.component';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NotificationService} from '../shared/services/notification.service';
+import {ResetPasswordModalComponent} from './components/reset-password-modal/reset-password-modal.component';
+
+export enum AuthActions {
+	RESET_PASSWORD = 'resetPassword',
+	RECOVER_EMAIL = 'recoverEmail',
+	VERIFY_EMAIL = 'verifyEmail'
+}
 
 @Component({
 	selector: 'app-admin',
@@ -13,13 +21,63 @@ import {Router} from '@angular/router';
 	styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent extends BaseObserverComponent implements OnInit, OnDestroy {
-	constructor(private authService: AuthService, private modalService: ModalService, private router: Router) {
+	checkUser$: ReplaySubject<any> = new ReplaySubject(1);
+
+	constructor(
+		private authService: AuthService,
+		private modalService: ModalService,
+		private router: Router,
+		private route: ActivatedRoute,
+		private notificationService: NotificationService
+	) {
 		super();
 	}
 
 	ngOnInit() {
-		this.authService.currentUser$
+		this.route.queryParams
 			.pipe(
+				takeUntil(this.destroy$),
+				switchMap(params => {
+					const {mode, oobCode} = params;
+					switch (mode) {
+						case AuthActions.RESET_PASSWORD:
+							return this.authService.verifyPasswordResetCode(oobCode).pipe(
+								catchError(err => {
+									this.notificationService.showError({
+										message: 'Invalid or expired access code. Try to reset password again.',
+										enableClose: true
+									});
+									this.checkUser$.next(true);
+									return throwError(err);
+								}),
+								concatMap(() => {
+									const modalRef = this.modalService.open(ResetPasswordModalComponent, {code: oobCode}, {size: 'sm'});
+									return from(modalRef.result).pipe(
+										catchError(() => {
+											this.notificationService.dismissAll();
+											return of(null);
+										}),
+										finalize(() => this.checkUser$.next(true))
+									);
+								})
+							);
+						case AuthActions.RECOVER_EMAIL:
+							return of(false);
+						case AuthActions.VERIFY_EMAIL:
+							return of(false);
+
+						default:
+							this.checkUser$.next(true);
+							return of(true);
+					}
+				})
+			)
+			.subscribe(() => {}, error1 => console.error('Auth params: , error: ', error1));
+
+		this.checkUser$
+			.asObservable()
+			.pipe(
+				concatMap(() => this.authService.currentUser$),
 				switchMap(user => {
 					if (!!user) {
 						return of(user);
@@ -31,7 +89,7 @@ export class AdminComponent extends BaseObserverComponent implements OnInit, OnD
 			)
 			.subscribe(user => {
 				if (!user) {
-					this.router.navigate(['']).catch(err => console.log('navigate: , err: ', err));
+					this.router.navigate(['']).catch(err => console.error('navigate: , err: ', err));
 				}
 			});
 	}

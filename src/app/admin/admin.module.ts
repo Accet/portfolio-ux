@@ -12,6 +12,8 @@ import {LoginModalComponent} from './components/login-modal/login-modal.componen
 import {CapsDetectorDirective} from './directives/caps-detector.directive';
 import {ModalService} from '../shared/services/modal.service';
 import {BlurredModalDirective} from './directives/blurred-modal.directive';
+import {ForgotPasswordComponent} from './components/forgot-password/forgot-password.component';
+import {ResetPasswordModalComponent} from './components/reset-password-modal/reset-password-modal.component';
 
 @NgModule({
 	declarations: [
@@ -21,11 +23,19 @@ import {BlurredModalDirective} from './directives/blurred-modal.directive';
 		ProfileComponent,
 		LoginModalComponent,
 		CapsDetectorDirective,
+		BlurredModalDirective,
+		ForgotPasswordComponent,
+		ResetPasswordModalComponent
+	],
+	entryComponents: [LoginModalComponent, ResetPasswordModalComponent, ForgotPasswordComponent, AdminComponent],
+	imports: [RouterModule, AdminRoutingModule, SharedModule, AngularFireAuthModule],
+	exports: [
+		LoginModalComponent,
+		ResetPasswordModalComponent,
+		ForgotPasswordComponent,
+		AdminComponent,
 		BlurredModalDirective
 	],
-	entryComponents: [LoginModalComponent, AdminComponent],
-	imports: [RouterModule, AdminRoutingModule, SharedModule, AngularFireAuthModule],
-	exports: [LoginModalComponent, AdminComponent, BlurredModalDirective],
 	providers: [AuthService, ModalService]
 })
 export class AdminModule {}

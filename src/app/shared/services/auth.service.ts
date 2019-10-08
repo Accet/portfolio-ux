@@ -1,12 +1,11 @@
 import {Injectable} from '@angular/core';
-import {from, Observable, ReplaySubject, Subject} from 'rxjs';
+import {from, Observable} from 'rxjs';
 import {User} from 'firebase';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {map, shareReplay, switchMap, tap} from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
-	// private currentUser$: ReplaySubject<User> = new ReplaySubject();
 	private _currentUser$: Observable<User>;
 
 	get currentUser$(): Observable<User> {
@@ -43,6 +42,18 @@ export class AuthService {
 				return this.currentUser$;
 			})
 		);
+	}
+
+	resetPasswordInit(email: string) {
+		return this.afAuth.auth.sendPasswordResetEmail(email, {url: 'http://localhost:4200/admin'});
+	}
+
+	confirmPasswordReset(code: string, newPassword: string) {
+		return this.afAuth.auth.confirmPasswordReset(code, newPassword);
+	}
+
+	verifyPasswordResetCode(code: string): Observable<string> {
+		return from(this.afAuth.auth.verifyPasswordResetCode(code));
 	}
 
 	resetMeCache() {

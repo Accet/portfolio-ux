@@ -120,6 +120,10 @@ mat-form-field {
 	}
 }
 
+.cdk-overlay-container {
+	z-index: 1060!important;
+}
+
 .mat-snack-bar-container {
 	position: relative;
 	box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
@@ -136,7 +140,7 @@ mat-form-field {
 	}
 
 	&.warning {
-		background-color: $warning !important;
+		background-color: $danger !important;
 		color: $white;
 	}
 

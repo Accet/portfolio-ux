@@ -93,12 +93,17 @@
 				</div>
 			</div>
 		</div>
+		<div class="row align-items-stretch justify-content-start">
+			<a class="px-3" (click)="showForgot($event)">
+				Forgot your password?
+			</a>
+		</div>
 	</div>
 	<div class="modal-footer">
 		<button mat-stroked-button color="warn" class="btn px-3" (click)="closeModal($event)">
 			Cancel
 		</button>
-		<button (click)="handleLogin($event)" #btnRef mat-stroked-button color="primary" class="btn px-3">
+		<button (click)="handleLogin($event)" #btnRef mat-flat-button color="primary" class="btn px-3">
 			Login
 		</button>
 	</div>

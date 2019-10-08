@@ -1,9 +1,9 @@
 @import "variables";
+@import "material-overrides";
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import "mixins";
 @import "~bootstrap/scss/bootstrap";
 @import "bootstrap-overrides";
-@import "material-overrides";
 
 body {
 	background-color: $background;
