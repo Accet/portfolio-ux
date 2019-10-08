@@ -10,7 +10,7 @@ import {CustomValidators} from '../../../shared/utils/custom-validators';
 import {MatButton} from '@angular/material';
 import {BaseObserverComponent} from '../../../shared/components/base-observer/base-observer.component';
 import {ModalService} from '../../../shared/services/modal.service';
-import {ForgotPasswordComponent} from '../forgot-password/forgot-password.component';
+import {ForgotPasswordModalComponent} from '../forgot-password/forgot-password-modal.component';
 import {NotificationService} from '../../../shared/services/notification.service';
 
 @Component({
@@ -140,7 +140,7 @@ export class LoginModalComponent extends BaseObserverComponent implements OnInit
 	showForgot(event: MouseEvent) {
 		event.preventDefault();
 		this.stopListeningForSubmit = true;
-		const modalRef = this.modalService.open(ForgotPasswordComponent, null, {size: 'sm'});
+		const modalRef = this.modalService.open(ForgotPasswordModalComponent, null, {size: 'sm'});
 		modalRef.result
 			.then(() => {})
 			.catch(() => {

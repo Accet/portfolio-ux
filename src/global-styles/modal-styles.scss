@@ -1,4 +1,5 @@
 @import "styles";
+
 :host .modal-footer {
 	justify-content: space-around;
 	button {
@@ -7,9 +8,23 @@
 }
 
 .modal-title {
-	font-size: 1.25rem;
+	@include custom-header;
+	font-size: 1.75rem;
 	text-align: center;
 	width: 100%;
+}
+
+:host .btn-clear {
+	&.mat-icon-button {
+		width: fit-content !important;
+		height: fit-content !important;
+		line-height: 1.5rem !important;
+	}
+}
+
+.btn-clear-icon {
+	display: block;
+	font-size: 1rem;
 }
 
 .modal-body {

@@ -36,3 +36,8 @@
 	}
 }
 .carousel:focus {outline:0;}
+button.close {
+	&:focus {
+		outline: none;
+	}
+}

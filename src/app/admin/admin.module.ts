@@ -12,7 +12,7 @@ import {LoginModalComponent} from './components/login-modal/login-modal.componen
 import {CapsDetectorDirective} from './directives/caps-detector.directive';
 import {ModalService} from '../shared/services/modal.service';
 import {BlurredModalDirective} from './directives/blurred-modal.directive';
-import {ForgotPasswordComponent} from './components/forgot-password/forgot-password.component';
+import {ForgotPasswordModalComponent} from './components/forgot-password/forgot-password-modal.component';
 import {ResetPasswordModalComponent} from './components/reset-password-modal/reset-password-modal.component';
 
 @NgModule({
@@ -24,15 +24,15 @@ import {ResetPasswordModalComponent} from './components/reset-password-modal/res
 		LoginModalComponent,
 		CapsDetectorDirective,
 		BlurredModalDirective,
-		ForgotPasswordComponent,
+		ForgotPasswordModalComponent,
 		ResetPasswordModalComponent
 	],
-	entryComponents: [LoginModalComponent, ResetPasswordModalComponent, ForgotPasswordComponent, AdminComponent],
+	entryComponents: [LoginModalComponent, ResetPasswordModalComponent, ForgotPasswordModalComponent, AdminComponent],
 	imports: [RouterModule, AdminRoutingModule, SharedModule, AngularFireAuthModule],
 	exports: [
 		LoginModalComponent,
 		ResetPasswordModalComponent,
-		ForgotPasswordComponent,
+		ForgotPasswordModalComponent,
 		AdminComponent,
 		BlurredModalDirective
 	],

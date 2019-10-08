@@ -10,11 +10,11 @@ import {filter, takeUntil} from 'rxjs/operators';
 import {BaseObserverComponent} from '../../../shared/components/base-observer/base-observer.component';
 
 @Component({
-	selector: 'app-forgot-password',
-	templateUrl: './forgot-password.component.html',
-	styleUrls: ['./forgot-password.component.scss']
+	selector: 'app-forgot-modal-password',
+	templateUrl: './forgot-password-modal.component.html',
+	styleUrls: ['./forgot-password-modal.component.scss']
 })
-export class ForgotPasswordComponent extends BaseObserverComponent implements OnInit, AfterViewInit {
+export class ForgotPasswordModalComponent extends BaseObserverComponent implements OnInit, AfterViewInit {
 	emailForm: FormGroup;
 	constructor(
 		private fb: FormBuilder,

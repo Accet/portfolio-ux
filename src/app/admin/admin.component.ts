@@ -47,8 +47,8 @@ export class AdminComponent extends BaseObserverComponent implements OnInit, OnD
 										message: 'Invalid or expired access code. Try to reset password again.',
 										enableClose: true
 									});
-									this.checkUser$.next(true);
-									return throwError(err);
+									// this.checkUser$.next(true);
+									return from(this.router.navigate([this.route.snapshot.url], {relativeTo: this.route}));
 								}),
 								concatMap(() => {
 									const modalRef = this.modalService.open(ResetPasswordModalComponent, {code: oobCode}, {size: 'sm'});
@@ -57,7 +57,7 @@ export class AdminComponent extends BaseObserverComponent implements OnInit, OnD
 											this.notificationService.dismissAll();
 											return of(null);
 										}),
-										finalize(() => this.checkUser$.next(true))
+										finalize(() => this.router.navigate([this.route.snapshot.url], {relativeTo: this.route}))
 									);
 								})
 							);
@@ -96,6 +96,7 @@ export class AdminComponent extends BaseObserverComponent implements OnInit, OnD
 
 	ngOnDestroy(): void {
 		super.ngOnDestroy();
+		this.notificationService.dismissAll();
 		this.modalService.dismissAll();
 	}
 }
