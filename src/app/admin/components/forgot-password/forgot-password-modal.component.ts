@@ -3,11 +3,11 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CustomValidators} from '../../../shared/utils/custom-validators';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormUtils} from '../../../shared/utils/form-utils';
-import {AuthService} from '../../../shared/services/auth.service';
 import {NotificationService} from '../../../shared/services/notification.service';
 import {fromEvent} from 'rxjs';
 import {filter, takeUntil} from 'rxjs/operators';
 import {BaseObserverComponent} from '../../../shared/components/base-observer/base-observer.component';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
 	selector: 'app-forgot-modal-password',

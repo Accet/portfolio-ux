@@ -8,13 +8,13 @@ export class NavigationItemsUtils {
 	public static getNavItems(id?: string): NavItem[] {
 		return [
 			{
-				name: 'Posts',
-				url: id ? `posts/${id}` : 'posts',
-				selected: false
-			},
-			{
 				name: 'Profile',
 				url: 'me',
+				selected: true
+			},
+			{
+				name: 'Posts',
+				url: id ? `posts/${id}` : 'posts',
 				selected: false
 			}
 		];

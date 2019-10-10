@@ -4,9 +4,9 @@ import {NavItem} from '../../../shared/utils/navigation-items-utils';
 import {NavigationItemsService} from '../../services/navigation-items.service';
 import {BaseObserverComponent} from '../../../shared/components/base-observer/base-observer.component';
 import {take, takeUntil} from 'rxjs/operators';
-import {AuthService} from '../../../shared/services/auth.service';
 import {Observable} from 'rxjs';
-import {User} from 'firebase';
+import {AuthService} from '../../services/auth.service';
+import {User} from '../../../shared/models/user';
 
 @Component({
 	selector: 'app-admin-navigation',

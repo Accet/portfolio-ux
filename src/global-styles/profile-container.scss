@@ -1,0 +1,27 @@
+@import "styles";
+.reset-container {
+	margin-top: 1rem;
+	padding: 0 2rem 1rem;
+	border-color: $border-color;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: $border-radius;
+}
+
+.reset-container>label{
+	color: $font-color-main;
+	font-family: $font-family;
+	font-weight: $font-weight-bolder;
+	position:relative;
+	text-align: center;
+	padding: 0.5rem;
+	height: 2rem;
+	line-height: 2rem;
+	top: -1.5rem;
+	background-color:white;
+}
+
+.form-error {
+	font-family: $font-family;
+	font-size: 0.75rem;
+}

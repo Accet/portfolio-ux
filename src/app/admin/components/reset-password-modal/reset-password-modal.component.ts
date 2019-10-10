@@ -9,8 +9,8 @@ import {CustomValidators} from '../../../shared/utils/custom-validators';
 import {FormUtils, MyErrorStateMatcher} from '../../../shared/utils/form-utils';
 import {MatButton} from '@angular/material';
 import {MODAL_DATA} from '../../../shared/services/modal.service';
-import {AuthService} from '../../../shared/services/auth.service';
 import {NotificationService} from '../../../shared/services/notification.service';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
 	selector: 'app-reset-password-modal',

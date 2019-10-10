@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AuthService} from '../shared/services/auth.service';
 import {BaseObserverComponent} from '../shared/components/base-observer/base-observer.component';
 import {catchError, concatMap, finalize, switchMap, takeUntil} from 'rxjs/operators';
 import {ModalService} from '../shared/services/modal.service';
@@ -8,8 +7,9 @@ import {LoginModalComponent} from './components/login-modal/login-modal.componen
 import {ActivatedRoute, Router} from '@angular/router';
 import {NotificationService} from '../shared/services/notification.service';
 import {ResetPasswordModalComponent} from './components/reset-password-modal/reset-password-modal.component';
+import {AuthService} from './services/auth.service';
 
-export enum AuthActions {
+enum AuthActions {
 	RESET_PASSWORD = 'resetPassword',
 	RECOVER_EMAIL = 'recoverEmail',
 	VERIFY_EMAIL = 'verifyEmail'
@@ -42,12 +42,11 @@ export class AdminComponent extends BaseObserverComponent implements OnInit, OnD
 					switch (mode) {
 						case AuthActions.RESET_PASSWORD:
 							return this.authService.verifyPasswordResetCode(oobCode).pipe(
-								catchError(err => {
+								catchError(() => {
 									this.notificationService.showError({
 										message: 'Invalid or expired access code. Try to reset password again.',
 										enableClose: true
 									});
-									// this.checkUser$.next(true);
 									return from(this.router.navigate([this.route.snapshot.url], {relativeTo: this.route}));
 								}),
 								concatMap(() => {
@@ -90,6 +89,8 @@ export class AdminComponent extends BaseObserverComponent implements OnInit, OnD
 			.subscribe(user => {
 				if (!user) {
 					this.router.navigate(['']).catch(err => console.error('navigate: , err: ', err));
+				} else {
+					this.router.navigate(['me'], {relativeTo: this.route}).catch(err => console.error('navigate: , err: ', err));
 				}
 			});
 	}

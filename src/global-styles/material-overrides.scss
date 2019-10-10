@@ -154,4 +154,13 @@ mat-form-field {
 	}
 }
 
+.mat-flat-button {
+	&.btn:hover {
+		color: $gray-500;
+	}
+	.mat-button-wrapper {
+		font-weight: $font-weight-bold;
+	}
+}
+
 

@@ -1,17 +1,17 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, Optional, ViewChild} from '@angular/core';
 import {NgbActiveModal, NgbPopover} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {catchError, filter, mergeMap, takeUntil, tap} from 'rxjs/operators';
 import {from, fromEvent, throwError} from 'rxjs';
-import {AuthService} from '../../../shared/services/auth.service';
 import {FormUtils} from '../../../shared/utils/form-utils';
 import {CustomValidators} from '../../../shared/utils/custom-validators';
 import {MatButton} from '@angular/material';
 import {BaseObserverComponent} from '../../../shared/components/base-observer/base-observer.component';
-import {ModalService} from '../../../shared/services/modal.service';
+import {MODAL_DATA, ModalService} from '../../../shared/services/modal.service';
 import {ForgotPasswordModalComponent} from '../forgot-password/forgot-password-modal.component';
 import {NotificationService} from '../../../shared/services/notification.service';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
 	selector: 'app-login-modal',
@@ -23,6 +23,7 @@ export class LoginModalComponent extends BaseObserverComponent implements OnInit
 	private passwordFocus: boolean;
 	visiblePassword = false;
 	stopListeningForSubmit = false;
+	private readonly email: string;
 
 	@ViewChild('btnRef', {static: true}) buttonRef: MatButton;
 	@ViewChild('popOver', {static: false}) popOver: NgbPopover;
@@ -33,9 +34,13 @@ export class LoginModalComponent extends BaseObserverComponent implements OnInit
 		private router: Router,
 		private authService: AuthService,
 		private modalService: ModalService,
-		private notificationService: NotificationService
+		private notificationService: NotificationService,
+		@Optional() @Inject(MODAL_DATA) private modalData: any
 	) {
 		super();
+		if (this.modalData && this.modalData.data) {
+			this.email = this.modalData.data.email;
+		}
 	}
 
 	loginForm: FormGroup;
@@ -68,7 +73,8 @@ export class LoginModalComponent extends BaseObserverComponent implements OnInit
 		if (!this.loginForm.valid) {
 			return;
 		}
-		const {email, password} = this.loginForm.value;
+		const password = this.loginForm.value.password;
+		const email = this.email ? this.email : this.loginForm.value.email;
 		this.authService
 			.login(email, password)
 			.pipe(
@@ -94,11 +100,9 @@ export class LoginModalComponent extends BaseObserverComponent implements OnInit
 							break;
 					}
 					return throwError(error);
-				}),
-				mergeMap(() => from(this.router.navigate(['/admin']))),
-				tap(() => this.activeModal.close())
+				})
 			)
-			.subscribe(() => {}, error => console.log('Function: login, error: ', error));
+			.subscribe(() => this.activeModal.close(), error => console.log('Function: login, error: ', error));
 	}
 
 	private initForm() {
@@ -106,6 +110,11 @@ export class LoginModalComponent extends BaseObserverComponent implements OnInit
 			email: ['', [Validators.required, CustomValidators.validateEmail]],
 			password: ['', [Validators.required]]
 		});
+
+		if (this.email) {
+			this.loginForm.get('email').disable();
+			this.loginForm.updateValueAndValidity();
+		}
 	}
 
 	handleCapsLockState(isOn: boolean) {

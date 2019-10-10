@@ -1,7 +1,7 @@
 import {FormControl, FormGroup} from '@angular/forms';
 
 export class CustomValidators {
-	public static vlidateName(c: FormControl) {
+	public static validateName(c: FormControl) {
 		const regex = new RegExp(/^[a-zA-Z\x7f-\xff][^0-9_!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:[\]]+$/g);
 		if (!c.value || c.value === '') {
 			return null;
