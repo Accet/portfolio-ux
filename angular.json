@@ -26,14 +26,15 @@
               "src/favicon.png",
               "src/assets"
             ],
-						"styles": [
-							"src/global-styles/styles.scss"
-						],
-						"stylePreprocessorOptions": {
-							"includePaths": [
-								"src/global-styles"
-							]
-						},
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "src/global-styles/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/global-styles"
+              ]
+            },
             "scripts": [],
             "es5BrowserSupport": true
           },
@@ -88,14 +89,15 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
-						"styles": [
-							"src/global-styles/styles.scss"
-						],
-						"stylePreprocessorOptions": {
-							"includePaths": [
-								"src/global-styles"
-							]
-						},
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "src/global-styles/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/global-styles"
+              ]
+            },
             "scripts": [],
             "assets": [
               "src/favicon.png",

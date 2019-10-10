@@ -35,4 +35,20 @@ export class CustomValidators {
 
 		return pass === passwordConfirm ? null : {match: true};
 	}
+
+	static validateMobile(c: FormControl) {
+		const E164_REGEXP = /^\+{1}[1-9]\d{1,14}$/g;
+
+		if (!c.value || c.value === '') {
+			return null;
+		}
+
+		return E164_REGEXP.test(c.value)
+			? null
+			: {
+					validateMobile: {
+						valid: false
+					}
+			  };
+	}
 }

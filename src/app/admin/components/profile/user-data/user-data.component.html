@@ -1,4 +1,5 @@
 <div class="reset-container">
+	<label>User info</label>
 	<form [formGroup]="userForm" class="mt-3">
 		<div class="d-flex flex-column justify-content-around align-items-start form-group">
 			<mat-form-field class="form-input">
@@ -24,8 +25,10 @@
 				{{ 'Display name is invalid' }}
 			</div>
 		</div>
-		<div class="d-flex flex-row justify-content-end align-items-center">
-			<button mat-flat-button color="primary" class="px-3 btn" (click)="handleSave($event)">
+		<mat-divider></mat-divider>
+		<h3>Contact info</h3>
+		<div class="mt-3 d-flex flex-row justify-content-end align-items-center">
+			<button mat-flat-button color="primary" class="px-3" (click)="handleSave($event)">
 				{{ 'Save' }}
 			</button>
 		</div>

@@ -3,6 +3,7 @@ import {ScrollSpyDirective} from './directives/scroll-spy.directive';
 import {CommonModule} from '@angular/common';
 import {
 	MatButtonModule,
+	MatDividerModule,
 	MatFormFieldModule,
 	MatGridListModule,
 	MatIconModule,
@@ -36,6 +37,7 @@ import {RouterModule} from '@angular/router';
 		NgbModule,
 		MatGridListModule,
 		MatSnackBarModule,
+		MatDividerModule,
 		FormsModule
 	],
 	entryComponents: [CustomNotificationComponent],
@@ -49,6 +51,7 @@ import {RouterModule} from '@angular/router';
 		MatFormFieldModule,
 		ScrollSpyDirective,
 		CommonModule,
+		MatDividerModule,
 		NgbModule
 	]
 })

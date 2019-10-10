@@ -147,3 +147,6 @@ h2 {
 @mixin dashboard-box-shadow() {
 	box-shadow: 0 0.625rem 2.125rem 0 rgba(210, 210, 210, 0.5);
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

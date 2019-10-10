@@ -39,7 +39,8 @@ export class UserDataComponent extends BaseObserverComponent implements OnInit {
 
 	private initForm() {
 		this.userForm = this.fb.group({
-			displayName: ['', [Validators.required, CustomValidators.validateName]]
+			displayName: ['', [Validators.required, CustomValidators.validateName]],
+			phone: ['', [CustomValidators.validateMobile]]
 		});
 	}
 

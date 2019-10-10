@@ -7,7 +7,13 @@
 	border-style: solid;
 	border-radius: $border-radius;
 }
-
+h3 {
+	font-size: 1rem;
+	font-weight: $font-weight-bold;
+	padding: 0.5rem;
+	font-family: $font-family;
+	color: $font-color-main;
+}
 .reset-container>label{
 	color: $font-color-main;
 	font-family: $font-family;
