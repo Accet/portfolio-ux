@@ -72,16 +72,11 @@ export class UserDataComponent extends BaseObserverComponent implements OnInit {
 			switchMap(storedUser => {
 				const tempContacts = {...storedUser.contacts};
 				const tempSocial = {...storedUser.social};
-				const newSkype = this.userForm.get('skype').value;
-				const newPhone = this.userForm.get('phone').value;
-				const newLinked = this.userForm.get('linkedIn').value;
-				const newMedium = this.userForm.get('medium').value;
-				const newGitHub = this.userForm.get('github').value;
-				tempContacts.skype = newSkype ? newSkype.trim() : '';
-				tempContacts.phone = newPhone ? newPhone.trim() : '';
-				tempSocial.medium = newMedium ? newMedium.trim() : '';
-				tempSocial.linkedIn = newLinked ? newLinked.trim() : '';
-				tempSocial.github = newGitHub ? newGitHub.trim() : '';
+				tempContacts.skype = this.userForm.get('skype').value ? this.userForm.get('skype').value.trim() : '';
+				tempContacts.phone = this.userForm.get('phone').value ? this.userForm.get('phone').value.trim() : '';
+				tempSocial.medium = this.userForm.get('medium').value ? this.userForm.get('medium').value.trim() : '';
+				tempSocial.linkedIn = this.userForm.get('linkedIn').value ? this.userForm.get('linkedIn').value.trim() : '';
+				tempSocial.github = this.userForm.get('github').value ? this.userForm.get('github').value.trim() : '';
 				const tempUser = {...storedUser, ...{contacts: tempContacts, social: tempSocial}};
 				return isEqual(storedUser, tempUser) ? of(null) : this.userDataManager.updateUserData(tempUser);
 			})
