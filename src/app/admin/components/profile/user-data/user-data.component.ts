@@ -1,12 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {BaseObserverComponent} from '../../../../shared/components/base-observer/base-observer.component';
 import {AuthService} from '../../../services/auth.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NotificationService} from '../../../../shared/services/notification.service';
 import {CustomValidators} from '../../../../shared/utils/custom-validators';
-import {catchError, take, takeUntil} from 'rxjs/operators';
+import {catchError, debounceTime, switchMap, take, takeUntil, tap} from 'rxjs/operators';
 import {FormUtils} from '../../../../shared/utils/form-utils';
-import {of, zip} from 'rxjs';
+import {combineLatest, Observable, of, zip} from 'rxjs';
+import {User} from '../../../../shared/models/user';
+import {addInputmaskForPhone} from '../../../../shared/models/helper';
+import {UserDataManagerService} from '../../../../shared/services/user-data-manager.service';
+import * as isEqual from 'lodash.isequal';
 
 @Component({
 	selector: 'app-user-data',
@@ -15,11 +19,13 @@ import {of, zip} from 'rxjs';
 })
 export class UserDataComponent extends BaseObserverComponent implements OnInit {
 	userForm: FormGroup;
+	@ViewChild('mobileEl', {static: true}) mobileEl: ElementRef;
 
 	constructor(
 		private authService: AuthService,
 		private fb: FormBuilder,
-		private notificationService: NotificationService
+		private notificationService: NotificationService,
+		private userDataManager: UserDataManagerService
 	) {
 		super();
 	}
@@ -32,7 +38,12 @@ export class UserDataComponent extends BaseObserverComponent implements OnInit {
 				return;
 			}
 			this.userForm.patchValue({
-				displayName: user.displayName
+				displayName: user.displayName,
+				phone: user.contacts.phone,
+				skype: user.contacts.skype,
+				linkedIn: user.social && user.social.linkedIn ? user.social.linkedIn : '',
+				medium: user.social && user.social.medium ? user.social.medium : '',
+				github: user.social && user.social.github ? user.social.github : ''
 			});
 		});
 	}
@@ -40,22 +51,54 @@ export class UserDataComponent extends BaseObserverComponent implements OnInit {
 	private initForm() {
 		this.userForm = this.fb.group({
 			displayName: ['', [Validators.required, CustomValidators.validateName]],
-			phone: ['', [CustomValidators.validateMobile]]
+			phone: ['', [CustomValidators.validateMobile]],
+			skype: ['', []],
+			linkedIn: ['', []],
+			medium: ['', []],
+			github: ['', []]
 		});
+		addInputmaskForPhone(this.mobileEl.nativeElement);
 	}
 
 	handleSave(event: MouseEvent) {
 		event.preventDefault();
-		console.log('Function: onUpdatePassword, this.passwordForm: ', this.userForm);
+		console.log('Function: handleSave, this.userForm: ', this.userForm);
 		this.notificationService.dismissAll();
 		FormUtils.markFormFieldsAsDirty(this.userForm);
 		if (this.userForm.invalid) {
 			return;
 		}
+		const userData$ = this.authService.currentUser$.pipe(
+			take(1),
+			switchMap(storedUser => {
+				const tempContacts = {...storedUser.contacts};
+				const tempSocial = {...storedUser.social};
+				const newSkype = this.userForm.get('skype').value;
+				const newPhone = this.userForm.get('phone').value;
+				const newLinked = this.userForm.get('linkedIn').value;
+				const newMedium = this.userForm.get('medium').value;
+				const newGitHub = this.userForm.get('github').value;
+				tempContacts.skype = newSkype ? newSkype.trim() : '';
+				tempContacts.phone = newPhone ? newPhone.trim() : '';
+				tempSocial.medium = newMedium ? newMedium.trim() : '';
+				tempSocial.linkedIn = newLinked ? newLinked.trim() : '';
+				tempSocial.github = newGitHub ? newGitHub.trim() : '';
+				const tempUser = {...storedUser, ...{contacts: tempContacts, social: tempSocial}};
+				return isEqual(storedUser, tempUser) ? of(null) : this.userDataManager.updateUserData(tempUser);
+			})
+		);
+
 		const newName = this.userForm.get('displayName').value;
 		const displayName$ = newName
-			? this.authService.setNewDisplayName(newName).pipe(
+			? this.authService.currentUser$.pipe(
 					take(1),
+					switchMap(user => {
+						if (user.displayName !== newName.trim()) {
+							return this.authService.setNewDisplayName(newName.trim());
+						} else {
+							return of(null);
+						}
+					}),
 					catchError(err => {
 						console.error('Function: setNewDisplayName, ERROR: ', err);
 						this.notificationService.showError({
@@ -67,9 +110,15 @@ export class UserDataComponent extends BaseObserverComponent implements OnInit {
 					})
 			  )
 			: of(null);
-
-		zip(displayName$).subscribe(() => {
-			this.notificationService.showSuccess({message: 'Your profile updated!', duration: 3000});
+		zip(displayName$, userData$).subscribe(result => {
+			console.log('Function: , result: ', result);
+			if (result.filter(res => res !== null).length) {
+				this.notificationService.showSuccess({message: 'Your profile updated!', duration: 3000});
+			}
 		});
+	}
+
+	clearValue(control: AbstractControl) {
+		control.patchValue('');
 	}
 }

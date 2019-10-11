@@ -7,7 +7,7 @@ import {BaseObserverComponent} from '../../../shared/components/base-observer/ba
 import {environment} from '../../../../environments/environment';
 import {NotificationService} from '../../../shared/services/notification.service';
 import {GoogleAnalyticsService} from '../../../shared/services/google-analytics.service';
-import {validateEmail} from '../../../shared/models/validators';
+import {CustomValidators} from '../../../shared/utils/custom-validators';
 
 @Component({
 	selector: 'app-contact',
@@ -51,7 +51,7 @@ export class ContactComponent extends BaseObserverComponent implements OnInit {
 		this.contactForm = this.fb.group({
 			name: ['', [Validators.required]],
 			subject: ['', []],
-			email: ['', [Validators.required, validateEmail]],
+			email: ['', [Validators.required, CustomValidators.validateEmail]],
 			message: ['', Validators.required],
 			recaptchaReactive: [null, Validators.required]
 		});

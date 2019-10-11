@@ -1,9 +1,11 @@
 @import "variables";
+@import "mixins";
 @import "material-overrides";
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-@import "mixins";
-@import "~bootstrap/scss/bootstrap";
+//@import "~bootstrap/dist/css/bootstrap.min.css";
 @import "bootstrap-overrides";
+
+
 
 body {
 	background-color: $background;
@@ -137,15 +139,6 @@ h2 {
 	color: $header-font-color;
 	font-family: $font-family;
 	font-size: 0.75rem;
-}
-
-@mixin custom-header() {
-	font-family: 'Lato', sans-serif;
-	font-weight: 900;
-}
-
-@mixin dashboard-box-shadow() {
-	box-shadow: 0 0.625rem 2.125rem 0 rgba(210, 210, 210, 0.5);
 }
 
 html, body { height: 100%; }
