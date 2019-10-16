@@ -1,8 +1,15 @@
 export interface User {
 	uid: string;
 	email: string;
-	photoURL?: string;
+	photoURL?: {
+		url: string;
+		path: string;
+	};
 	displayName: string;
+	resume?: {
+		url: string;
+		path: string;
+	};
 	contacts: {
 		email: string;
 		skype?: string;

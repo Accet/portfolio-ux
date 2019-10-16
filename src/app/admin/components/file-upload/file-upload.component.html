@@ -1,0 +1,70 @@
+<div class="d-flex flex-column align-items-center justify-content-between">
+	<div class="drop-zone" appDropZone (hovered)="toggleHover($event)" [class.hovering]="isHovering">
+		<div *ngIf="!(isUploaded$ | async); else ready">
+			<div *ngIf="!(isLoading$ | async); else loading">
+				<img class="upload-img" src="./assets/icons/upload.svg" alt="" />
+				<p>Drag and Drop a File</p>
+			</div>
+		</div>
+	</div>
+
+	<mat-form-field class="form-input">
+		<mat-label>{{ labelMessage }}</mat-label>
+		<ngx-mat-file-input
+			[multiple]="false"
+			[valuePlaceholder]="placeholder"
+			[formControl]="fileControl"
+		></ngx-mat-file-input>
+		<mat-icon matSuffix>folder</mat-icon>
+	</mat-form-field>
+	<div *ngIf="isLoading$ | async" [@enterAnimation]>
+		<div class="actions-container" *ngIf="snapshot | async; let snap" [@enterAnimation]>
+			<div class="text-center">{{ snap.bytesTransferred | byteFormat }} of {{ snap.totalBytes | byteFormat }}</div>
+			<div class="mt-2 d-flex flex-row align-items-center justify-content-center">
+				<button mat-stroked-button color="primary" (click)="task.pause()" [disabled]="!isActive(snap)">
+					<mat-icon>pause</mat-icon>
+				</button>
+				<button mat-stroked-button color="warn" (click)="onCancel($event)" [disabled]="!isActive(snap)">
+					<mat-icon>close</mat-icon>
+				</button>
+				<button mat-stroked-button color="primary" (click)="task.resume()" [disabled]="!(snap?.state === 'paused')">
+					<mat-icon>play_arrow</mat-icon>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<ng-template #loading>
+		<div class="done-container d-flex flex-column align-items-center justify-content-center">
+			<div *ngIf="percentage | async as pct" class="d-flex flex-column align-items-center justify-content-center">
+				<mat-progress-spinner diameter="112" [strokeWidth]="8" [value]="pct"></mat-progress-spinner>
+				<div class="text-center">{{ pct | number }}%</div>
+			</div>
+		</div>
+	</ng-template>
+	<ng-template #ready>
+		<div class="d-flex align-items-center justify-content-center done-container">
+			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134.2 134.2">
+				<circle
+					class="path circle"
+					fill="none"
+					stroke="#18a966"
+					stroke-width="8"
+					stroke-miterlimit="10"
+					cx="67.1"
+					cy="67.1"
+					r="62.1"
+				/>
+				<polyline
+					class="path check"
+					fill="none"
+					stroke="#18a966"
+					stroke-width="8"
+					stroke-linecap="round"
+					stroke-miterlimit="10"
+					points="100.2,40.2 51.5,88.8 29.8,67.5 "
+				/>
+			</svg>
+		</div>
+	</ng-template>
+</div>

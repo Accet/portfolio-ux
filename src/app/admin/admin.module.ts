@@ -17,6 +17,11 @@ import {AuthService} from './services/auth.service';
 import {NewEmailComponent} from './components/profile/new-email/new-email.component';
 import {NewPasswordComponent} from './components/profile/new-password/new-password.component';
 import {UserDataComponent} from './components/profile/user-data/user-data.component';
+import {DropZoneDirective} from './directives/drop-zone.directive';
+import {FileUploadComponent} from './components/file-upload/file-upload.component';
+import {MaterialFileInputModule} from 'ngx-material-file-input';
+import {MatProgressSpinnerModule} from '@angular/material';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
 	declarations: [
@@ -31,10 +36,20 @@ import {UserDataComponent} from './components/profile/user-data/user-data.compon
 		ResetPasswordModalComponent,
 		NewEmailComponent,
 		NewPasswordComponent,
-		UserDataComponent
+		UserDataComponent,
+		DropZoneDirective,
+		FileUploadComponent
 	],
 	entryComponents: [LoginModalComponent, ResetPasswordModalComponent, ForgotPasswordModalComponent, AdminComponent],
-	imports: [RouterModule, AdminRoutingModule, SharedModule, AngularFireAuthModule],
+	imports: [
+		RouterModule,
+		AdminRoutingModule,
+		SharedModule,
+		AngularFireAuthModule,
+		MaterialFileInputModule,
+		MatProgressSpinnerModule,
+		CommonModule
+	],
 	exports: [
 		LoginModalComponent,
 		ResetPasswordModalComponent,

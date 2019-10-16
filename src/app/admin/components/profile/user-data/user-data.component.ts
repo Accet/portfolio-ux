@@ -10,6 +10,7 @@ import {of, zip} from 'rxjs';
 import {addInputmaskForPhone} from '../../../../shared/models/helper';
 import {UserDataManagerService} from '../../../../shared/services/user-data-manager.service';
 import * as isEqual from 'lodash.isequal';
+import {UploadType} from '../../file-upload/file-upload.component';
 
 @Component({
 	selector: 'app-user-data',
@@ -18,6 +19,8 @@ import * as isEqual from 'lodash.isequal';
 })
 export class UserDataComponent extends BaseObserverComponent implements OnInit {
 	userForm: FormGroup;
+	uploadType = UploadType;
+
 	@ViewChild('mobileEl', {static: true}) mobileEl: ElementRef;
 
 	constructor(
