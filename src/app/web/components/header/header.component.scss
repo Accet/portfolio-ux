@@ -1,4 +1,4 @@
-@import "styles";
+@import 'styles';
 
 .nav-container {
 	transition: box-shadow 0.3s ease-in-out;
@@ -43,8 +43,8 @@
 
 		.wrap {
 			@supports (backdrop-filter: none) {
-					backdrop-filter: blur(10px);
-					-webkit-backdrop-filter: blur(10px);
+				backdrop-filter: blur(10px);
+				-webkit-backdrop-filter: blur(10px);
 			}
 
 			@supports not (backdrop-filter: none) {
@@ -54,7 +54,6 @@
 			top: 0;
 			width: 100%;
 			height: 100%;
-
 		}
 	}
 

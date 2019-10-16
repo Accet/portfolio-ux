@@ -18,13 +18,16 @@
 }
 
 .carousel {
-	a:focus {outline:0;}
+	a:focus {
+		outline: 0;
+	}
 	.carousel-indicators li {
 		background-color: $header-font-color;
 		position: relative;
 		top: 2.5rem;
 	}
-	.carousel-control-prev-icon, .carousel-control-next-icon {
+	.carousel-control-prev-icon,
+	.carousel-control-next-icon {
 		width: 2rem;
 		height: 2rem;
 	}

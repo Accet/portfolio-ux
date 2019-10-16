@@ -1,6 +1,6 @@
 <div class="w-100 d-flex justify-content-between justify-content-start flex-column container">
 	<div class="w-100 pb-6 work-container" *ngFor="let item of items">
-		<div class="ground d-flex">
+		<div class="ground d-flex" [routerLink]="item.url">
 			<div class="image-container mat-elevation-z10">
 				<img class="h-100" [src]="item.imgUrl" [alt]="'Image of the ' + item.title + ' project'" />
 			</div>

@@ -131,6 +131,9 @@ h2 {
 	font-family: $font-family;
 	color: $font-color-main;
 	font-size: 1rem;
+	&:hover {
+		color: $secondary;
+	}
 }
 
 .info {
