@@ -29,7 +29,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 		private navBarService: NavBarService
 	) {
-		['linked', 'medium', 'mail', 'media', 'download', 'arrow_forward', 'cv'].forEach(icon => {
+		['linked', 'medium', 'mail', 'medium-green', 'download', 'arrow_forward', 'cv'].forEach(icon => {
 			this.matIconRegistry.addSvgIcon(
 				icon,
 				this.domSanitizer.bypassSecurityTrustResourceUrl(`assets/icons/${icon}.svg`)

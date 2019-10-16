@@ -61,6 +61,7 @@
       true,
       "single"
     ],
+		"indent": [true, "tabs", 2],
     "trailing-comma": false,
     "no-output-on-prefix": true,
     "no-inputs-metadata-property": true,

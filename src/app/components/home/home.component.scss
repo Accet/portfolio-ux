@@ -1,4 +1,4 @@
-@import "styles";
+@import 'styles';
 .container {
 	position: relative;
 }
@@ -27,7 +27,7 @@
 	position: absolute;
 	top: 1000px;
 	//left:0;
-	right:0;
+	right: 0;
 	width: 100%;
 	height: auto;
 	display: flex;
