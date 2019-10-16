@@ -1,9 +1,9 @@
 <div class="title-container d-flex flex-column">
 	<h1>{{ items.fullTitle }}</h1>
-	<div class="d-flex flex-row justify-content-start align-items-center" *ngIf="items.mediumUrl">
+	<div class="mt-3 d-flex flex-row justify-content-start align-items-center" *ngIf="items.mediumUrl">
 		<h2>Read the full story on Medium</h2>
 		<a class="ml-3" (click)="onMedium(items.mediumUrl)" [href]="items.mediumUrl" target="_blank">
-			<mat-icon [svgIcon]="'media'"></mat-icon>
+			<mat-icon svgIcon="medium-green"></mat-icon>
 		</a>
 	</div>
 </div>
