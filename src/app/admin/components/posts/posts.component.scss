@@ -1,0 +1,26 @@
+@import 'styles';
+
+.dashboard-section {
+	max-width: 75%;
+	margin-left: auto;
+	margin-right: auto;
+	display: flex;
+	align-self: center;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	.posts-container {
+		.title {
+			font-weight: $font-weight-bolder;
+			color: $header-font-color;
+		}
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+		border-radius: $border-radius;
+		background-color: $white;
+		@include dashboard-box-shadow();
+		padding: 2rem 5rem 2rem 5rem;
+	}
+}

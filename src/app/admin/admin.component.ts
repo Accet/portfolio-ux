@@ -4,10 +4,12 @@ import {catchError, concatMap, finalize, switchMap, takeUntil} from 'rxjs/operat
 import {ModalService} from '../shared/services/modal.service';
 import {from, of, ReplaySubject, throwError} from 'rxjs';
 import {LoginModalComponent} from './components/login-modal/login-modal.component';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, RouterOutlet} from '@angular/router';
 import {NotificationService} from '../shared/services/notification.service';
 import {ResetPasswordModalComponent} from './components/reset-password-modal/reset-password-modal.component';
 import {AuthService} from './services/auth.service';
+import {slideInAnimation, slideOutAnimation} from '../shared/animations/animations';
+import {transition, trigger, useAnimation} from '@angular/animations';
 
 enum AuthActions {
 	RESET_PASSWORD = 'resetPassword',
@@ -18,7 +20,17 @@ enum AuthActions {
 @Component({
 	selector: 'app-admin',
 	templateUrl: './admin.component.html',
-	styleUrls: ['./admin.component.scss']
+	styleUrls: ['./admin.component.scss'],
+	animations: [
+		trigger('routeAnimation', [
+			//
+			transition('posts => me', [useAnimation(slideInAnimation)]),
+			transition('me => posts', [useAnimation(slideOutAnimation)])
+		]),
+		trigger('routeAnimation', [
+			//
+		])
+	]
 })
 export class AdminComponent extends BaseObserverComponent implements OnInit, OnDestroy {
 	checkUser$: ReplaySubject<any> = new ReplaySubject(1);
@@ -97,5 +109,9 @@ export class AdminComponent extends BaseObserverComponent implements OnInit, OnD
 		super.ngOnDestroy();
 		this.notificationService.dismissAll();
 		this.modalService.dismissAll();
+	}
+
+	getAnimationData(outlet: RouterOutlet) {
+		return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
 	}
 }

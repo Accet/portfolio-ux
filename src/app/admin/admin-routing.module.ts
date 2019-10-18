@@ -9,15 +9,16 @@ const routes: Routes = [
 		path: '',
 		component: AdminComponent,
 		children: [
-			{path: '', component: ProfileComponent},
+			{path: 'me', component: ProfileComponent, data: {animation: 'me'}},
 			{
 				path: 'posts',
 				component: PostsComponent,
-				pathMatch: 'full'
+				pathMatch: 'full',
+				data: {animation: 'posts'}
 			},
 			{
-				path: 'me',
-				component: ProfileComponent,
+				path: '',
+				redirectTo: 'me',
 				pathMatch: 'full'
 			},
 			{

@@ -23,7 +23,7 @@ export class NavigationItemsService {
 	constructor(private router: Router) {
 		combineLatest([router.events, this._currentItems$.pipe(take(1))]).subscribe(([event, items]) => {
 			if (event instanceof NavigationEnd) {
-				const currentItemIndex = items.findIndex(item => event.url.includes(item.url));
+				const currentItemIndex = items.findIndex(item => event.urlAfterRedirects.includes(item.url));
 				items = items.map(item => {
 					item.selected = false;
 					return item;
