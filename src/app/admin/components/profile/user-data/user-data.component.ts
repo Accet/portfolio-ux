@@ -36,7 +36,6 @@ export class UserDataComponent extends BaseObserverComponent implements OnInit {
 	ngOnInit() {
 		this.initForm();
 		this.authService.currentUser$.pipe(takeUntil(this.destroy$)).subscribe(user => {
-			console.log('Function: CHANGED, user: ', user);
 			if (!user) {
 				return;
 			}
@@ -69,7 +68,6 @@ export class UserDataComponent extends BaseObserverComponent implements OnInit {
 
 	handleSave(event: MouseEvent) {
 		event.preventDefault();
-		console.log('Function: handleSave, this.userForm: ', this.userForm);
 		this.notificationService.dismissAll();
 		FormUtils.markFormFieldsAsDirty(this.userForm);
 		if (this.userForm.invalid) {
@@ -121,7 +119,6 @@ export class UserDataComponent extends BaseObserverComponent implements OnInit {
 			  )
 			: of(null);
 		zip(displayName$, userData$).subscribe(result => {
-			console.log('Function: , result: ', result);
 			if (result.filter(res => res !== null).length) {
 				this.notificationService.showSuccess({message: 'Your profile updated!', duration: 3000});
 			}
