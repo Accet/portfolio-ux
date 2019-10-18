@@ -6,9 +6,12 @@ import {BaseObserverComponent} from '../../../shared/components/base-observer/ba
 import {
 	catchError,
 	concatMap,
+	debounceTime,
+	distinctUntilChanged,
 	filter,
 	finalize,
 	map,
+	scan,
 	shareReplay,
 	switchMap,
 	take,
@@ -60,7 +63,6 @@ export interface UploadFileData {
 	styleUrls: ['./file-upload.component.scss']
 })
 export class FileUploadComponent extends BaseObserverComponent implements OnInit, OnChanges {
-	isHovering: boolean;
 	percentage: Observable<number>;
 	snapshot: Observable<UploadTaskSnapshot>;
 	task: AngularFireUploadTask;
@@ -69,8 +71,12 @@ export class FileUploadComponent extends BaseObserverComponent implements OnInit
 	placeholder: string;
 	currentUser: User;
 	labelMessage: string;
+	public lottieConfig: any;
+	private anim: any;
 
 	isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	private _isHovering$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	isHovering$: Observable<boolean>;
 	isUploaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	@ViewChild(DropZoneDirective, {static: false}) set dropFile(element: DropZoneDirective) {
@@ -89,6 +95,11 @@ export class FileUploadComponent extends BaseObserverComponent implements OnInit
 		private storage: AngularFireStorage
 	) {
 		super();
+		this.lottieConfig = {
+			path: 'assets/upload.json',
+			autoplay: true,
+			loop: true
+		};
 	}
 
 	ngOnInit() {
@@ -101,11 +112,13 @@ export class FileUploadComponent extends BaseObserverComponent implements OnInit
 					switch (this.mode) {
 						case UploadType.RESUME:
 							this.placeholder =
-								user.resume && user.resume.path ? this.storage.storage.ref(user.resume.path).name : undefined;
+								user && user.resume && user.resume.path ? this.storage.storage.ref(user.resume.path).name : undefined;
 							break;
 						case UploadType.AVATAR:
 							this.placeholder =
-								user.photoURL && user.photoURL.path ? this.storage.storage.ref(user.photoURL.path).name : undefined;
+								user && user.photoURL && user.photoURL.path
+									? this.storage.storage.ref(user.photoURL.path).name
+									: undefined;
 							break;
 						default:
 							break;
@@ -180,6 +193,14 @@ export class FileUploadComponent extends BaseObserverComponent implements OnInit
 					console.log('Function: error, : ');
 				}
 			);
+
+		this.isHovering$ = this._isHovering$.asObservable().pipe(
+			distinctUntilChanged(),
+			debounceTime(50)
+		);
+		this.isHovering$.subscribe(value => {
+			console.log('Function: , value: ', value);
+		});
 	}
 
 	uploadFile(file: File, path: string): Observable<any> {
@@ -202,7 +223,7 @@ export class FileUploadComponent extends BaseObserverComponent implements OnInit
 
 	toggleHover(event) {
 		this.isUploaded$.next(false);
-		this.isHovering = event;
+		this._isHovering$.next(event);
 	}
 
 	isActive(snapshot) {
@@ -226,7 +247,9 @@ export class FileUploadComponent extends BaseObserverComponent implements OnInit
 								return this.userManager.updateUserData(user, true);
 							case UploadType.AVATAR:
 								delete user.photoURL;
-								return this.userManager.updateUserData(user, true);
+								return this.userManager
+									.updateUserData(user, true)
+									.pipe(concatMap(() => this.authService.setNewProfilePicture()));
 							default:
 								return of(null);
 						}
@@ -312,7 +335,10 @@ export class FileUploadComponent extends BaseObserverComponent implements OnInit
 			case UploadType.RESUME:
 				return this.userManager.updateUserData({...this.currentUser, ...{resume: data}}).pipe(map(() => data));
 			case UploadType.AVATAR:
-				return this.userManager.updateUserData({...this.currentUser, ...{photoURL: data}}).pipe(map(() => data));
+				return this.userManager
+					.updateUserData({...this.currentUser, ...{photoURL: data}})
+					.pipe(map(() => data))
+					.pipe(concatMap(() => this.authService.setNewProfilePicture(data.url)));
 			default:
 				return of(data);
 		}
@@ -332,5 +358,9 @@ export class FileUploadComponent extends BaseObserverComponent implements OnInit
 					break;
 			}
 		}
+	}
+
+	handleAnimation(anim) {
+		this.anim = anim;
 	}
 }

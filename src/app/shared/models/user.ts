@@ -1,6 +1,8 @@
 export interface User {
 	uid: string;
 	email: string;
+	objectives?: string;
+	bio?: string;
 	photoURL?: {
 		url: string;
 		path: string;

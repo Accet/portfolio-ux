@@ -1,11 +1,41 @@
 <div class="d-flex flex-column align-items-center justify-content-between">
-	<div class="drop-zone" appDropZone (hovered)="toggleHover($event)" [class.hovering]="isHovering">
-		<div *ngIf="!(isUploaded$ | async); else ready">
-			<div *ngIf="!(isLoading$ | async); else loading">
-				<img class="upload-img" src="./assets/icons/upload.svg" alt="" />
-				<p>Drag and Drop a File</p>
-			</div>
-		</div>
+	<div class="drop-zone" appDropZone (hovered)="toggleHover($event)" [class.hovering]="isHovering$ | async">
+		<ng-container *ngIf="!(isUploaded$ | async); else ready">
+			<ng-container *ngIf="!(isLoading$ | async); else loading">
+				<ng-container *ngIf="!(isHovering$ | async); else hovering">
+					<ng-container *ngIf="mode === uploadType.AVATAR && currentUser?.photoURL?.url; else info">
+						<div class="user-avatar">
+							<div class="user-profile-picture">
+								<img class="img-avatar" [src]="currentUser?.photoURL?.url" alt="Profile photo" />
+							</div>
+						</div>
+					</ng-container>
+					<ng-template #info>
+						<img
+							class="upload-img"
+							[src]="mode === uploadType.AVATAR ? './assets/icons/add-photo.svg' : './assets/icons/upload.svg'"
+							[alt]="
+								mode === uploadType.AVATAR
+									? 'Upload profile picture'
+									: mode === uploadType.RESUME
+									? 'Upload resume'
+									: 'upload image'
+							"
+						/>
+						<div>Drag and Drop a File</div>
+					</ng-template>
+				</ng-container>
+				<ng-template #hovering>
+					<lottie-animation-view
+						[width]="144"
+						[height]="144"
+						[options]="lottieConfig"
+						(animCreated)="handleAnimation($event)"
+					>
+					</lottie-animation-view
+				></ng-template>
+			</ng-container>
+		</ng-container>
 	</div>
 
 	<mat-form-field class="form-input">

@@ -22,6 +22,7 @@ import {FileUploadComponent} from './components/file-upload/file-upload.componen
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {MatProgressSpinnerModule} from '@angular/material';
 import {CommonModule} from '@angular/common';
+import {LottieAnimationViewModule} from 'ng-lottie';
 
 @NgModule({
 	declarations: [
@@ -48,7 +49,8 @@ import {CommonModule} from '@angular/common';
 		AngularFireAuthModule,
 		MaterialFileInputModule,
 		MatProgressSpinnerModule,
-		CommonModule
+		CommonModule,
+		LottieAnimationViewModule.forRoot()
 	],
 	exports: [
 		LoginModalComponent,

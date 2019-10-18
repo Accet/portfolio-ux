@@ -11,6 +11,7 @@ import {addInputmaskForPhone} from '../../../../shared/models/helper';
 import {UserDataManagerService} from '../../../../shared/services/user-data-manager.service';
 import * as isEqual from 'lodash.isequal';
 import {UploadType} from '../../file-upload/file-upload.component';
+import {User} from '../../../../shared/models/user';
 
 @Component({
 	selector: 'app-user-data',
@@ -41,6 +42,8 @@ export class UserDataComponent extends BaseObserverComponent implements OnInit {
 			}
 			this.userForm.patchValue({
 				displayName: user.displayName,
+				objectives: user.objectives,
+				bio: user.bio,
 				phone: user.contacts.phone,
 				skype: user.contacts.skype,
 				linkedIn: user.social && user.social.linkedIn ? user.social.linkedIn : '',
@@ -53,6 +56,8 @@ export class UserDataComponent extends BaseObserverComponent implements OnInit {
 	private initForm() {
 		this.userForm = this.fb.group({
 			displayName: ['', [Validators.required, CustomValidators.validateName]],
+			objectives: ['', [Validators.required]],
+			bio: ['', [Validators.required]],
 			phone: ['', [CustomValidators.validateMobile]],
 			skype: ['', []],
 			linkedIn: ['', []],
@@ -80,7 +85,15 @@ export class UserDataComponent extends BaseObserverComponent implements OnInit {
 				tempSocial.medium = this.userForm.get('medium').value ? this.userForm.get('medium').value.trim() : '';
 				tempSocial.linkedIn = this.userForm.get('linkedIn').value ? this.userForm.get('linkedIn').value.trim() : '';
 				tempSocial.github = this.userForm.get('github').value ? this.userForm.get('github').value.trim() : '';
-				const tempUser = {...storedUser, ...{contacts: tempContacts, social: tempSocial}};
+				const tempUser: User = {
+					...storedUser,
+					...{
+						contacts: tempContacts,
+						social: tempSocial,
+						bio: this.userForm.get('bio').value ? this.userForm.get('bio').value.trim() : '',
+						objectives: this.userForm.get('objectives').value ? this.userForm.get('objectives').value.trim() : ''
+					}
+				};
 				return isEqual(storedUser, tempUser) ? of(null) : this.userDataManager.updateUserData(tempUser);
 			})
 		);

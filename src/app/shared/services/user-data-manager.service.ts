@@ -2,18 +2,13 @@ import {Injectable} from '@angular/core';
 import {from, Observable} from 'rxjs';
 import {User} from '../models/user';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
-import {finalize, map, switchMap} from 'rxjs/operators';
-import {AngularFireStorage} from '@angular/fire/storage';
-import {UploadType} from '../../admin/components/file-upload/file-upload.component';
+import {map} from 'rxjs/operators';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class UserDataManagerService {
-	uploadPercent: Observable<number>;
-	downloadURL: Observable<string>;
-
-	constructor(private db: AngularFirestore, private storage: AngularFireStorage) {}
+	constructor(private db: AngularFirestore) {}
 
 	getUser(uid): Observable<User> {
 		return this.db.doc<User>(`users/${uid}`).valueChanges();
@@ -21,7 +16,6 @@ export class UserDataManagerService {
 
 	updateUserData(user: User, force = false): Observable<void> {
 		// Sets user data to firestore on login
-		console.log('Function: updateUserData, user: ', user);
 		const userRef: AngularFirestoreDocument<any> = this.db.doc(`users/${user.uid}`);
 		return from(userRef.set(user, {merge: !force}));
 	}

@@ -17,14 +17,16 @@ export class DropZoneDirective {
 	}
 
 	@HostListener('dragover', ['$event'])
-	onDragOver($event) {
-		$event.preventDefault();
+	onDragOver(evt) {
+		evt.preventDefault();
+		evt.stopPropagation();
 		this.hovered.emit(true);
 	}
 
 	@HostListener('dragleave', ['$event'])
-	onDragLeave($event) {
-		$event.preventDefault();
+	onDragLeave(evt) {
+		evt.preventDefault();
+		evt.stopPropagation();
 		this.hovered.emit(false);
 	}
 }

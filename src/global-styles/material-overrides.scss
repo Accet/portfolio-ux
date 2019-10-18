@@ -4,8 +4,8 @@ mat-form-field {
 		height: 3.125rem;
 		width: 100% !important;
 		padding: 0.3rem 0.75rem;
-		font-size: 0.875rem;
-		line-height: 1.25;
+		font-size: 0.9rem;
+		line-height: 1.3;
 		color: $form-input-color;
 		background-color: $white;
 		background-clip: padding-box;
@@ -24,7 +24,8 @@ mat-form-field {
 		}
 
 		input.mat-input-element {
-			margin-top: 0.2rem !important;
+			line-height: 1.3;
+			margin-top: 0.3rem !important;
 		}
 
 		&.mat-form-field-type-mat-select {

@@ -1,1 +1,8 @@
 @import 'profile-container';
+.float-text {
+	mat-form-field {
+		&.form-input {
+			height: auto !important;
+		}
+	}
+}

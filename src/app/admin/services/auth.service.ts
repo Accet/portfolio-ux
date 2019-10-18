@@ -22,6 +22,7 @@ export class AuthService {
 		return from(this.afAuth.auth.signInWithEmailAndPassword(email, password)).pipe(
 			map(userCredentials => userCredentials.user),
 			concatMap(user => {
+				console.log('Function: , user: ', user);
 				const data: User = {
 					uid: user.uid,
 					email: user.email,
@@ -77,5 +78,9 @@ export class AuthService {
 			switchMap(() => this.currentUser$),
 			concatMap(user => this.userDataManager.updateUserData({...user, ...{displayName: name}}))
 		);
+	}
+
+	setNewProfilePicture(photoURL: string = null): Observable<any> {
+		return from(this.afAuth.auth.currentUser.updateProfile({photoURL}));
 	}
 }

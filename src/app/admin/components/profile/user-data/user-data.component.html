@@ -26,6 +26,50 @@
 			</div>
 		</div>
 
+		<div class="float-text d-flex flex-column justify-content-around align-items-start form-group">
+			<mat-form-field class="form-input">
+				<mat-label>Type your objectives here</mat-label>
+				<textarea
+					formControlName="objectives"
+					required
+					matInput
+					maxlength="180"
+					cdkTextareaAutosize
+					cdkAutosizeMinRows="2"
+					cdkAutosizeMaxRows="3"
+				></textarea>
+				<mat-hint align="end">{{ userForm.get('objectives').value?.length || 0 }} / 140</mat-hint>
+			</mat-form-field>
+			<div
+				*ngIf="userForm.get('objectives').touched && userForm.get('objectives').hasError('required')"
+				class="text-danger form-error"
+			>
+				{{ 'Provide your objectives' }}
+			</div>
+		</div>
+
+		<div class="float-text d-flex flex-column justify-content-around align-items-start form-group">
+			<mat-form-field class="form-input">
+				<mat-label>Write about yourself</mat-label>
+				<textarea
+					formControlName="bio"
+					matInput
+					required
+					maxlength="900"
+					cdkTextareaAutosize
+					cdkAutosizeMinRows="3"
+					cdkAutosizeMaxRows="7"
+				></textarea>
+				<mat-hint align="end">{{ userForm.get('bio').value?.length || 0 }} / 900</mat-hint>
+			</mat-form-field>
+			<div
+				*ngIf="userForm.get('bio').touched && userForm.get('bio').hasError('required')"
+				class="text-danger form-error"
+			>
+				{{ 'Provide your brief bio' }}
+			</div>
+		</div>
+
 		<div class="d-flex flex-row align-items-center justify-content-between">
 			<h3 class="mb-0">Contact info</h3>
 			<mat-divider class="flex-grow-1 ml-3"></mat-divider>
@@ -113,17 +157,27 @@
 			</div>
 		</div>
 
-		<div class="d-flex flex-row align-items-center justify-content-between">
-			<h3 class="mb-0">Upload resume</h3>
-			<mat-divider class="flex-grow-1 ml-3"></mat-divider>
-		</div>
-		<div class="mt-3 d-flex flex-row align-items-center justify-content-center">
-			<app-file-upload [mode]="uploadType.RESUME"></app-file-upload>
-		</div>
 		<div class="mt-3 d-flex flex-row justify-content-end align-items-center">
 			<button mat-flat-button color="primary" class="px-3" (click)="handleSave($event)">
 				{{ 'Save' }}
 			</button>
 		</div>
 	</form>
+
+	<div class="mt-3 d-flex flex-row align-items-center justify-content-center">
+		<div class="col-6 align-self-start">
+			<div class="d-flex mb-3 flex-row align-items-center justify-content-between">
+				<h3 class="mb-0">Upload resume</h3>
+				<mat-divider class="flex-grow-1 ml-3"></mat-divider>
+			</div>
+			<app-file-upload [mode]="uploadType.RESUME"></app-file-upload>
+		</div>
+		<div class="col-6 align-self-start">
+			<div class="d-flex mb-3 flex-row align-items-center justify-content-between">
+				<h3 class="mb-0">Profile photo</h3>
+				<mat-divider class="flex-grow-1 ml-3"></mat-divider>
+			</div>
+			<app-file-upload [mode]="uploadType.AVATAR"></app-file-upload>
+		</div>
+	</div>
 </div>
