@@ -5,10 +5,9 @@ import {NotificationService} from '../../../../shared/services/notification.serv
 import {ModalService} from '../../../../shared/services/modal.service';
 import {BaseObserverComponent} from '../../../../shared/components/base-observer/base-observer.component';
 import {CustomValidators} from '../../../../shared/utils/custom-validators';
-import {catchError, concatMap, debounceTime, shareReplay, switchMap, take, takeUntil, tap} from 'rxjs/operators';
+import {debounceTime, filter, shareReplay, switchMap, take, takeUntil, tap} from 'rxjs/operators';
 import {LoginModalComponent} from '../../login-modal/login-modal.component';
-import {BehaviorSubject, combineLatest, from, Observable, of} from 'rxjs';
-import {User} from '../../../../shared/models/user';
+import {BehaviorSubject, combineLatest, from, of} from 'rxjs';
 
 @Component({
 	selector: 'app-new-email',
@@ -45,15 +44,16 @@ export class NewEmailComponent extends BaseObserverComponent implements OnInit {
 
 		this.emailControl.valueChanges
 			.pipe(
-				takeUntil(this.destroy$),
 				debounceTime(300),
-				switchMap(email => combineLatest([of(email), this.authService.currentUser$])),
-				tap(([email, user]) => this.isDisabled.next(!email || email === user.email))
+				switchMap(email => combineLatest([of(email), this.authService.currentUser$.pipe(filter(val => !!val))])),
+				tap(([email, user]) => this.isDisabled.next(!email || email === user.email)),
+				takeUntil(this.destroy$)
 			)
 			.subscribe();
 	}
 
 	onUpdateEmail(event: MouseEvent) {
+		event.preventDefault();
 		this.emailControl.markAsTouched();
 		this.emailControl.updateValueAndValidity();
 		if (this.emailControl.invalid) {
@@ -67,20 +67,7 @@ export class NewEmailComponent extends BaseObserverComponent implements OnInit {
 					const modalRef = this.modalService.open(LoginModalComponent, {email: user.email}, {size: 'sm'});
 					return from(modalRef.result);
 				}),
-				switchMap(() => this.authService.setNewEmail(this.emailControl.value)),
-				switchMap(() => {
-					const reloginRef = this.modalService.open(
-						LoginModalComponent,
-						{email: this.emailControl.value},
-						{size: 'sm'}
-					);
-					return from(reloginRef.result).pipe(
-						catchError(() => {
-							this.notificationService.dismissAll();
-							return of(null);
-						})
-					);
-				})
+				switchMap(() => this.authService.setNewEmail(this.emailControl.value))
 			)
 			.subscribe(() => {}, () => {});
 	}

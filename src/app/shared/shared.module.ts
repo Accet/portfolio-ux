@@ -21,6 +21,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {RouterModule} from '@angular/router';
 import {GhostBlockComponent} from './components/ghost-block/ghost-block.component';
 import {PhoneNumberPipe} from './pipes/phone-number.pipe';
+import {LottieAnimationViewModule} from 'ng-lottie';
 
 @NgModule({
 	declarations: [ScrollSpyDirective, CustomNotificationComponent, GhostBlockComponent, PhoneNumberPipe],
@@ -40,7 +41,8 @@ import {PhoneNumberPipe} from './pipes/phone-number.pipe';
 		MatGridListModule,
 		MatSnackBarModule,
 		MatDividerModule,
-		FormsModule
+		FormsModule,
+		LottieAnimationViewModule.forRoot()
 	],
 	entryComponents: [CustomNotificationComponent],
 	exports: [
@@ -56,7 +58,8 @@ import {PhoneNumberPipe} from './pipes/phone-number.pipe';
 		MatDividerModule,
 		NgbModule,
 		GhostBlockComponent,
-		PhoneNumberPipe
+		PhoneNumberPipe,
+		LottieAnimationViewModule
 	]
 })
 export class SharedModule {}

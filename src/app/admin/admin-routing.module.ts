@@ -9,6 +9,7 @@ const routes: Routes = [
 		path: '',
 		component: AdminComponent,
 		children: [
+			{path: '', component: ProfileComponent},
 			{
 				path: 'posts',
 				component: PostsComponent,
@@ -18,6 +19,10 @@ const routes: Routes = [
 				path: 'me',
 				component: ProfileComponent,
 				pathMatch: 'full'
+			},
+			{
+				path: '**',
+				loadChildren: () => import('../shared/components/not-found/not-found.module').then(m => m.NotFoundModule)
 			}
 		]
 	}

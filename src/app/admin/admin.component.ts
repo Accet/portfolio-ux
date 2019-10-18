@@ -89,8 +89,6 @@ export class AdminComponent extends BaseObserverComponent implements OnInit, OnD
 			.subscribe(user => {
 				if (!user) {
 					this.router.navigate(['']).catch(err => console.error('navigate: , err: ', err));
-				} else {
-					this.router.navigate(['me'], {relativeTo: this.route}).catch(err => console.error('navigate: , err: ', err));
 				}
 			});
 	}
