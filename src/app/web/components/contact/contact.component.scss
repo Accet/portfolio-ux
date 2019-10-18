@@ -39,8 +39,7 @@
 	height: fit-content;
 }
 a {
-	text-decoration: none;
-	color: $font-color-main;
+	text-decoration: underline;
 }
 
 :host ::ng-deep {

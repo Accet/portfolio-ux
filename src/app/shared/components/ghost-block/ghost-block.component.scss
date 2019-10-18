@@ -1,0 +1,16 @@
+@import 'styles';
+
+.ghost-block {
+	display: block;
+	content: '';
+	border-radius: 0.25rem;
+	opacity: 0.4;
+
+	@media (max-width: $layout-md-size) {
+		&.full-width-md {
+			width: 100% !important;
+		}
+	}
+
+	@include animate-ghost-line;
+}

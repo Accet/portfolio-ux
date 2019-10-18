@@ -3,6 +3,7 @@
 ul {
 	width: 100%;
 	z-index: 200;
+	transition: all ease-in-out 500ms;
 	&.nav {
 		@media (max-width: $layout-lg-size) {
 			display: none !important;
@@ -39,7 +40,7 @@ ul {
 			.rounded-btn {
 				padding: 2px;
 				border-radius: $border-radius;
-				margin-top: 5px !important;
+				margin-top: 1px !important;
 				.mat-icon {
 					width: 1.75rem;
 					height: 1.75rem;

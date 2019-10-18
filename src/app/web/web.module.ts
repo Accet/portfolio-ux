@@ -15,6 +15,7 @@ import {WorkInfoComponent} from './components/works/work-info/work-info.componen
 import {CarouselComponent} from './components/carousel/carousel.component';
 import {SharedModule} from '../shared/shared.module';
 import {RecaptchaFormsModule, RecaptchaModule} from 'ng-recaptcha';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
 	declarations: [
@@ -32,7 +33,7 @@ import {RecaptchaFormsModule, RecaptchaModule} from 'ng-recaptcha';
 		CarouselComponent
 	],
 	entryComponents: [WebComponent],
-	imports: [RouterModule, WebRoutingModule, SharedModule, RecaptchaModule, RecaptchaFormsModule],
+	imports: [RouterModule, WebRoutingModule, SharedModule, RecaptchaModule, RecaptchaFormsModule, CommonModule],
 	exports: [WebComponent],
 	providers: []
 })

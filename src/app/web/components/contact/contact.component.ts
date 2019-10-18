@@ -1,13 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {takeUntil, tap} from 'rxjs/operators';
 import {BaseObserverComponent} from '../../../shared/components/base-observer/base-observer.component';
 import {environment} from '../../../../environments/environment';
 import {NotificationService} from '../../../shared/services/notification.service';
 import {GoogleAnalyticsService} from '../../../shared/services/google-analytics.service';
 import {CustomValidators} from '../../../shared/utils/custom-validators';
+import {UserDataManagerService} from '../../../shared/services/user-data-manager.service';
+import {User} from '../../../shared/models/user';
 
 @Component({
 	selector: 'app-contact',
@@ -15,17 +17,19 @@ import {CustomValidators} from '../../../shared/utils/custom-validators';
 	styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent extends BaseObserverComponent implements OnInit {
-	emailFirst = 'tatyana.arkhypchuk';
-	emailSecond = '@gmail.com';
+	emailFirst: string;
+	emailSecond: string;
 	contactForm: FormGroup;
 	disabledSubmit: BehaviorSubject<boolean> = new BehaviorSubject(true);
+	user$: Observable<User>;
 
 	RECAPTCHA_KEY = environment.recaptcha;
 	constructor(
 		private db: AngularFirestore,
 		private fb: FormBuilder,
 		private notificationService: NotificationService,
-		private gAnalytics: GoogleAnalyticsService
+		private gAnalytics: GoogleAnalyticsService,
+		private userService: UserDataManagerService
 	) {
 		super();
 	}
@@ -45,6 +49,12 @@ export class ContactComponent extends BaseObserverComponent implements OnInit {
 				tap(state => this.disabledSubmit.next(state === 'INVALID'))
 			)
 			.subscribe();
+		this.user$ = this.userService.userInfo$.pipe(
+			tap(user => {
+				this.emailFirst = user.email.split('@')[0];
+				this.emailSecond = user.email.split('@')[1];
+			})
+		);
 	}
 
 	initForm() {

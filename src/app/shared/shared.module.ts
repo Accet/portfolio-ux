@@ -19,9 +19,11 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {RouterModule} from '@angular/router';
+import {GhostBlockComponent} from './components/ghost-block/ghost-block.component';
+import {PhoneNumberPipe} from './pipes/phone-number.pipe';
 
 @NgModule({
-	declarations: [ScrollSpyDirective, CustomNotificationComponent],
+	declarations: [ScrollSpyDirective, CustomNotificationComponent, GhostBlockComponent, PhoneNumberPipe],
 	imports: [
 		AngularFireModule.initializeApp(environment.firebase),
 		AngularFireStorageModule,
@@ -52,7 +54,9 @@ import {RouterModule} from '@angular/router';
 		ScrollSpyDirective,
 		CommonModule,
 		MatDividerModule,
-		NgbModule
+		NgbModule,
+		GhostBlockComponent,
+		PhoneNumberPipe
 	]
 })
 export class SharedModule {}

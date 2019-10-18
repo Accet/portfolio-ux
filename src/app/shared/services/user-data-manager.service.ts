@@ -1,14 +1,16 @@
 import {Injectable} from '@angular/core';
-import {from, Observable} from 'rxjs';
+import {from, Observable, of} from 'rxjs';
 import {User} from '../models/user';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
-import {map} from 'rxjs/operators';
+import {map, shareReplay, switchMap, tap} from 'rxjs/operators';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class UserDataManagerService {
 	constructor(private db: AngularFirestore) {}
+
+	private _currentUser$: Observable<User>;
 
 	getUser(uid): Observable<User> {
 		return this.db.doc<User>(`users/${uid}`).valueChanges();
@@ -20,10 +22,21 @@ export class UserDataManagerService {
 		return from(userRef.set(user, {merge: !force}));
 	}
 
-	getUserData(): Observable<User> {
+	private getUserData(): Observable<User> {
 		return this.db
 			.collection('users/')
 			.valueChanges()
-			.pipe(map(users => (users.length ? (users[0] as User) : null)));
+			.pipe(
+				tap(() => this.resetMeCache()),
+				map(users => (users.length ? (users[0] as User) : null))
+			);
+	}
+
+	get userInfo$(): Observable<User> {
+		return this._currentUser$ ? this._currentUser$ : (this._currentUser$ = this.getUserData().pipe(shareReplay(1)));
+	}
+
+	resetMeCache() {
+		this._currentUser$ = null;
 	}
 }

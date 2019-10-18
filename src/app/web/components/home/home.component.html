@@ -6,21 +6,33 @@
 		<img src="./assets/images/middle_bg.png" alt="header image" />
 	</div>
 	<div class="container">
-		<div class="title-section dashboard-section mt-2" id="top">
+		<div class="title-section dashboard-section" id="top">
 			<div class="short-info">
-				Hi, my name is Tanya and I am a UX Designer and Researcher with customer service experience
+				<ng-container *ngIf="user$ | async; let user; else: objectivesGhost">
+					<div>{{ user.objectives }}</div>
+				</ng-container>
+				<ng-template #objectivesGhost>
+					<div *ngFor="let i of ghostLinesObjectives; last as isLast">
+						<div class="mb-3" [ngClass]="{'last-ghost': isLast}">
+							<app-ghost-block [h]="3"></app-ghost-block>
+						</div>
+					</div>
+				</ng-template>
 			</div>
 		</div>
 		<div class="dashboard-section route-section" id="about">
 			<h3 class="section-title">{{ 'about me' | uppercase }}</h3>
 			<div class="about-content mt-4">
-				I am a UX Designer and Researcher with the customer service experience. My 10 years’ experience of working in
-				the customer service industry has taught me that clients, as well as their needs and concerns, must always be
-				the first priority. I take pride in creating design for real people in the real contemporary world and my
-				working motto is “The devil is in the details”. My colleagues have always pointed out that I think outside the
-				box when it comes to problem solving. I am passionate about creating a unique user experience design and
-				meticulous about quality. My most important principle is to create an intuitive and usable design for real
-				people in the real world.
+				<ng-container *ngIf="user$ | async; let user; else: bioGhost">
+					<div>{{ user.bio }}</div>
+				</ng-container>
+				<ng-template #bioGhost>
+					<div *ngFor="let i of ghostLinesAbout; last as isLast">
+						<div class="mb-3" [ngClass]="{'last-ghost': isLast}">
+							<app-ghost-block [h]="2"></app-ghost-block>
+						</div>
+					</div>
+				</ng-template>
 			</div>
 		</div>
 		<div class="dashboard-section route-section" id="works">

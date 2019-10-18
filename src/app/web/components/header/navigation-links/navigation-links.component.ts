@@ -1,9 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {takeUntil} from 'rxjs/operators';
+import {take, takeUntil, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {BaseObserverComponent} from '../../../../shared/components/base-observer/base-observer.component';
 import {CommunicationService, MessageType} from '../../../../shared/services/communication.service';
 import {GoogleAnalyticsService} from '../../../../shared/services/google-analytics.service';
+import {UserDataManagerService} from '../../../../shared/services/user-data-manager.service';
+import {Observable} from 'rxjs';
+import {User} from '../../../../shared/models/user';
 
 interface HomeLink {
 	linkText: string;
@@ -21,6 +24,8 @@ export class NavigationLinksComponent extends BaseObserverComponent implements O
 	@Input() navMode: 'navbar-nav' | 'nav';
 	@Output() navItemSelected: EventEmitter<any> = new EventEmitter<any>();
 	@Input() isLoggedIn = false;
+
+	user$: Observable<User>;
 
 	links: HomeLink[] = [
 		{
@@ -46,7 +51,8 @@ export class NavigationLinksComponent extends BaseObserverComponent implements O
 	constructor(
 		private communicationService: CommunicationService,
 		private router: Router,
-		private gAnalytics: GoogleAnalyticsService
+		private gAnalytics: GoogleAnalyticsService,
+		private userService: UserDataManagerService
 	) {
 		super();
 	}
@@ -58,6 +64,7 @@ export class NavigationLinksComponent extends BaseObserverComponent implements O
 			.subscribe((section: any) => {
 				this.setActiveNavLink(section);
 			});
+		this.user$ = this.userService.userInfo$;
 	}
 
 	handleScrollToSection(section: string): void {
@@ -77,9 +84,18 @@ export class NavigationLinksComponent extends BaseObserverComponent implements O
 
 	onDownload() {
 		this.gAnalytics.sendEvent('download_cv');
-		const link = document.createElement('a');
-		link.href = 'https://store-cv-arkhypchuk.s3.amazonaws.com/cv/tanya_arkhypchuk_cv.pdf';
-		link.target = '_blank';
-		link.click();
+
+		this.user$
+			.pipe(
+				take(1),
+				tap(user => {
+					console.log('Function: , user: ', user);
+					const link = document.createElement('a');
+					link.href = user && user.resume ? user.resume.url : '';
+					link.target = '_blank';
+					link.click();
+				})
+			)
+			.subscribe(() => {}, () => {});
 	}
 }

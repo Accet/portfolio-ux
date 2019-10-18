@@ -1,6 +1,8 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {UserDataManagerService} from '../../../shared/services/user-data-manager.service';
+import {User} from '../../../shared/models/user';
 
 @Component({
 	selector: 'app-header',
@@ -9,6 +11,9 @@ import {BehaviorSubject} from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
 	isStickied$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+
+	user$: Observable<User>;
+
 	@Input() set isStickied(val) {
 		if (val === false || val === true) {
 			this.isStickied$.next(val);
@@ -23,9 +28,11 @@ export class HeaderComponent implements OnInit {
 		}
 	}
 
-	constructor(private router: Router) {}
+	constructor(private router: Router, private userService: UserDataManagerService) {}
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.user$ = this.userService.userInfo$;
+	}
 
 	toggleNavbar(): void {
 		this.navBarOpen = !this.navBarOpen;
