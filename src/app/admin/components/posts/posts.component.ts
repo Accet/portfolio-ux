@@ -30,18 +30,6 @@ export class PostsComponent extends BaseObserverComponent implements OnInit {
 			)
 			.subscribe(event => (this.currentState = this.processUrl(event.urlAfterRedirects)));
 	}
-	handleBtn() {
-		switch (this.currentState) {
-			case PostsState.LIST:
-				this.router.navigate(['new'], {relativeTo: this.route});
-				break;
-			case PostsState.NEW:
-				this.router.navigate(['./'], {relativeTo: this.route});
-				break;
-			case PostsState.EDIT:
-				break;
-		}
-	}
 
 	processUrl(url: string) {
 		switch (url) {
