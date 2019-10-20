@@ -39,7 +39,7 @@ export interface UploadFileData {
 }
 
 @Component({
-	selector: 'app-file-upload',
+	selector: 'app-user-file-upload',
 	animations: [
 		trigger('enterAnimation', [
 			transition(':enter', [
