@@ -1,6 +1,15 @@
 <div class="dashboard-section">
-	<div class="mt-3 w-100">
-		<h3 class="title">{{ 'Posts' | uppercase }}</h3>
+	<div class="mt-3 d-flex flex-row justify-content-between align-items-center w-100">
+		<div class="justify-content-start flex-grow-1">
+			<h3 class="title">
+				{{
+					(currentState === postsState.LIST ? 'Posts' : currentState === postsState.NEW ? 'Create new' : 'edit')
+						| uppercase
+				}}
+			</h3>
+		</div>
 	</div>
-	<div class="container-fluid posts-container mt-4"></div>
+	<div class="container-fluid posts-container mt-4">
+		<router-outlet></router-outlet>
+	</div>
 </div>

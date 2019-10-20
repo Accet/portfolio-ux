@@ -4,7 +4,6 @@ import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared/shared.module';
 import {AdminRoutingModule} from './admin-routing.module';
 import {AdminNavigationComponent} from './components/admin-navigation/admin-navigation.component';
-import {PostsComponent} from './components/posts/posts.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {LoginModalComponent} from './components/login-modal/login-modal.component';
@@ -27,7 +26,6 @@ import {CommonModule} from '@angular/common';
 	declarations: [
 		AdminComponent,
 		AdminNavigationComponent,
-		PostsComponent,
 		ProfileComponent,
 		LoginModalComponent,
 		CapsDetectorDirective,

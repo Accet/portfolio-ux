@@ -20,14 +20,25 @@ export class AppComponent implements OnInit {
 		private run: NgZone,
 		private gAnalytics: GoogleAnalyticsService
 	) {
-		['linked', 'medium', 'mail', 'medium-green', 'download', 'arrow_forward', 'cv', 'hide', 'show', 'github'].forEach(
-			icon => {
-				this.matIconRegistry.addSvgIcon(
-					icon,
-					this.domSanitizer.bypassSecurityTrustResourceUrl(`assets/icons/${icon}.svg`)
-				);
-			}
-		);
+		[
+			'linked',
+			'medium',
+			'mail',
+			'medium-green',
+			'download',
+			'arrow_forward',
+			'cv',
+			'hide',
+			'show',
+			'github',
+			'add-post',
+			'publish'
+		].forEach(icon => {
+			this.matIconRegistry.addSvgIcon(
+				icon,
+				this.domSanitizer.bypassSecurityTrustResourceUrl(`assets/icons/${icon}.svg`)
+			);
+		});
 
 		this.router.events
 			.pipe(

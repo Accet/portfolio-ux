@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AdminComponent} from './admin.component';
-import {PostsComponent} from './components/posts/posts.component';
 import {ProfileComponent} from './components/profile/profile.component';
 
 const routes: Routes = [
@@ -12,9 +11,7 @@ const routes: Routes = [
 			{path: 'me', component: ProfileComponent, data: {animation: 'me'}},
 			{
 				path: 'posts',
-				component: PostsComponent,
-				pathMatch: 'full',
-				data: {animation: 'posts'}
+				loadChildren: () => import('./components/posts/posts.module').then(m => m.PostsModule)
 			},
 			{
 				path: '',
