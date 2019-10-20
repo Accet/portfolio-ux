@@ -17,7 +17,7 @@ import {NewEmailComponent} from './components/profile/new-email/new-email.compon
 import {NewPasswordComponent} from './components/profile/new-password/new-password.component';
 import {UserDataComponent} from './components/profile/user-data/user-data.component';
 import {DropZoneDirective} from './directives/drop-zone.directive';
-import {FileUploadComponent} from './components/file-upload/file-upload.component';
+import {UserFileUploadComponent} from './components/user-file-upload/user-file-upload.component';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {MatProgressSpinnerModule} from '@angular/material';
 import {CommonModule} from '@angular/common';
@@ -36,7 +36,7 @@ import {CommonModule} from '@angular/common';
 		NewPasswordComponent,
 		UserDataComponent,
 		DropZoneDirective,
-		FileUploadComponent
+		UserFileUploadComponent
 	],
 	entryComponents: [LoginModalComponent, ResetPasswordModalComponent, ForgotPasswordModalComponent, AdminComponent],
 	imports: [

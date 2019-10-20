@@ -1,4 +1,4 @@
-<div class="w-100 d-flex flex-row align-items-center justify-content-start">
+<div class="w-100 d-flex flex-column align-items-center justify-content-start">
 	<div class="w-100 flex-grow-1 d-flex flex-row-reverse align-items-center">
 		<button class="no-outline " mat-stroked-button color="primary" routerLink="../new">
 			<div class="d-flex flex-row align-items-center justify-content-between">
@@ -13,4 +13,104 @@
 			</div>
 		</button>
 	</div>
+	<form [formGroup]="postForm" class="mt-3 w-100">
+		<div class="reset-container">
+			<label>Post info</label>
+
+			<div class="d-flex flex-column justify-content-around align-items-start form-group">
+				<mat-form-field class="form-input">
+					<input matInput placeholder="Title" required type="text" id="post-title" formControlName="title" />
+				</mat-form-field>
+				<div
+					*ngIf="postForm.get('title').touched && postForm.get('title').hasError('required')"
+					class="text-danger form-error"
+				>
+					{{ 'Display name is required' }}
+				</div>
+			</div>
+
+			<div class="float-text d-flex flex-column justify-content-around align-items-start form-group">
+				<mat-form-field class="form-input">
+					<mat-label>Type short description here</mat-label>
+					<textarea
+						formControlName="description"
+						required
+						matInput
+						maxlength="180"
+						cdkTextareaAutosize
+						cdkAutosizeMinRows="2"
+						cdkAutosizeMaxRows="3"
+					></textarea>
+					<mat-hint align="end">{{ postForm.get('description').value?.length || 0 }} / 140</mat-hint>
+				</mat-form-field>
+				<div
+					*ngIf="postForm.get('description').touched && postForm.get('description').hasError('required')"
+					class="text-danger form-error"
+				>
+					{{ 'Provide short description' }}
+				</div>
+			</div>
+
+			<hr />
+			<div class="mt-3 d-flex flex-row align-items-center justify-content-between">
+				<div class="col-6 pl-0 d-flex flex-column justify-content-around align-items-start form-group">
+					<mat-form-field class="form-input">
+						<input matInput placeholder="Your role" type="text" id="post-role" formControlName="role" />
+					</mat-form-field>
+				</div>
+				<div class="col-6 pr-0 d-flex flex-column justify-content-around align-items-start form-group">
+					<mat-form-field class="form-input">
+						<input matInput placeholder="Projects timeline" type="text" id="post-timeline" formControlName="timeline" />
+					</mat-form-field>
+				</div>
+			</div>
+
+			<hr />
+			<div class="mt-3 d-flex flex-row align-items-center justify-content-between">
+				<div class="col-6 pl-0 d-flex flex-column justify-content-around align-items-start form-group">
+					<mat-form-field class="form-input">
+						<input
+							matInput
+							placeholder="Link to Medium Post"
+							type="text"
+							id="post-mediumLink"
+							formControlName="mediumLink"
+						/>
+						<button
+							mat-button
+							*ngIf="postForm.get('mediumLink').value"
+							matSuffix
+							mat-icon-button
+							aria-label="Clear medium link"
+							(click)="clearValue(postForm.get('mediumLink'))"
+						>
+							<mat-icon>close</mat-icon>
+						</button>
+					</mat-form-field>
+				</div>
+				<div class="col-6 pr-0 d-flex flex-column justify-content-around align-items-start form-group">
+					<mat-form-field class="form-input">
+						<input
+							matInput
+							placeholder="Link to prototype"
+							type="text"
+							id="post-prototypeLink"
+							formControlName="prototypeLink"
+						/>
+						<button
+							mat-button
+							*ngIf="postForm.get('prototypeLink').value"
+							matSuffix
+							mat-icon-button
+							aria-label="Clear link to the prototype"
+							(click)="clearValue(postForm.get('prototypeLink'))"
+						>
+							<mat-icon>close</mat-icon>
+						</button>
+					</mat-form-field>
+				</div>
+			</div>
+			<hr />
+		</div>
+	</form>
 </div>

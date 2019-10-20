@@ -40,7 +40,6 @@ export class AdminNavigationComponent extends BaseObserverComponent implements O
 	}
 
 	handleMenuItemSelected(url: string) {
-		console.log('Function: handleMenuItemSelected, url: ', url);
 		this.router.navigate([url], {relativeTo: this.route}).catch(error => console.log('Function: , error: ', error));
 	}
 

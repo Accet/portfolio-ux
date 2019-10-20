@@ -11,7 +11,6 @@ import {
 	filter,
 	finalize,
 	map,
-	scan,
 	shareReplay,
 	switchMap,
 	take,
@@ -25,7 +24,7 @@ import {UserDataManagerService} from '../../../shared/services/user-data-manager
 import {UploadTaskSnapshot} from '@angular/fire/storage/interfaces';
 import {AuthService} from '../../services/auth.service';
 import {User} from '../../../shared/models/user';
-import {animate, style, transition, trigger, useAnimation} from '@angular/animations';
+import {transition, trigger, useAnimation} from '@angular/animations';
 import {verticalIn, verticalOut} from '../../../shared/animations/animations';
 
 export enum UploadType {
@@ -59,10 +58,10 @@ export interface UploadFileData {
 			])
 		])
 	],
-	templateUrl: './file-upload.component.html',
-	styleUrls: ['./file-upload.component.scss']
+	templateUrl: './user-file-upload.component.html',
+	styleUrls: ['./user-file-upload.component.scss']
 })
-export class FileUploadComponent extends BaseObserverComponent implements OnInit, OnChanges {
+export class UserFileUploadComponent extends BaseObserverComponent implements OnInit, OnChanges {
 	percentage: Observable<number>;
 	snapshot: Observable<UploadTaskSnapshot>;
 	task: AngularFireUploadTask;
@@ -131,17 +130,12 @@ export class FileUploadComponent extends BaseObserverComponent implements OnInit
 
 		merge(
 			this.fileControl.valueChanges.pipe(
-				tap(value => console.log('Function: , value: ', value)),
-				// filter(value => value && value._files),
 				map(value => {
 					this.isUploaded$.next(false);
 					return value && value._files ? value._files[0] : null;
 				})
 			),
-			dropped$.pipe(
-				tap(value => console.log('Function: , dropped$: ', value)),
-				map(event => event.item(0))
-			)
+			dropped$.pipe(map(event => event.item(0)))
 		)
 			.pipe(
 				filter(value => !!value),
@@ -187,7 +181,6 @@ export class FileUploadComponent extends BaseObserverComponent implements OnInit
 					if (res) {
 						this.notificationService.showSuccess({message: 'File uploaded!', duration: 3000});
 					}
-					console.log('Function: completed, : ');
 				},
 				() => {
 					console.log('Function: error, : ');
@@ -198,9 +191,6 @@ export class FileUploadComponent extends BaseObserverComponent implements OnInit
 			distinctUntilChanged(),
 			debounceTime(50)
 		);
-		this.isHovering$.subscribe(value => {
-			console.log('Function: , value: ', value);
-		});
 	}
 
 	uploadFile(file: File, path: string): Observable<any> {

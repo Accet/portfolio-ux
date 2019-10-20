@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import {Post} from '../models/post';
 import {Observable} from 'rxjs';
-import {User} from '../models/user';
 import {shareReplay} from 'rxjs/operators';
 
 @Injectable({

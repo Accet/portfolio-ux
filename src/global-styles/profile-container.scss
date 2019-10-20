@@ -31,3 +31,10 @@ h3 {
 	font-family: $font-family;
 	font-size: 0.75rem;
 }
+.float-text {
+	mat-form-field {
+		&.form-input {
+			height: auto !important;
+		}
+	}
+}

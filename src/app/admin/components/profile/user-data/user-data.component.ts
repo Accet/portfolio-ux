@@ -10,7 +10,7 @@ import {of, zip} from 'rxjs';
 import {addInputmaskForPhone} from '../../../../shared/models/helper';
 import {UserDataManagerService} from '../../../../shared/services/user-data-manager.service';
 import * as isEqual from 'lodash.isequal';
-import {UploadType} from '../../file-upload/file-upload.component';
+import {UploadType} from '../../user-file-upload/user-file-upload.component';
 import {User} from '../../../../shared/models/user';
 
 @Component({
