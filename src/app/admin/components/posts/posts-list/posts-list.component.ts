@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
 import {BaseObserverComponent} from '../../../../shared/components/base-observer/base-observer.component';
+import {PostsManagerService} from '../../../../shared/services/posts-manager.service';
+import {Observable} from 'rxjs';
+import {Post} from '../../../../shared/models/post';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
 	selector: 'app-posts-list',
@@ -8,9 +11,15 @@ import {BaseObserverComponent} from '../../../../shared/components/base-observer
 	styleUrls: ['./posts-list.component.scss']
 })
 export class PostsListComponent extends BaseObserverComponent implements OnInit {
-	constructor(private route: ActivatedRoute) {
+	posts$: Observable<Post[]>;
+	constructor(private postsService: PostsManagerService) {
 		super();
 	}
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.posts$ = this.postsService.getPosts;
+		this.posts$.pipe(takeUntil(this.destroy$)).subscribe(val => {
+			console.log('Function: , posts$: ', val);
+		});
+	}
 }
