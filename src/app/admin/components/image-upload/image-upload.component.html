@@ -1,0 +1,20 @@
+<div class="drop-zone" appDropZone (hovered)="toggleHover($event)" [class.hovering]="isHovering$ | async">
+	<ng-container *ngIf="!(isHovering$ | async); else hovering">
+		<ng-container *ngIf="selectedFile$ | async; let file; else: info">
+			<app-removable-image [url]="url" (removeClicked)="handleReset()"></app-removable-image>
+		</ng-container>
+		<ng-template #info>
+			<img class="upload-img" [src]="'./assets/icons/upload.svg'" [alt]="'Drag and drop an image to upload it'" />
+			<div>Drag and Drop a File</div>
+		</ng-template>
+	</ng-container>
+	<ng-template #hovering>
+		<lottie-animation-view
+			[width]="144"
+			[height]="144"
+			[options]="lottieConfig"
+			(animCreated)="handleAnimation($event)"
+		>
+		</lottie-animation-view
+	></ng-template>
+</div>

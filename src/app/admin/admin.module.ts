@@ -21,6 +21,9 @@ import {UserFileUploadComponent} from './components/user-file-upload/user-file-u
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {MatProgressSpinnerModule} from '@angular/material';
 import {CommonModule} from '@angular/common';
+import {ImageUploadComponent} from './components/image-upload/image-upload.component';
+import {CompressorService} from './services/compressor.service';
+import {RemovableImageComponent} from './components/image-upload/removable-image/removable-image.component';
 
 @NgModule({
 	declarations: [
@@ -36,7 +39,9 @@ import {CommonModule} from '@angular/common';
 		NewPasswordComponent,
 		UserDataComponent,
 		DropZoneDirective,
-		UserFileUploadComponent
+		UserFileUploadComponent,
+		ImageUploadComponent,
+		RemovableImageComponent
 	],
 	entryComponents: [LoginModalComponent, ResetPasswordModalComponent, ForgotPasswordModalComponent, AdminComponent],
 	imports: [
@@ -53,8 +58,10 @@ import {CommonModule} from '@angular/common';
 		ResetPasswordModalComponent,
 		ForgotPasswordModalComponent,
 		AdminComponent,
-		BlurredModalDirective
+		BlurredModalDirective,
+		ImageUploadComponent,
+		RemovableImageComponent
 	],
-	providers: [AuthService, ModalService]
+	providers: [AuthService, ModalService, CompressorService]
 })
 export class AdminModule {}

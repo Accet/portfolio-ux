@@ -32,7 +32,8 @@ export class AppComponent implements OnInit {
 			'show',
 			'github',
 			'add-post',
-			'publish'
+			'publish',
+			'bin'
 		].forEach(icon => {
 			this.matIconRegistry.addSvgIcon(
 				icon,

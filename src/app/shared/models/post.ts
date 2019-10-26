@@ -15,4 +15,5 @@ export interface Post {
 	role?: string;
 	timeline?: string;
 	prototypeLink?: string;
+	author_uid?: string;
 }

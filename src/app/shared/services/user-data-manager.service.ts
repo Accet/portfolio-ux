@@ -24,7 +24,7 @@ export class UserDataManagerService {
 
 	private getUserData(): Observable<User> {
 		return this.db
-			.collection('users/')
+			.collection('users')
 			.valueChanges()
 			.pipe(
 				tap(() => this.resetMeCache()),
