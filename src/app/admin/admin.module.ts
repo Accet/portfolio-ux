@@ -24,6 +24,7 @@ import {CommonModule} from '@angular/common';
 import {ImageUploadComponent} from './components/image-upload/image-upload.component';
 import {CompressorService} from './services/compressor.service';
 import {RemovableImageComponent} from './components/image-upload/removable-image/removable-image.component';
+import {FireStorageService} from './services/fire-storage.service';
 
 @NgModule({
 	declarations: [
@@ -62,6 +63,6 @@ import {RemovableImageComponent} from './components/image-upload/removable-image
 		ImageUploadComponent,
 		RemovableImageComponent
 	],
-	providers: [AuthService, ModalService, CompressorService]
+	providers: [AuthService, ModalService, CompressorService, FireStorageService]
 })
 export class AdminModule {}

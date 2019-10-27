@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {BehaviorSubject, from, merge, Observable, of, Subject, throwError} from 'rxjs';
-import {AngularFireStorage, AngularFireUploadTask} from '@angular/fire/storage';
+import {AngularFireUploadTask} from '@angular/fire/storage';
 import {FormBuilder, FormControl} from '@angular/forms';
 import {BaseObserverComponent} from '../../../shared/components/base-observer/base-observer.component';
 import {
@@ -26,11 +26,11 @@ import {AuthService} from '../../services/auth.service';
 import {User} from '../../../shared/models/user';
 import {transition, trigger, useAnimation} from '@angular/animations';
 import {verticalIn, verticalOut} from '../../../shared/animations/animations';
+import {FireStorageService} from '../../services/fire-storage.service';
 
 export enum UploadType {
 	RESUME,
-	AVATAR,
-	OTHER
+	AVATAR
 }
 
 export interface UploadFileData {
@@ -91,7 +91,7 @@ export class UserFileUploadComponent extends BaseObserverComponent implements On
 		private notificationService: NotificationService,
 		private userManager: UserDataManagerService,
 		private authService: AuthService,
-		private storage: AngularFireStorage
+		private storage: FireStorageService
 	) {
 		super();
 		this.lottieConfig = {
@@ -111,15 +111,13 @@ export class UserFileUploadComponent extends BaseObserverComponent implements On
 					switch (this.mode) {
 						case UploadType.RESUME:
 							this.placeholder =
-								user && user.resume && user.resume.path ? this.storage.storage.ref(user.resume.path).name : undefined;
+								user && user.resume && user.resume.path ? this.storage.getStorageRef(user.resume.path).name : undefined;
 							break;
 						case UploadType.AVATAR:
 							this.placeholder =
 								user && user.photoURL && user.photoURL.path
-									? this.storage.storage.ref(user.photoURL.path).name
+									? this.storage.getStorageRef(user.photoURL.path).name
 									: undefined;
-							break;
-						default:
 							break;
 					}
 				})
@@ -240,8 +238,6 @@ export class UserFileUploadComponent extends BaseObserverComponent implements On
 								return this.userManager
 									.updateUserData(user, true)
 									.pipe(concatMap(() => this.authService.setNewProfilePicture()));
-							default:
-								return of(null);
 						}
 					})
 				)
@@ -283,37 +279,15 @@ export class UserFileUploadComponent extends BaseObserverComponent implements On
 				}
 			case UploadType.AVATAR:
 				return `user/${new Date().getTime()}_${file.name}`;
-			// tslint:disable-next-line:no-switch-case-fall-through
-			case UploadType.OTHER:
-				if (file.type.split('/')[0] !== 'image') {
-					console.error('unsupported file type :( ');
-					this.notificationService.showError({
-						message: 'Unsupported file type. Select only image files',
-						duration: 5000,
-						enableClose: true
-					});
-					this.fileControl.reset();
-					return;
-				} else {
-					return `web/${new Date().getTime()}_${file.name}`;
-				}
 		}
 	}
 
 	private removeOldFiles(): Observable<any> {
-		if (this.mode === UploadType.RESUME && this.currentUser.resume) {
-			return this.storage
-				.ref(this.currentUser.resume.path)
-				.delete()
-				.pipe(catchError(err => (err.code_ === 'storage/object-not-found' ? of(true) : throwError(err))));
-		}
-		if (this.mode === UploadType.AVATAR && this.currentUser.photoURL) {
-			return this.storage
-				.ref(this.currentUser.photoURL.path)
-				.delete()
-				.pipe(catchError(err => (err.code_ === 'storage/object-not-found' ? of(true) : throwError(err))));
-		}
-		return of(true);
+		return this.mode === UploadType.RESUME && this.currentUser.resume
+			? this.storage.removeFile(this.currentUser.resume.path)
+			: this.currentUser.photoURL
+			? this.storage.removeFile(this.currentUser.photoURL.path)
+			: of(true);
 	}
 
 	private updateUserData(url: string, path: string): Observable<UploadFileData> {
@@ -321,32 +295,17 @@ export class UserFileUploadComponent extends BaseObserverComponent implements On
 			url,
 			path
 		};
-		switch (this.mode) {
-			case UploadType.RESUME:
-				return this.userManager.updateUserData({...this.currentUser, ...{resume: data}}).pipe(map(() => data));
-			case UploadType.AVATAR:
-				return this.userManager
+		return this.mode === UploadType.RESUME
+			? this.userManager.updateUserData({...this.currentUser, ...{resume: data}}).pipe(map(() => data))
+			: this.userManager
 					.updateUserData({...this.currentUser, ...{photoURL: data}})
 					.pipe(map(() => data))
 					.pipe(concatMap(() => this.authService.setNewProfilePicture(data.url)));
-			default:
-				return of(data);
-		}
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes && changes.mode) {
-			switch (changes.mode.currentValue) {
-				case UploadType.RESUME:
-					this.labelMessage = 'Upload your resume';
-					break;
-				case UploadType.AVATAR:
-					this.labelMessage = 'Upload your photo';
-					break;
-				case UploadType.OTHER:
-					this.labelMessage = 'Upload your image';
-					break;
-			}
+			this.labelMessage = changes.mode.currentValue === UploadType.RESUME ? 'Upload your resume' : 'Upload your photo';
 		}
 	}
 

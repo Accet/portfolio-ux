@@ -2,11 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {BaseObserverComponent} from '../../../../shared/components/base-observer/base-observer.component';
 import {Post} from '../../../../shared/models/post';
-import {BehaviorSubject, merge, of} from 'rxjs';
+import {BehaviorSubject, merge, of, Subject} from 'rxjs';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {concatMap, filter, map, switchMap, takeUntil, tap} from 'rxjs/operators';
 import {NotificationService} from '../../../../shared/services/notification.service';
 import {CompressorService} from '../../../services/compressor.service';
+import {FormUtils} from '../../../../shared/utils/form-utils';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
 	selector: 'app-post-details',
@@ -14,14 +16,15 @@ import {CompressorService} from '../../../services/compressor.service';
 	styleUrls: ['./post-details.component.scss']
 })
 export class PostDetailsComponent extends BaseObserverComponent implements OnInit {
-	post: BehaviorSubject<Post> = new BehaviorSubject(undefined);
+	post: Subject<Post> = new Subject();
 	postForm: FormGroup;
 
 	constructor(
 		private router: Router,
 		private fb: FormBuilder,
 		private notificationService: NotificationService,
-		private compressor: CompressorService
+		private compressor: CompressorService,
+		private authService: AuthService
 	) {
 		super();
 		const navigation = this.router.getCurrentNavigation();
@@ -32,6 +35,11 @@ export class PostDetailsComponent extends BaseObserverComponent implements OnIni
 
 	ngOnInit() {
 		this.initForm();
+
+		this.post
+			.asObservable()
+			.pipe(takeUntil(this.destroy$))
+			.subscribe(post => this.prePopulateForm(post));
 	}
 
 	private initForm() {
@@ -89,5 +97,41 @@ export class PostDetailsComponent extends BaseObserverComponent implements OnIni
 
 	clearValue(control: AbstractControl) {
 		control.patchValue('');
+	}
+
+	handlePublish() {
+		this.notificationService.dismissAll();
+		FormUtils.markFormFieldsAsDirty(this.postForm);
+		if (this.postForm.invalid) {
+			return;
+		}
+		console.log('Function: handlePublish, this.postForm: ', this.postForm);
+
+		this.authService.currentUser$.pipe(switchMap(user => {}));
+	}
+
+	private prePopulateForm(post: Post) {
+		this.postForm.patchValue({
+			title: post.title,
+			description: post.description
+		});
+		if (post.timeline) {
+			this.postForm.patchValue({timeline: post.timeline});
+		}
+		if (post.role) {
+			this.postForm.patchValue({role: post.role});
+		}
+		if (post.mediumLink) {
+			this.postForm.patchValue({mediumLink: post.mediumLink});
+		}
+		if (post.prototypeLink) {
+			this.postForm.patchValue({prototypeLink: post.prototypeLink});
+		}
+		if (post.headImg) {
+			// this.postForm.patchValue({headerImg: post.headImg});
+		}
+		if (post.previewImg) {
+			// this.postForm.patchValue({thumbImg: post.previewImg});
+		}
 	}
 }

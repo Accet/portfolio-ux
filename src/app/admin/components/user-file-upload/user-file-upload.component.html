@@ -14,13 +14,7 @@
 						<img
 							class="upload-img"
 							[src]="mode === uploadType.AVATAR ? './assets/icons/add-photo.svg' : './assets/icons/upload.svg'"
-							[alt]="
-								mode === uploadType.AVATAR
-									? 'Upload profile picture'
-									: mode === uploadType.RESUME
-									? 'Upload resume'
-									: 'upload image'
-							"
+							[alt]="mode === uploadType.AVATAR ? 'Upload profile picture' : 'Upload resume'"
 						/>
 						<div>Drag and Drop a File</div>
 					</ng-template>
