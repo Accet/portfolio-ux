@@ -23,13 +23,10 @@ enum AuthActions {
 	styleUrls: ['./admin.component.scss'],
 	animations: [
 		trigger('routeAnimation', [
-			//
 			transition('posts => me', [useAnimation(slideInAnimation)]),
 			transition('me => posts', [useAnimation(slideOutAnimation)])
 		]),
-		trigger('routeAnimation', [
-			//
-		])
+		trigger('routeAnimation', [])
 	]
 })
 export class AdminComponent extends BaseObserverComponent implements OnInit, OnDestroy {

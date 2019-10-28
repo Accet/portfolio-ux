@@ -5,6 +5,11 @@ import {debounceTime, distinctUntilChanged, map, shareReplay, switchMap, takeUnt
 import {BaseObserverComponent} from '../../../shared/components/base-observer/base-observer.component';
 import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 
+export interface ImageDataItem {
+	file?: File;
+	url?: string;
+}
+
 @Component({
 	selector: 'app-image-upload',
 	providers: [
@@ -29,13 +34,13 @@ export class ImageUploadComponent extends BaseObserverComponent implements Contr
 	private _isHovering$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	dropFile$: Subject<DropZoneDirective> = new Subject<DropZoneDirective>();
 
-	setValue$: Subject<File> = new Subject<File>();
+	setValue$: Subject<ImageDataItem> = new Subject<ImageDataItem>();
 
 	@ViewChild(DropZoneDirective, {static: false}) set dropFile(element: DropZoneDirective) {
 		this.dropFile$.next(element);
 	}
 
-	selectedFile$: Observable<File>;
+	selectedFile$: Observable<ImageDataItem>;
 	url: string;
 
 	isHovering$: Observable<boolean>;
@@ -58,29 +63,36 @@ export class ImageUploadComponent extends BaseObserverComponent implements Contr
 	ngOnInit() {
 		const fileDrop = this.dropFile$.asObservable().pipe(
 			switchMap(el => el.dropped.asObservable()),
-			map(fileList => fileList.item(0)),
+			map(fileList => {
+				return {file: fileList.item(0)} as ImageDataItem;
+			}),
 			shareReplay(1)
 		);
-		// fileDrop.subscribe(file => console.log('Function: file, : '));
 
 		this.selectedFile$ = merge(this.setValue$.asObservable(), fileDrop).pipe(
-			map(file => {
-				if (file) {
-					Object.defineProperty(file, 'name', {
+			map(item => {
+				if (item && item.file) {
+					Object.defineProperty(item.file, 'name', {
 						writable: true,
-						value: file.name.replace(/[\s-]+/g, '_').toLocaleLowerCase()
+						value: item.file.name.replace(/[\s-]+/g, '_').toLocaleLowerCase()
 					});
 				}
-				return file;
+				return item;
 			}),
-			tap(file => {
-				if (file) {
+			tap(item => {
+				if (item && item.file) {
+					this.propagateTouched();
+
 					const reader = new FileReader();
 
 					reader.onload = (event: any) => {
 						this.url = event.target.result;
 					};
-					reader.readAsDataURL(file);
+					reader.readAsDataURL(item.file);
+				} else if (item && item.url) {
+					this.url = item.url;
+				} else {
+					this.url = null;
 				}
 			}),
 			shareReplay(1)
@@ -94,10 +106,10 @@ export class ImageUploadComponent extends BaseObserverComponent implements Contr
 	}
 
 	validate({value}: FormControl) {
-		if (!value) {
+		if (!value || !value.file) {
 			return null;
 		}
-		const isNotValid = value.type.split('/')[0] !== 'image';
+		const isNotValid = value.file.type.split('/')[0] !== 'image';
 		return (
 			isNotValid && {
 				invalid: true
@@ -112,21 +124,26 @@ export class ImageUploadComponent extends BaseObserverComponent implements Contr
 	toggleHover(event) {
 		this._isHovering$.next(event);
 	}
-	propagateChange = (_: File) => {};
+	private propagateChange = (_: ImageDataItem) => {};
+
+	private propagateTouched = () => {};
 
 	registerOnChange(fn: any): void {
 		this.propagateChange = fn;
 	}
 
-	registerOnTouched(fn: any): void {}
+	registerOnTouched(fn: any): void {
+		this.propagateTouched = fn;
+	}
 
-	writeValue(obj: File): void {
+	writeValue(obj: ImageDataItem): void {
 		if (obj !== undefined) {
 			this.setValue$.next(obj);
 		}
 	}
 
 	handleReset() {
+		this.propagateTouched();
 		this.setValue$.next(null);
 	}
 }

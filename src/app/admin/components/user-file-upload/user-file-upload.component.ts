@@ -36,6 +36,7 @@ export enum UploadType {
 export interface UploadFileData {
 	url: string;
 	path: string;
+	source?: string;
 }
 
 @Component({
@@ -266,20 +267,29 @@ export class UserFileUploadComponent extends BaseObserverComponent implements On
 						file.type.split('/')[1].includes('document')
 					)
 				) {
-					this.notificationService.showError({
-						message: 'Unsupported file type. Select PDF or Word document file',
-						duration: 5000,
-						enableClose: true
-					});
-					console.error('unsupported file type :( ');
-					this.fileControl.reset();
+					this.showError('Unsupported file type. Select PDF or document file');
 					return;
 				} else {
 					return `cv/${new Date().getTime()}_${file.name}`;
 				}
 			case UploadType.AVATAR:
-				return `user/${new Date().getTime()}_${file.name}`;
+				if (file.type.split('/')[0] !== 'image') {
+					this.showError('Unsupported file type. Select PDF or Word document file');
+					return;
+				} else {
+					return `user/${new Date().getTime()}_${file.name}`;
+				}
 		}
+	}
+
+	private showError(message: string) {
+		this.notificationService.showError({
+			message,
+			duration: 5000,
+			enableClose: true
+		});
+		console.error('unsupported file type :( ');
+		this.fileControl.reset();
 	}
 
 	private removeOldFiles(): Observable<any> {

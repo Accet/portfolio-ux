@@ -27,12 +27,12 @@ export class CompressorService {
 						blob => {
 							observer.next(
 								new File([blob], file.name, {
-									type: 'image/jpeg',
+									type: file.type,
 									lastModified: Date.now()
 								})
 							);
 						},
-						'image/jpeg',
+						file.type,
 						1
 					);
 				}),

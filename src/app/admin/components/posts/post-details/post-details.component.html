@@ -1,12 +1,24 @@
-<div class="w-100 d-flex flex-column align-items-center justify-content-start">
-	<div class="w-100 flex-grow-1 d-flex flex-row-reverse align-items-center">
-		<button class="no-outline " mat-stroked-button color="primary" (click)="handlePublish()">
+<div class="post-wrapper w-100 d-flex flex-column align-items-center justify-content-start">
+	<div class=" w-100 d-flex flex-row-reverse align-items-center">
+		<button
+			[disabled]="!!(isLoading$ | async)"
+			class="no-outline "
+			mat-stroked-button
+			color="primary"
+			(click)="handlePublish()"
+		>
 			<div class="d-flex flex-row align-items-center justify-content-between">
 				<mat-icon svgIcon="publish"></mat-icon>
 				<div class="ml-3">Publish</div>
 			</div>
 		</button>
-		<button class="no-outline mr-4" mat-stroked-button color="warn" routerLink="../list">
+		<button
+			[disabled]="!!(isLoading$ | async)"
+			class="no-outline mr-4"
+			mat-stroked-button
+			color="warn"
+			routerLink="../list"
+		>
 			<div class="d-flex flex-row align-items-center justify-content-between">
 				<mat-icon>navigate_before</mat-icon>
 				<div class="mr-3">Go back</div>
@@ -124,3 +136,4 @@
 		</div>
 	</form>
 </div>
+<app-spinner *ngIf="isLoading$ | async"></app-spinner>

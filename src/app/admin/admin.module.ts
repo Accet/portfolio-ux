@@ -25,6 +25,7 @@ import {ImageUploadComponent} from './components/image-upload/image-upload.compo
 import {CompressorService} from './services/compressor.service';
 import {RemovableImageComponent} from './components/image-upload/removable-image/removable-image.component';
 import {FireStorageService} from './services/fire-storage.service';
+import {SpinnerComponent} from './components/spinner/spinner.component';
 
 @NgModule({
 	declarations: [
@@ -42,7 +43,8 @@ import {FireStorageService} from './services/fire-storage.service';
 		DropZoneDirective,
 		UserFileUploadComponent,
 		ImageUploadComponent,
-		RemovableImageComponent
+		RemovableImageComponent,
+		SpinnerComponent
 	],
 	entryComponents: [LoginModalComponent, ResetPasswordModalComponent, ForgotPasswordModalComponent, AdminComponent],
 	imports: [
@@ -61,7 +63,8 @@ import {FireStorageService} from './services/fire-storage.service';
 		AdminComponent,
 		BlurredModalDirective,
 		ImageUploadComponent,
-		RemovableImageComponent
+		RemovableImageComponent,
+		SpinnerComponent
 	],
 	providers: [AuthService, ModalService, CompressorService, FireStorageService]
 })

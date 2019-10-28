@@ -1,0 +1,13 @@
+<div class="cdk-overlay-container">
+	<div class="blurred-overlay"></div>
+	<div id="spinner" class="d-flex loading-container w-100 h-100 flex-column justify-content-center align-items-center">
+		<lottie-animation-view
+			[width]="160"
+			[height]="160"
+			[options]="lottieConfig"
+			(animCreated)="handleAnimation($event)"
+		>
+		</lottie-animation-view>
+		<h3>{{ message | async }}</h3>
+	</div>
+</div>

@@ -1,7 +1,10 @@
 <div class="drop-zone" appDropZone (hovered)="toggleHover($event)" [class.hovering]="isHovering$ | async">
 	<ng-container *ngIf="!(isHovering$ | async); else hovering">
-		<ng-container *ngIf="selectedFile$ | async; let file; else: info">
+		<ng-container *ngIf="url; else info">
 			<app-removable-image [url]="url" (removeClicked)="handleReset()"></app-removable-image>
+			<div *ngIf="(selectedFile$ | async).file; let file" class="badge badge-secondary mt-2">
+				{{ file.size | byteFormat }}
+			</div>
 		</ng-container>
 		<ng-template #info>
 			<img class="upload-img" [src]="'./assets/icons/upload.svg'" [alt]="'Drag and drop an image to upload it'" />

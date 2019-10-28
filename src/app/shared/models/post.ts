@@ -2,12 +2,13 @@ export interface Post {
 	id: string;
 	title: string;
 	description: string;
-	date: string;
-	previewImg?: {
+	createdOn: number;
+	modifiedOn?: number;
+	thumbImg?: {
 		url: string;
 		path: string;
 	};
-	headImg?: {
+	headerImg?: {
 		url: string;
 		path: string;
 	};

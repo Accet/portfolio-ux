@@ -1,6 +1,6 @@
 .img-container {
 	width: 100%;
-	max-height: 10rem;
+	height: 10rem;
 	position: relative;
 
 	.image-preview {
@@ -18,12 +18,9 @@
 		align-items: center;
 		justify-content: center;
 		border-radius: 0.25rem;
-		//bottom: 0;
 		background: rgb(0, 0, 0);
-		background: rgba(0, 0, 0, 0.7); /* Black see-through */
+		background: rgba(0, 0, 0, 0.7);
 		svg {
-			//margin-right: auto;
-			//margin-left: auto;
 			height: 60%;
 			transition: all cubic-bezier(0.8, -0.6, 0.2, 1.5) 700ms;
 			fill: #f1f1f1;
@@ -32,7 +29,6 @@
 		height: 100%;
 		transition: 0.5s ease;
 		opacity: 0;
-		//font-size: 20px;
 		padding: 20px;
 		text-align: center;
 	}

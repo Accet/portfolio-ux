@@ -7,10 +7,10 @@ export class FormUtils {
 	public static markFormFieldsAsDirty(form: FormGroup): void {
 		Object.keys(form.controls).forEach(field => {
 			const control = form.get(field);
-			control.markAsTouched({onlySelf: true});
+			control.markAsDirty({onlySelf: true});
 			if (control['controls']) {
 				Object.keys(control['controls']).forEach(child => {
-					control.get(child).markAsTouched({onlySelf: true});
+					control.get(child).markAsDirty({onlySelf: true});
 				});
 			}
 		});

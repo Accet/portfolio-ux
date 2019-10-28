@@ -21,6 +21,6 @@
 		border-radius: $border-radius;
 		background-color: $white;
 		@include dashboard-box-shadow();
-		padding: 2rem 3rem 2rem 3rem;
+		padding: 2rem 3rem 1rem 3rem;
 	}
 }
