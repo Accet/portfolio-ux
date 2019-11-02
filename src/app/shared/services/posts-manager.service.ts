@@ -27,6 +27,7 @@ export class PostsManagerService {
 		return this.db.createId();
 	}
 
+	// TODO: add reference to author_uid
 	writePost(post: Post): Observable<void> {
 		return from(this.postsCollection.doc(post.id).set(post, {merge: false}));
 	}

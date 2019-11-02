@@ -28,6 +28,9 @@
             ],
             "styles": [
 							"node_modules/bootstrap/dist/css/bootstrap.css",
+							"node_modules/medium-editor/dist/css/medium-editor.min.css",
+							"node_modules/medium-editor/dist/css/themes/default.css",
+							"src/app/admin/components/posts/editor/tables-js/css/medium-editor-tables.min.css",
 							"src/global-styles/styles.scss"
             ],
             "stylePreprocessorOptions": {
@@ -35,7 +38,12 @@
                 "src/global-styles"
               ]
             },
-            "scripts": [],
+            "scripts": [
+							"node_modules/medium-editor/dist/js/medium-editor.min.js",
+							"node_modules/medium-button/dist/medium-button.min.js",
+							"src/app/admin/components/posts/editor/tables-js/js/medium-editor-tables.js",
+							"node_modules/jquery/dist/jquery.min.js"
+						],
             "es5BrowserSupport": true
           },
           "configurations": {

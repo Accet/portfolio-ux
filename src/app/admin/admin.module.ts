@@ -26,6 +26,7 @@ import {CompressorService} from './services/compressor.service';
 import {RemovableImageComponent} from './components/image-upload/removable-image/removable-image.component';
 import {FireStorageService} from './services/fire-storage.service';
 import {SpinnerComponent} from './components/spinner/spinner.component';
+import {MediumEditorDirective} from './directives/medium-editor.directive';
 
 @NgModule({
 	declarations: [
@@ -44,7 +45,8 @@ import {SpinnerComponent} from './components/spinner/spinner.component';
 		UserFileUploadComponent,
 		ImageUploadComponent,
 		RemovableImageComponent,
-		SpinnerComponent
+		SpinnerComponent,
+		MediumEditorDirective
 	],
 	entryComponents: [LoginModalComponent, ResetPasswordModalComponent, ForgotPasswordModalComponent, AdminComponent],
 	imports: [
@@ -64,7 +66,8 @@ import {SpinnerComponent} from './components/spinner/spinner.component';
 		BlurredModalDirective,
 		ImageUploadComponent,
 		RemovableImageComponent,
-		SpinnerComponent
+		SpinnerComponent,
+		MediumEditorDirective
 	],
 	providers: [AuthService, ModalService, CompressorService, FireStorageService]
 })

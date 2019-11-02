@@ -1,1 +1,14 @@
-<p>editor works!</p>
+<div class="d-flex flex-column justify-content-center align-items-start">
+	<!--	<div #editable class="w-100 editor"></div>-->
+	<!--	<div *ngIf="editor" class="shadow px-2 mw-100" [innerHTML]="editor.elements[0].innerHTML"></div>-->
+	<div
+		#editorContainer
+		class="w-100 editor"
+		appMediumEditor
+		[model]="textVar"
+		[options]="options"
+		(onUpdate)="updateModel($event)"
+		placeholder="Start your story..."
+	></div>
+	<div *ngIf="editor" class="shadow px-2 w-100" [innerHTML]="value$ | async"></div>
+</div>

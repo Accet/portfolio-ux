@@ -1,0 +1,10 @@
+.medium-editor-toolbar {
+	button {
+		&.medium-editor-button-active {
+			color: $secondary !important;
+		}
+	}
+	&.medium-editor-sticky-toolbar {
+		top: 5.5rem !important;
+	}
+}
