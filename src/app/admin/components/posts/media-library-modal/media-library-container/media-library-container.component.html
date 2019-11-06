@@ -1,0 +1,14 @@
+<div class="library-container p-3" appHoverDetector (hovered)="handleHovered($event)">
+	<ng-container *ngIf="uploads$ | async; let uploads; else: uploadZone">
+		<div class="h-100 w-100">
+			<ng-container *ngIf="!(isHovering$ | async); else uploadZone">
+				<div *ngFor="let upload of uploads">
+					{{ upload.imageUrl }}
+				</div>
+			</ng-container>
+		</div>
+	</ng-container>
+</div>
+<ng-template #uploadZone>
+	<app-image-upload [formControl]="uploadControl"></app-image-upload>
+</ng-template>

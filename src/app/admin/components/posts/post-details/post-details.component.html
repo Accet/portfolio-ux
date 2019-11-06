@@ -1,5 +1,19 @@
-<div class="post-wrapper w-100 d-flex flex-column align-items-center justify-content-start">
-	<div class=" w-100 d-flex flex-row-reverse align-items-center">
+<div class="post-wrapper w-100 d-flex flex-column align-items-center justify-content-start" appBlurredModal>
+	<div class=" w-100 d-flex flex-row align-items-center">
+		<div class="flex-grow-1">
+			<button
+				[disabled]="!!(isLoading$ | async)"
+				class="no-outline mr-4"
+				mat-stroked-button
+				color="warn"
+				routerLink="../list"
+			>
+				<div class="d-flex flex-row align-items-center justify-content-between">
+					<mat-icon>navigate_before</mat-icon>
+					<div class="mr-3">Go back</div>
+				</div>
+			</button>
+		</div>
 		<button
 			[disabled]="!!(isLoading$ | async)"
 			class="no-outline "
@@ -14,14 +28,14 @@
 		</button>
 		<button
 			[disabled]="!!(isLoading$ | async)"
-			class="no-outline mr-4"
+			class="no-outline ml-3"
 			mat-stroked-button
-			color="warn"
-			routerLink="../list"
+			color="primary"
+			(click)="showMedia()"
 		>
 			<div class="d-flex flex-row align-items-center justify-content-between">
-				<mat-icon>navigate_before</mat-icon>
-				<div class="mr-3">Go back</div>
+				<mat-icon>photo_library</mat-icon>
+				<div class="ml-3">Media</div>
 			</div>
 		</button>
 	</div>

@@ -8,6 +8,9 @@ import {PostDetailsComponent} from './post-details/post-details.component';
 import {SharedModule} from '../../../shared/shared.module';
 import {AdminModule} from '../../admin.module';
 import {EditorComponent} from './editor/editor.component';
+import {MediaLibraryModalComponent} from './media-library-modal/media-library-modal.component';
+import {MediaLibraryContainerComponent} from './media-library-modal/media-library-container/media-library-container.component';
+import {HoverDetectorDirective} from './directives/hover-detector.directive';
 
 @NgModule({
 	declarations: [
@@ -16,8 +19,12 @@ import {EditorComponent} from './editor/editor.component';
 		PostsListComponent,
 		PostsListComponent,
 		PostDetailsComponent,
-		EditorComponent
+		EditorComponent,
+		MediaLibraryModalComponent,
+		MediaLibraryContainerComponent,
+		HoverDetectorDirective
 	],
-	imports: [CommonModule, PostsRoutingModule, SharedModule, AdminModule]
+	imports: [CommonModule, PostsRoutingModule, SharedModule, AdminModule],
+	entryComponents: [MediaLibraryModalComponent]
 })
 export class PostsModule {}

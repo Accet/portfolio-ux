@@ -12,6 +12,17 @@
 	font-size: 1.75rem;
 	text-align: center;
 	width: 100%;
+	color: $header-font-color;
+	text-transform: uppercase;
+}
+
+.modal-sub-title {
+	@include custom-header;
+	font-weight: $font-weight-bold;
+	color: $categoryTitleColor;
+	font-size: 1rem;
+	text-align: center;
+	width: 100%;
 }
 
 :host .btn-clear {

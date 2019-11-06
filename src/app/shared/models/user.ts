@@ -1,3 +1,8 @@
+export interface UserUploads {
+	thumbUrl: string;
+	imageUrl: string;
+}
+
 export interface User {
 	uid: string;
 	email: string;
@@ -22,4 +27,5 @@ export interface User {
 		linkedIn?: string;
 		github?: string;
 	};
+	uploads?: UserUploads[];
 }

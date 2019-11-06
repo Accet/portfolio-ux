@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BaseObserverComponent} from '../../../../shared/components/base-observer/base-observer.component';
 import {Post} from '../../../../shared/models/post';
-import {BehaviorSubject, merge, Observable, of, zip} from 'rxjs';
+import {BehaviorSubject, from, merge, Observable, of, throwError, zip} from 'rxjs';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {concatMap, filter, finalize, map, switchMap, take, takeUntil, tap} from 'rxjs/operators';
+import {catchError, concatMap, filter, finalize, map, switchMap, take, takeUntil, tap} from 'rxjs/operators';
 import {NotificationService} from '../../../../shared/services/notification.service';
 import {CompressorService} from '../../../services/compressor.service';
 import {AuthService} from '../../../services/auth.service';
@@ -12,6 +12,9 @@ import {FireStorageService} from '../../../services/fire-storage.service';
 import {PostsManagerService} from '../../../../shared/services/posts-manager.service';
 import {UploadFileData} from '../../user-file-upload/user-file-upload.component';
 import {SpinnerService} from '../../../services/spinner.service';
+import {ModalService} from '../../../../shared/services/modal.service';
+import {MediaLibraryModalComponent} from '../media-library-modal/media-library-modal.component';
+import {UserDataManagerService} from '../../../../shared/services/user-data-manager.service';
 
 export interface UploadQuery {
 	[key: string]: UploadItem;
@@ -28,7 +31,7 @@ export interface UploadItem {
 	templateUrl: './post-details.component.html',
 	styleUrls: ['./post-details.component.scss']
 })
-export class PostDetailsComponent extends BaseObserverComponent implements OnInit {
+export class PostDetailsComponent extends BaseObserverComponent implements OnInit, OnDestroy {
 	constructor(
 		private router: Router,
 		private fb: FormBuilder,
@@ -38,7 +41,9 @@ export class PostDetailsComponent extends BaseObserverComponent implements OnIni
 		private storage: FireStorageService,
 		private postManager: PostsManagerService,
 		private route: ActivatedRoute,
-		private spinnerService: SpinnerService
+		private spinnerService: SpinnerService,
+		private modalService: ModalService,
+		private userService: UserDataManagerService
 	) {
 		super();
 		const navigation = this.router.getCurrentNavigation();
@@ -57,6 +62,14 @@ export class PostDetailsComponent extends BaseObserverComponent implements OnIni
 
 	ngOnInit() {
 		this.initForm();
+		// this.userService.userInfo$
+		// 	.pipe(
+		// 		take(1),
+		// 		tap(user => {
+		const modalRef = this.modalService.open(MediaLibraryModalComponent, null, {size: 'lg'});
+		// 		})
+		// 	)
+		// 	.subscribe();
 
 		if (!this.post.value) {
 			this.route.params
@@ -148,7 +161,7 @@ export class PostDetailsComponent extends BaseObserverComponent implements OnIni
 				switchMap(item => {
 					if (this.postForm.get('headerImg').valid && !this.postForm.get('thumbImg').value) {
 						return this.compressor
-							.compress(item.file)
+							.compress(item.file, 600)
 							.pipe(
 								tap(compressedFile =>
 									this.postForm.get('thumbImg').setValue({file: compressedFile}, {emitEvent: false})
@@ -329,5 +342,19 @@ export class PostDetailsComponent extends BaseObserverComponent implements OnIni
 			};
 		}
 		return updateFields;
+	}
+	ngOnDestroy(): void {
+		super.ngOnDestroy();
+		this.modalService.dismissAll();
+	}
+
+	showMedia() {
+		const modalRef = this.modalService.open(MediaLibraryModalComponent, null, {size: 'lg'});
+		from(modalRef.result)
+			.pipe(
+				take(1),
+				catchError(err => (err ? throwError(err) : of(err)))
+			)
+			.subscribe();
 	}
 }

@@ -155,6 +155,19 @@ mat-form-field {
 }
 
 .mat-flat-button {
+	&.mat-warn {
+		background-color: rgb(252, 239, 234) !important;
+		color: rgb(255, 0, 59);
+	}
+	&.mat-primary {
+		background-color: $success !important;
+		color: #fefefe;
+	}
+	&.mat-primary[disabled],
+	&.mat-warn[disabled] {
+		background-color: rgba(0, 0, 0, 0.12) !important;
+		color: darkgray;
+	}
 	//&.btn:hover {
 	//	color: $gray-500;
 	//}

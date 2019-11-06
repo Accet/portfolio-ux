@@ -8,8 +8,7 @@ export class CompressorService {
 	constructor(rendererFactory: RendererFactory2) {
 		this.renderer = rendererFactory.createRenderer(null, null);
 	}
-	compress(file: File): Observable<any> {
-		const width = 600;
+	compress(file: File, width?: number, scale?: number): Observable<any> {
 		const reader = new FileReader();
 		reader.readAsDataURL(file);
 		return new Observable(observer => {
@@ -18,15 +17,18 @@ export class CompressorService {
 				img.src = (ev.target as any).result;
 				(img.onload = () => {
 					const elem = this.renderer.createElement('canvas');
-					const scaleFactor = width / img.width;
-					elem.width = width;
+					const scaleFactor = width ? width / img.width : scale ? scale : 1;
+					elem.width = img.width * scaleFactor;
 					elem.height = img.height * scaleFactor;
+					const regex = /(.+?)(\.[^.]*$|$)/gm;
+					const fileChunks = regex.exec(file.name);
+					const fileName = scale ? `${fileChunks[1]}_thumb${fileChunks.length === 3 ? fileChunks[2] : ''}` : file.name;
 					const ctx = elem.getContext('2d') as CanvasRenderingContext2D;
 					ctx.drawImage(img, 0, 0, width, img.height * scaleFactor);
 					ctx.canvas.toBlob(
 						blob => {
 							observer.next(
-								new File([blob], file.name, {
+								new File([blob], fileName, {
 									type: file.type,
 									lastModified: Date.now()
 								})

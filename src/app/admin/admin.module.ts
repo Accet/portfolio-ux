@@ -67,7 +67,8 @@ import {MediumEditorDirective} from './directives/medium-editor.directive';
 		ImageUploadComponent,
 		RemovableImageComponent,
 		SpinnerComponent,
-		MediumEditorDirective
+		MediumEditorDirective,
+		DropZoneDirective
 	],
 	providers: [AuthService, ModalService, CompressorService, FireStorageService]
 })
