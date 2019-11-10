@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {UserDataManagerService} from '../../../../../shared/services/user-data-manager.service';
 import {BaseObserverComponent} from '../../../../../shared/components/base-observer/base-observer.component';
-import {BehaviorSubject, Observable, zip} from 'rxjs';
-import {concatMap, distinctUntilChanged, filter, map, switchMap, takeUntil, tap} from 'rxjs/operators';
+import {BehaviorSubject, Observable, of, throwError, zip} from 'rxjs';
+import {catchError, concatMap, distinctUntilChanged, filter, map, switchMap, takeUntil, tap} from 'rxjs/operators';
 import {ControlValueAccessor, FormBuilder, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {FireStorageService} from '../../../../services/fire-storage.service';
 import {CompressorService} from '../../../../services/compressor.service';
 import {User, UserUploads} from '../../../../../shared/models/user';
+import {NotificationService} from '../../../../../shared/services/notification.service';
 
 @Component({
 	selector: 'app-media-library-container',
@@ -39,7 +40,8 @@ export class MediaLibraryContainerComponent extends BaseObserverComponent implem
 		private userService: UserDataManagerService,
 		private fb: FormBuilder,
 		private storageService: FireStorageService,
-		private compressor: CompressorService
+		private compressor: CompressorService,
+		private notificationService: NotificationService
 	) {
 		super();
 	}
@@ -54,7 +56,6 @@ export class MediaLibraryContainerComponent extends BaseObserverComponent implem
 			map(user => (user.uploads ? user.uploads : []))
 		);
 
-		// TODO: Error handling on upload
 		this.uploadControl.valueChanges
 			.pipe(
 				takeUntil(this.destroy$),
@@ -93,7 +94,15 @@ export class MediaLibraryContainerComponent extends BaseObserverComponent implem
 							)
 						)
 					)
-				)
+				),
+				catchError(err => {
+					this.notificationService.showError({
+						message: err.message ? err.message : 'Something went wrong, try again later.',
+						enableClose: true,
+						duration: 5000
+					});
+					return throwError(err);
+				})
 			)
 			.subscribe(() => {});
 

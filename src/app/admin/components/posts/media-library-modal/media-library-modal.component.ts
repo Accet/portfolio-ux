@@ -7,7 +7,7 @@ import {User} from '../../../../shared/models/user';
 import {FormBuilder, FormControl} from '@angular/forms';
 import {from, Observable, of, throwError, zip} from 'rxjs';
 import {DeleteConfirmationModalComponent} from '../../delete-confirmation-modal/delete-confirmation-modal.component';
-import {catchError, concatMap, finalize, switchMap, take} from 'rxjs/operators';
+import {catchError, concatMap, finalize, switchMap, take, tap} from 'rxjs/operators';
 import {NotificationService} from '../../../../shared/services/notification.service';
 import {FireStorageService} from '../../../services/fire-storage.service';
 import {UserDataManagerService} from '../../../../shared/services/user-data-manager.service';
@@ -74,7 +74,8 @@ export class MediaLibraryModalComponent extends BaseObserverComponent implements
 						})
 					)
 				),
-				finalize(() => {
+				tap(() => {
+					this.notificationService.showSuccess({message: 'File removed from cloud', duration: 3000});
 					this.selectedImage.setValue(null);
 				}),
 				catchError(err => {
@@ -91,11 +92,7 @@ export class MediaLibraryModalComponent extends BaseObserverComponent implements
 				})
 			)
 			.subscribe(
-				res => {
-					if (res) {
-						console.log('Function: DELETE, this.selectedImage.value.fileName: ', this.selectedImage.value);
-					}
-				},
+				() => {},
 				error => {
 					console.error('Function: handleDelete, error: ', error);
 				}
