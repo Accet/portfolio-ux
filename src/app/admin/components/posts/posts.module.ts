@@ -12,6 +12,7 @@ import {MediaLibraryModalComponent} from './media-library-modal/media-library-mo
 import {MediaLibraryContainerComponent} from './media-library-modal/media-library-container/media-library-container.component';
 import {HoverDetectorDirective} from './directives/hover-detector.directive';
 import {MatCardModule} from '@angular/material';
+import {NgxPicaModule} from '@digitalascetic/ngx-pica';
 
 @NgModule({
 	declarations: [
@@ -25,7 +26,7 @@ import {MatCardModule} from '@angular/material';
 		MediaLibraryContainerComponent,
 		HoverDetectorDirective
 	],
-	imports: [CommonModule, PostsRoutingModule, SharedModule, AdminModule, MatCardModule],
+	imports: [CommonModule, PostsRoutingModule, SharedModule, AdminModule, MatCardModule, NgxPicaModule],
 	entryComponents: [MediaLibraryModalComponent]
 })
 export class PostsModule {}

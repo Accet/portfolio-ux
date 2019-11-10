@@ -14,7 +14,6 @@ import {UploadFileData} from '../../user-file-upload/user-file-upload.component'
 import {SpinnerService} from '../../../services/spinner.service';
 import {ModalService} from '../../../../shared/services/modal.service';
 import {MediaLibraryModalComponent} from '../media-library-modal/media-library-modal.component';
-import {UserDataManagerService} from '../../../../shared/services/user-data-manager.service';
 
 export interface UploadQuery {
 	[key: string]: UploadItem;
@@ -42,8 +41,7 @@ export class PostDetailsComponent extends BaseObserverComponent implements OnIni
 		private postManager: PostsManagerService,
 		private route: ActivatedRoute,
 		private spinnerService: SpinnerService,
-		private modalService: ModalService,
-		private userService: UserDataManagerService
+		private modalService: ModalService
 	) {
 		super();
 		const navigation = this.router.getCurrentNavigation();
@@ -62,14 +60,6 @@ export class PostDetailsComponent extends BaseObserverComponent implements OnIni
 
 	ngOnInit() {
 		this.initForm();
-		// this.userService.userInfo$
-		// 	.pipe(
-		// 		take(1),
-		// 		tap(user => {
-		const modalRef = this.modalService.open(MediaLibraryModalComponent, null, {size: 'lg'});
-		// 		})
-		// 	)
-		// 	.subscribe();
 
 		if (!this.post.value) {
 			this.route.params

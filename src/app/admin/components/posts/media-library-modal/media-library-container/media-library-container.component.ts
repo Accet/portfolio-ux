@@ -69,31 +69,40 @@ export class MediaLibraryContainerComponent extends BaseObserverComponent implem
 					return file;
 				}),
 				switchMap(originalFile =>
-					this.compressor.compress(originalFile, 300, true).pipe(
-						concatMap(thumbFile =>
-							zip(
-								this.storageService.uploadAutomatically(`uploads/${thumbFile.name}`, thumbFile),
-								this.storageService.uploadAutomatically(`uploads/${originalFile.name}`, originalFile)
-							).pipe(
-								concatMap(([thumbUrl, imageUrl]) => {
-									const newUploads: UserUploads[] = [
-										{
-											thumbUrl,
-											imageUrl,
-											imagePath: `uploads/${originalFile.name}`,
-											thumbPath: `uploads/${thumbFile.name}`,
-											fileName: originalFile.name
+					this.compressor
+						.compress(
+							new File([originalFile], originalFile.name, {
+								type: originalFile.type,
+								lastModified: Date.now()
+							}),
+							300,
+							true
+						)
+						.pipe(
+							concatMap(thumbFile =>
+								zip(
+									this.storageService.uploadAutomatically(`uploads/${thumbFile.name}`, thumbFile),
+									this.storageService.uploadAutomatically(`uploads/${originalFile.name}`, originalFile)
+								).pipe(
+									concatMap(([thumbUrl, imageUrl]) => {
+										const newUploads: UserUploads[] = [
+											{
+												thumbUrl,
+												imageUrl,
+												imagePath: `uploads/${originalFile.name}`,
+												thumbPath: `uploads/${thumbFile.name}`,
+												fileName: originalFile.name
+											}
+										];
+										if (this.user.uploads) {
+											newUploads.push(...this.user.uploads);
 										}
-									];
-									if (this.user.uploads) {
-										newUploads.push(...this.user.uploads);
-									}
-									this.user.uploads = newUploads;
-									return this.userService.updateUserData(this.user);
-								})
+										this.user.uploads = newUploads;
+										return this.userService.updateUserData(this.user);
+									})
+								)
 							)
 						)
-					)
 				),
 				catchError(err => {
 					this.notificationService.showError({
