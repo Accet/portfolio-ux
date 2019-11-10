@@ -5,6 +5,7 @@
 //@import "~bootstrap/dist/css/bootstrap.min.css";
 @import 'bootstrap-overrides';
 @import 'medium-editor-overrides';
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 body {
 	background-color: $background;
@@ -150,5 +151,5 @@ body {
 }
 body {
 	margin: 0;
-	font-family: Roboto, 'Helvetica Neue', sans-serif;
+	font-family: 'Roboto', sans-serif;
 }

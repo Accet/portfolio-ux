@@ -1,0 +1,15 @@
+@import 'modal-styles';
+::ng-deep {
+	.modal-footer {
+		button {
+			width: auto !important;
+		}
+	}
+	.modal-title {
+		font-size: 1.4rem !important;
+	}
+	.info-text {
+		word-wrap: break-word;
+		font-size: 1rem;
+	}
+}

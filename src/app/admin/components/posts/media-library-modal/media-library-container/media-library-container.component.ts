@@ -1,19 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserDataManagerService} from '../../../../../shared/services/user-data-manager.service';
 import {BaseObserverComponent} from '../../../../../shared/components/base-observer/base-observer.component';
-import {BehaviorSubject, Observable, of, zip} from 'rxjs';
-import {
-	concatMap,
-	debounceTime,
-	distinctUntilChanged,
-	filter,
-	map,
-	switchMap,
-	take,
-	takeUntil,
-	tap
-} from 'rxjs/operators';
-import {FormBuilder, FormControl} from '@angular/forms';
+import {BehaviorSubject, Observable, zip} from 'rxjs';
+import {concatMap, distinctUntilChanged, filter, map, switchMap, takeUntil, tap} from 'rxjs/operators';
+import {ControlValueAccessor, FormBuilder, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {FireStorageService} from '../../../../services/fire-storage.service';
 import {CompressorService} from '../../../../services/compressor.service';
 import {User, UserUploads} from '../../../../../shared/models/user';
@@ -21,16 +11,29 @@ import {User, UserUploads} from '../../../../../shared/models/user';
 @Component({
 	selector: 'app-media-library-container',
 	templateUrl: './media-library-container.component.html',
-	styleUrls: ['./media-library-container.component.scss']
+	styleUrls: ['./media-library-container.component.scss'],
+	providers: [
+		{
+			provide: NG_VALUE_ACCESSOR,
+			useExisting: MediaLibraryContainerComponent,
+			multi: true
+		},
+		{
+			provide: NG_VALIDATORS,
+			useExisting: MediaLibraryContainerComponent,
+			multi: true
+		}
+	]
 })
-export class MediaLibraryContainerComponent extends BaseObserverComponent implements OnInit {
+export class MediaLibraryContainerComponent extends BaseObserverComponent implements ControlValueAccessor, OnInit {
 	uploads$: Observable<UserUploads[]>;
-	currentUser$: Observable<User>;
 	uploadControl: FormControl;
 	private _isHovering$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	isHovering$: Observable<boolean>;
+	selectedItem$: BehaviorSubject<UserUploads> = new BehaviorSubject<UserUploads>(null);
+	private user: User;
 
-	// @Input() currentUser: User;
+	ghostItems = new Array(5);
 
 	constructor(
 		private userService: UserDataManagerService,
@@ -43,64 +46,88 @@ export class MediaLibraryContainerComponent extends BaseObserverComponent implem
 
 	ngOnInit() {
 		this.uploadControl = this.fb.control(null, []);
-		this.currentUser$ = this.userService.userInfo$;
-		this.uploads$ = this.currentUser$.pipe(map(user => user.uploads));
+		this.uploads$ = this.userService.userInfo$.pipe(
+			tap(user => {
+				this.user = user;
+				this.uploadControl.setValue(null);
+			}),
+			map(user => (user.uploads ? user.uploads : []))
+		);
 
 		// TODO: Error handling on upload
 		this.uploadControl.valueChanges
 			.pipe(
 				takeUntil(this.destroy$),
-				filter(value => !!value.file),
+				filter(value => !!value && !!value.file),
 				map(fileRecord => {
 					const {file} = fileRecord;
-					console.log('Function: , file: ', file);
 					Object.defineProperty(file, 'name', {
 						writable: true,
 						value: file.name.replace(/ /g, '_').toLocaleLowerCase()
 					});
 					return file;
 				}),
-
-				concatMap(originalFile =>
-					this.compressor.compress(originalFile, null, 1 / 4).pipe(
+				switchMap(originalFile =>
+					this.compressor.compress(originalFile, 300, true).pipe(
 						concatMap(thumbFile =>
 							zip(
 								this.storageService.uploadAutomatically(`uploads/${thumbFile.name}`, thumbFile),
 								this.storageService.uploadAutomatically(`uploads/${originalFile.name}`, originalFile)
-							)
-						),
-						concatMap(([thumbUrl, imageUrl]) => {
-							return this.currentUser$.pipe(
-								take(1),
-								concatMap(user => {
+							).pipe(
+								concatMap(([thumbUrl, imageUrl]) => {
 									const newUploads: UserUploads[] = [
 										{
 											thumbUrl,
-											imageUrl
+											imageUrl,
+											imagePath: `uploads/${originalFile.name}`,
+											thumbPath: `uploads/${thumbFile.name}`,
+											fileName: originalFile.name
 										}
 									];
-									if (user.uploads) {
-										newUploads.push(...user.uploads);
+									if (this.user.uploads) {
+										newUploads.push(...this.user.uploads);
 									}
-									user.uploads = newUploads;
-									return this.userService.updateUserData(user);
+									this.user.uploads = newUploads;
+									return this.userService.updateUserData(this.user);
 								})
-							);
-						})
+							)
+						)
 					)
 				)
 			)
 			.subscribe(() => {});
 
 		this.isHovering$ = this._isHovering$.asObservable().pipe(distinctUntilChanged());
-		this.isHovering$.subscribe(val => {
-			console.log('Function: , val: ', val);
-		});
+		this.selectedItem$
+			.asObservable()
+			.pipe(takeUntil(this.destroy$))
+			.subscribe(item => this.propagateChange(item));
 	}
 
 	handleHovered(event: boolean) {
 		this._isHovering$.next(event);
 	}
 
-	handleSelect(event: MouseEvent) {}
+	onSelect(upload: UserUploads) {
+		this.selectedItem$.next(
+			this.selectedItem$.value && this.selectedItem$.value.imageUrl === upload.imageUrl ? null : upload
+		);
+	}
+
+	validate({value}: FormControl) {
+		return null;
+	}
+
+	private propagateChange = (_: UserUploads) => {};
+
+	writeValue(obj: UserUploads): void {
+		if (obj !== undefined) {
+			this.selectedItem$.next(obj);
+		}
+	}
+	registerOnChange(fn: any): void {
+		this.propagateChange = fn;
+	}
+
+	registerOnTouched(fn: any): void {}
 }

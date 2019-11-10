@@ -1,14 +1,39 @@
 <div class="library-container p-3" appHoverDetector (hovered)="handleHovered($event)">
-	<ng-container *ngIf="uploads$ | async; let uploads; else: uploadZone">
-		<div class="h-100 w-100">
-			<ng-container *ngIf="!(isHovering$ | async); else uploadZone">
-				<div *ngFor="let upload of uploads">
-					{{ upload.imageUrl }}
-				</div>
-			</ng-container>
+	<ng-container *ngIf="uploads$ | async; let uploads; else: loadingGhost">
+		<div class="d-flex flex-column w-100" *ngIf="uploads.length; else uploadZone">
+			<div class="w-100 flex-grow-1">
+				<ng-container *ngIf="!(isHovering$ | async); else uploadZone">
+					<div class="row">
+						<div class="col-4 mt-3" *ngFor="let upload of uploads">
+							<mat-card
+								[ngClass]="!!selectedItem$.value && selectedItem$.value.imageUrl === upload.imageUrl ? 'selected' : ''"
+								(click)="onSelect(upload)"
+							>
+								<img class="card-image" mat-card-image [src]="upload.thumbUrl" alt="uploaded image" />
+								<mat-card-content>
+									<div class="file-info">{{ upload.fileName }}</div>
+								</mat-card-content>
+							</mat-card>
+						</div>
+					</div>
+				</ng-container>
+			</div>
 		</div>
 	</ng-container>
 </div>
+
 <ng-template #uploadZone>
-	<app-image-upload [formControl]="uploadControl"></app-image-upload>
+	<div class="h-100 w-100 flex-grow-1">
+		<app-image-upload [formControl]="uploadControl"></app-image-upload>
+	</div>
+</ng-template>
+
+<ng-template #loadingGhost>
+	<div class="h-100 w-100">
+		<div class="row">
+			<div class="col-4 mt-3" *ngFor="let item of ghostItems">
+				<app-ghost-block [h]="14"></app-ghost-block>
+			</div>
+		</div>
+	</div>
 </ng-template>

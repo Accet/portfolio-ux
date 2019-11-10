@@ -1,5 +1,27 @@
+@import 'styles';
 .library-container {
-	height: 50vh;
+	height: 47vh;
 	overflow: auto;
 	padding: 0 2rem 1rem;
+	display: flex;
+	width: 100%;
+	.mat-card {
+		&.selected {
+			-webkit-box-shadow: 0 0 6px 2px $success;
+			-moz-box-shadow: 0 0 6px 2px $success;
+			box-shadow: 0 0 6px 2px $success;
+		}
+	}
+}
+.file-info {
+	font-size: 0.8rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.card-image {
+	height: 12rem;
+	object-fit: contain;
+	object-position: center top;
 }

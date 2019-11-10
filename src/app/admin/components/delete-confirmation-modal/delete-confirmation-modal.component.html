@@ -1,0 +1,24 @@
+<div class="modal-header">
+	<div class="d-flex w-100 flex-column align-items-center justify-content-between">
+		<h3 class="modal-title">Delete?</h3>
+	</div>
+</div>
+<div class="modal-body">
+	<div class="align-items-center w-100 text-center info-text">
+		<p>{{ infoText }}</p>
+		<p>Do you want to proceed?</p>
+	</div>
+</div>
+<div class="modal-footer">
+	<div class="d-flex w-100 justify-content-end">
+		<div class="flex-grow-1"></div>
+		<div class="d-flex">
+			<button mat-flat-button color="primary" class="px-3 ml-3" (click)="closeModal($event)">
+				Cancel
+			</button>
+			<button (click)="handleDelete()" mat-flat-button color="warn" class="px-3 ml-3">
+				Delete selected
+			</button>
+		</div>
+	</div>
+</div>

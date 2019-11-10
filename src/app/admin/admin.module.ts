@@ -27,6 +27,7 @@ import {RemovableImageComponent} from './components/image-upload/removable-image
 import {FireStorageService} from './services/fire-storage.service';
 import {SpinnerComponent} from './components/spinner/spinner.component';
 import {MediumEditorDirective} from './directives/medium-editor.directive';
+import {DeleteConfirmationModalComponent} from './components/delete-confirmation-modal/delete-confirmation-modal.component';
 
 @NgModule({
 	declarations: [
@@ -46,9 +47,16 @@ import {MediumEditorDirective} from './directives/medium-editor.directive';
 		ImageUploadComponent,
 		RemovableImageComponent,
 		SpinnerComponent,
-		MediumEditorDirective
+		MediumEditorDirective,
+		DeleteConfirmationModalComponent
 	],
-	entryComponents: [LoginModalComponent, ResetPasswordModalComponent, ForgotPasswordModalComponent, AdminComponent],
+	entryComponents: [
+		LoginModalComponent,
+		ResetPasswordModalComponent,
+		ForgotPasswordModalComponent,
+		AdminComponent,
+		DeleteConfirmationModalComponent
+	],
 	imports: [
 		RouterModule,
 		AdminRoutingModule,

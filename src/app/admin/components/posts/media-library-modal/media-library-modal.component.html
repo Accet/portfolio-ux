@@ -5,7 +5,7 @@
 	</div>
 </div>
 <div class="modal-body">
-	<app-media-library-container></app-media-library-container>
+	<app-media-library-container [formControl]="selectedImage"></app-media-library-container>
 </div>
 <div class="modal-footer">
 	<div class="d-flex w-100 justify-content-end">
@@ -16,10 +16,23 @@
 		</div>
 		<div class="flex-grow-1"></div>
 		<div class="d-flex">
-			<button (click)="handleSelect($event)" mat-flat-button color="warn" class="px-3 ml-3">
+			<button
+				[disabled]="!(isSelected$ | async)"
+				(click)="handleDelete()"
+				mat-flat-button
+				color="warn"
+				class="px-3 ml-3"
+			>
 				Delete selected
 			</button>
-			<button (click)="handleSelect($event)" #btnRef mat-flat-button color="primary" class="px-3 ml-3">
+			<button
+				[disabled]="!(isSelected$ | async)"
+				(click)="handleSelect()"
+				#btnRef
+				mat-flat-button
+				color="primary"
+				class="px-3 ml-3"
+			>
 				Choose selected
 			</button>
 		</div>

@@ -11,6 +11,7 @@ import {EditorComponent} from './editor/editor.component';
 import {MediaLibraryModalComponent} from './media-library-modal/media-library-modal.component';
 import {MediaLibraryContainerComponent} from './media-library-modal/media-library-container/media-library-container.component';
 import {HoverDetectorDirective} from './directives/hover-detector.directive';
+import {MatCardModule} from '@angular/material';
 
 @NgModule({
 	declarations: [
@@ -24,7 +25,7 @@ import {HoverDetectorDirective} from './directives/hover-detector.directive';
 		MediaLibraryContainerComponent,
 		HoverDetectorDirective
 	],
-	imports: [CommonModule, PostsRoutingModule, SharedModule, AdminModule],
+	imports: [CommonModule, PostsRoutingModule, SharedModule, AdminModule, MatCardModule],
 	entryComponents: [MediaLibraryModalComponent]
 })
 export class PostsModule {}

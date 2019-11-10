@@ -1,6 +1,9 @@
 export interface UserUploads {
 	thumbUrl: string;
 	imageUrl: string;
+	fileName: string;
+	imagePath: string;
+	thumbPath: string;
 }
 
 export interface User {
